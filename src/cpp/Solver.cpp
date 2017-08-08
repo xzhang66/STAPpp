@@ -31,7 +31,7 @@ int MAX(int I, int J)
 		return J;
 };
 
-Solver::Solver(FEM* FEMData) : FEMData(FEMData) {};
+Solver::Solver(Domain* FEMData) : FEMData(FEMData) {};
 
 // LDLT分解
 void LDLTSolver::LDLT()
@@ -40,7 +40,7 @@ void LDLTSolver::LDLT()
 
 	unsigned int* Address = FEMData->GetDiagonalAddress();
 
-	unsigned int N = FEMData->GetFreedom();
+	unsigned int N = FEMData->GetNEQ();
 
 	for (int j = 0; j < N; j++)      //对列循环
 	{
@@ -88,7 +88,7 @@ void LDLTSolver::ComputeDisplacement()
 	double* U = FEMData->GetDisplacement();     //位移
 
 	unsigned int* Address = FEMData->GetDiagonalAddress();  //对角元素位置
-	unsigned int Freedom = FEMData->GetFreedom(); //自由度数
+	unsigned int Freedom = FEMData->GetNEQ(); //自由度数
 
 	// L * V = F , V与F占用同样的位置
 	for (int i = 0; i < Freedom; i++)
@@ -131,9 +131,9 @@ void LDLTSolver::Solve()
 
 	LDLT();
 
-	for (int i = 0; i < FEMData->GetLoadCaseNumber(); i++)
+	for (int i = 0; i < FEMData->GetNLCASE(); i++)
 	{
-		FEMData->AssemblyForce(i + 1);
+		FEMData->AssembleForce(i + 1);
 
 		ComputeDisplacement();
 

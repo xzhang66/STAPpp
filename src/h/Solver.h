@@ -16,15 +16,15 @@ using namespace std;
 // 实现新的求解器需要继承此类
 // 需要与FEM类的数据存储格式相匹配
 
-class FEM;
+class Domain;
 
 class Solver
 {
 protected:
-	FEM* FEMData;
+	Domain* FEMData;
 
 public:
-	Solver(FEM* FEMData);
+	Solver(Domain* FEMData);
 
 	virtual void Solve() = 0;
 };
@@ -34,7 +34,7 @@ public:
 class LDLTSolver : public Solver
 {
 public:
-	LDLTSolver(FEM* FEMData) :Solver(FEMData) {};
+	LDLTSolver(Domain* FEMData) :Solver(FEMData) {};
 
 	void LDLT();                // 对总刚度阵执行LDLT分解，分解后存储于原位置 
 

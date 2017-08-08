@@ -76,7 +76,7 @@ void Outputter::OutputLogo()
 	OutputFile << "***********************************************************" << endl;
 	OutputFile << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
 
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
 	cout << "TITLE : " << FEMData->Title << endl;
 	OutputFile << "TITLE : " << FEMData->Title << endl;
@@ -93,7 +93,7 @@ void Outputter::OutputLogo()
 // 打印结点信息
 void Outputter::OutputNodeInfo()
 {
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
 	Node* NodeList = FEMData->NodeList;
 
@@ -105,7 +105,7 @@ void Outputter::OutputNodeInfo()
 	cout << "*********************  N O D E **************************" << endl;
 	OutputFile << "*********************  N O D E **************************" << endl;
 
-	for (int i = 0; i < FEMData->NodeNumber; i++)
+	for (int i = 0; i < FEMData->NUMNP; i++)
 	{
 		if (i % Page == 0)
 		{
@@ -123,11 +123,11 @@ void Outputter::OutputNodeInfo()
 // 打印载荷信息
 void Outputter::OutputLoadInfo(int LoadCase)
 {
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
-	unsigned int* LoadNumber = FEMData->LoadNumber;
+	unsigned int* NLOAD = FEMData->NLOAD;
 
-	if (LoadCase > FEMData->LoadCaseNumber) 
+	if (LoadCase > FEMData->NLCASE) 
 		return;
 
 	LoadData* Load = FEMData->LoadList[LoadCase - 1];
@@ -138,22 +138,22 @@ void Outputter::OutputLoadInfo(int LoadCase)
 	cout << "****************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
 	OutputFile << "****************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
 
-	cout << "No. ...... NodeNumber .. DIR ....... ....Force .........." << endl;
-	OutputFile << "No. ...... NodeNumber .. DIR ....... ....Force .........." << endl;
+	cout << "No. ...... NUMNP .. DIR ....... ....Force .........." << endl;
+	OutputFile << "No. ...... NUMNP .. DIR ....... ....Force .........." << endl;
 
-	for (int i = 0; i < LoadNumber[LoadCase - 1]; i++)
+	for (int i = 0; i < NLOAD[LoadCase - 1]; i++)
 	{
-		cout << setw(10) << i + 1 << setw(14) << Load[i].NodeNumber << setw(12) << Load[i].Direction 
-			 << setw(17) << Load[i].Force << endl;
-		OutputFile << setw(10) << i + 1 << setw(14) << Load[i].NodeNumber << setw(12) << Load[i].Direction 
-			       << setw(17) << Load[i].Force << endl;
+		cout << setw(10) << i + 1 << setw(14) << Load[i].node << setw(12) << Load[i].dof 
+			 << setw(17) << Load[i].load << endl;
+		OutputFile << setw(10) << i + 1 << setw(14) << Load[i].node << setw(12) << Load[i].dof 
+			       << setw(17) << Load[i].load << endl;
 	}
 }
 
 // 输出位移
 void Outputter::OutputDisplacement()
 {
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
 	int Page = 30;
 
@@ -167,7 +167,7 @@ void Outputter::OutputDisplacement()
 	cout << "************* D I S P L A C E l M E N T *****************" << endl;
 	OutputFile << "************* D I S P L A C E l M E N T *****************" << endl;
 
-	for (int i = 0; i < FEMData->NodeNumber; i++)
+	for (int i = 0; i < FEMData->NUMNP; i++)
 	{
 		if (i % Page == 0)
 		{
@@ -180,15 +180,15 @@ void Outputter::OutputDisplacement()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (NodeList[i].Freedom[j] == 0)
+			if (NodeList[i].EquationNo[j] == 0)
 			{
 				cout << setw(14) << 0.0;
 				OutputFile << setw(14) << 0.0;
 			}
 			else
 			{
-				cout << setw(14) << Displacement[NodeList[i].Freedom[j] - 1];
-				OutputFile << setw(14) << Displacement[NodeList[i].Freedom[j] - 1];
+				cout << setw(14) << Displacement[NodeList[i].EquationNo[j] - 1];
+				OutputFile << setw(14) << Displacement[NodeList[i].EquationNo[j] - 1];
 			}
 		}
 

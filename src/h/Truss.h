@@ -20,9 +20,9 @@ public:
 
 	friend FileReader;
 
-	virtual void LocalStiffness(double* Matrix);
+	virtual void ElementStiffness(double* Matrix);
 
-	virtual void Assembly(double* Matrix);
+	virtual void assembly(double* Matrix);
 
 	virtual void ComputeColumnHeight(unsigned int* ColumnHeight);
 

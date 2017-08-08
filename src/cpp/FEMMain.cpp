@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
 	FileReader* Reader = new FileReader(InFile);
 
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
 	if (!FEMData->Initial(Reader))
 	{
@@ -41,11 +41,11 @@ int main(int argc, char *argv[])
 	Output->OutputLogo();
 	Output->OutputNodeInfo();
 
-	FEMData->GenerateFreedom();
+	FEMData->EquationNumber();
 	
 	FEMData->AllocateStiffnessMatrix();
 	
-	FEMData->AssemblyStiffnessMatrix();
+	FEMData->AssembleStiffnessMatrix();
 	
 	LDLTSolver* S = new LDLTSolver(FEMData);
 	S->Solve();

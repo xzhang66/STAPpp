@@ -21,129 +21,211 @@ using namespace std;
 
 class FileReader;
 
-class FEM;
+class Domain;
 
-// 材料和截面类
-/************************/
-// 材料和截面性质的基类，只存储杨氏模量一个参数。新的材料通过继承实现。
-/************************/
+/*
+   Material base class which only define one data member
+   All type of material classes should be derived from this base class
+*/
 class Material
 {
 public:
-	double E;  //杨氏模量
+	double E;  // Young's modulus
 };
 
-// 结点类
-// 三维结点类，存储了XYZ三个平动自由度的信息
+//	Node class
 class Node
 {
 public:
-	double XYZ[3];  // XYZ坐标
-	int Fix[3];     // 约束条件，1：约束。0：自由。
-	unsigned int Freedom[3];  // 三个分量的自由度编号
-	static unsigned int Dimension;  // 静态：结点的自由度数
+
+//	Maximum number of degrees of freedom per node
+//	For 3D bar and solid elements, NDF = 3. For 3D beam or shell elements NDF = 5 or 6
+	const static unsigned int NDF = 3; 
+
+//	x, y and z coordinates of the node
+	double XYZ[NDF];
+
+//	Boundary code of each degree of freedom of the node
+//		0: The corresponding degree of freedom is active (defined in the global system)
+//		1: The corresponding degree of freedom in nonactive (not defined)
+	int bcode[NDF];
+
+//	Global equation number corresponding to each degree of freedom
+	unsigned int EquationNo[NDF]; 
+
+//	Constructor
 	Node(double X, double Y, double Z);
 };
 
-// 单元类
-// 单元基类，提供了单元的基本信息和接口
-// 实现具体单元应继承此类
+//	Element base class
+//	All type of element classes should be derived from this base class
+//	
 class Element
 {
 protected:
-	unsigned int NodeNumber;    //单元的节点数
-	Node** NodeList;            //单元的结点指针数组
-	Material* ElementMaterial;  //单元的材料与截面
+
+//	Number of nodes per element in this type of element
+	unsigned int NEN;
+
+//	Nodes of the element
+	Node** nodes;
+
+//	Material of the element
+	Material* ElementMaterial;
+
 public:
-	Element() :NodeNumber(0), NodeList(NULL), ElementMaterial(NULL) {};
-	virtual void LocalStiffness(double* Matrix) = 0;  //计算单元刚度阵，存储在Matrix中
-	virtual void Assembly(double* Matrix) = 0;        //将单元刚度阵组装入总刚，Matrix的存储格式需要与LocalStiffness相配
-	virtual void ComputeColumnHeight(unsigned int* ColumnHeight) = 0; //计算列高，在skyline存储方法中使用
-	virtual unsigned int LocalMatrixSpace() = 0;     //返回单元刚度阵所占的空间大小，需要与Matrix的存储格式相配
+
+//	Constructor
+	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+
+//	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
+	virtual void ElementStiffness(double* stiffness) = 0;  
+
+//	Assemble the element stiffness matrix to the global stiffness matrix
+	virtual void assembly(double* stiffness) = 0;        
+
+//  Calculate the column height, used with the skyline storage scheme
+	virtual void ComputeColumnHeight(unsigned int* ColumnHeight) = 0; 
+
+//	Return the size of the element stiffness (stored as an array column by column)
+	virtual unsigned int LocalMatrixSpace() = 0;     
+
 	friend FileReader;
 };
 
-// LoadData 用来暂存力信息
+// Structure LoadData is used to store load data
 struct LoadData
 {
-	unsigned NodeNumber;   //结点号
-	unsigned Direction;    //力的方向
-	double Force;          //力的大小
+	unsigned node;	// Node number to which this load is applied
+	unsigned dof;	// Degree of freedom number for this load component
+	double load;	// Magnitude of load
 };
 
-// FileReader 文件读入器
+// FileReader : The reader of the input data file
 class FileReader
 {
 private:
 	ifstream Input;
+
 public:
+
 	FileReader(string InputFile);
-	virtual bool ReadFile(FEM* FEMData);
+
+	virtual bool ReadFile(Domain* FEMData);
 };
 
-// FEM类，单例，存储有限元算法用到的数据
-class FEM
+//	Domain class : Define the problem domain
+//				Only a single instance of Domain class can be created
+class Domain
 {
 private:
-	static FEM* _instance;
 
-	string Title;                     //标题
+//	The instance of the Domain class
+	static Domain* _instance;
 
-	int Mode;						  //求解模式
+//	Heading information for use in labeling the outpu
+	string Title; 
 
-	unsigned int NodeNumber;          //结点数
-	Node* NodeList;                   //结点
+//	Solution MODEX
+//		0 : Data check only
+//		1 : Execution
+	int MODEX;
 
-	unsigned int ElementGroupNumber;  //单元组数
-	unsigned int* ElementNumber;      //每个单元组的单元数
-	Element** ElementGroupList;       //单元
+//	Total number of nodal points
+	unsigned int NUMNP;
 
-	unsigned int* MaterialNumber;     //每个材料组的材料数
-	Material** MaterialGroupList;     //材料
+//	List of all nodes in the domain
+	Node* NodeList; 
 
-	LoadData** LoadList;              //载荷
-	unsigned int LoadCaseNumber;      //工况数
-	unsigned int* LoadNumber;         //每个工况中载荷数量
+//	Total number of element groups. An element group consists of a convenient
+//	collection of elements with same type
+	unsigned int NUMEG;
 
-	unsigned int Freedom;             //自由度数
+//	Number of elements in each element group
+	unsigned int* NUME;
 
-	double* StiffnessMatrix;          //总刚度阵
+//	List of all elements in each element group
+	Element** ElementList;
 
-	unsigned int* DiagonalAddress;    //刚度阵对角元素的地址
+//	Number of different sets of material/section properties in each element group
+	unsigned int* NUMMAT;
 
-	double* Displacement;             //位移
-	double* Force;                    //力向量
+//	List of all material sets
+	Material** MaterialList;
 
-	FEM();
+//	Number of load cases
+	unsigned int NLCASE;
+
+//	List of loads in each load case
+	LoadData** LoadList;
+
+//	Number of concentrated loads applied in each load case
+	unsigned int* NLOAD;
+
+//	Total number of equations in the system
+	unsigned int NEQ;
+
+//	Global stiffness matrix. A one-dimensional array storing only the elements below the 
+//	skyline of the global stiffness matrix. 
+	double* StiffnessMatrix;
+
+//	Address of the diagonal elements of the one dimensional array StiffnessMatrix
+	unsigned int* DiagonalAddress;
+
+//	Global nodal displacement vector
+	double* Displacement;
+
+//	Global nodal force vector
+	double* Force;
+
+//	Constructor
+	Domain();
 
 public:
-	static FEM* Instance();
+
+//	Return pointer to the instance of the Domain class
+	static Domain* Instance();
 
 	friend FileReader;
 	friend Outputter;
 
+//	Return pointer to the one dimensional array storing the global stiffness matrix
 	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
+
+//	Return pointer to the array storing the address of the diagonal elements
 	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
 
-	inline unsigned int GetFreedom() { return Freedom; }
+//	Return the total number of equations
+	inline unsigned int GetNEQ() { return NEQ; }
 
+//	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }
 
+//	Return pointer to the global nodal displacement vector
 	inline double* GetDisplacement() { return Displacement; }
 
-	inline unsigned int GetLoadCaseNumber() { return LoadCaseNumber; }
+//	Return the total number of load cases
+	inline unsigned int GetNLCASE() { return NLCASE; }
 
-	void GenerateFreedom();           //计算自由度数
+//	Calculate global equation numbers corresponding to every degree of freedom of each node
+	void EquationNumber();
 
-	void AllocateStiffnessMatrix();   //分配刚度阵的存储空间
-	void AssemblyStiffnessMatrix();   //组装刚度阵
+//	Allocate storage for the one dimensional array storing the global stiffness matrix,
+//	and generate the address of diagonal elements
+	void AllocateStiffnessMatrix();
 
-	bool AssemblyForce(unsigned int LoadCase);   //组装第LoadCase个力向量，成功则返回true
+//	Assemble the gloabl stiffness matrix
+	void AssembleStiffnessMatrix();
 
-	bool Initial(FileReader* Reader); //从文件读入器初始化，读取基本信息
+//	Assemble global nodal force vector for load case LoadCase
+	bool AssembleForce(unsigned int LoadCase); 
+
+//	Initialize the class data member by reading input data file
+	bool Initial(FileReader* Reader); 
 
 #ifdef _DEBUG_
-	void Info();  //debug时用到的数据输出函数
+//	Print debug information
+	void Info(); 
 #endif
 
 };

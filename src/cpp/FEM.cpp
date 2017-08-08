@@ -14,42 +14,39 @@
 
 using namespace std;
 
-/***Node***/
-// Node类型的自由度数为3
-// 扩展转角自由度需要更改此数值
-unsigned int Node::Dimension = 3;
 Node::Node(double X = 0, double Y = 0, double Z = 0) 
 {
-	XYZ[0] = X;
+	XYZ[0] = X;		// Coordinates of the node
 	XYZ[1] = Y;
 	XYZ[2] = Z;
-	Fix[0] = 0;
-	Fix[1] = 0;
-	Fix[2] = 0;
-	Freedom[0] = 0;
-	Freedom[1] = 0;
-	Freedom[2] = 0;
+
+	bcode[0] = 0;	// Boundary codes
+	bcode[1] = 0;
+	bcode[2] = 0;
+
+	EquationNo[0] = 0;	// Equation numbers 
+	EquationNo[1] = 0;
+	EquationNo[2] = 0;
 };
 
-/***FEM***/
-// Instance单例函数
-FEM* FEM::_instance = NULL;
 
-FEM::FEM() : Title(""), Mode(0), NodeNumber(0), NodeList(NULL), ElementGroupNumber(0),
-ElementGroupList(NULL), ElementNumber(NULL),  MaterialNumber(NULL),
-MaterialGroupList(NULL), LoadCaseNumber(0), LoadNumber(NULL), LoadList(NULL), Freedom(0), StiffnessMatrix(NULL), Displacement(NULL),
+Domain* Domain::_instance = NULL;
+
+Domain::Domain() : Title(""), MODEX(0), NUMNP(0), NodeList(NULL), NUMEG(0),
+ElementList(NULL), NUME(NULL),  NUMMAT(NULL),
+MaterialList(NULL), NLCASE(0), NLOAD(NULL), LoadList(NULL), NEQ(0), StiffnessMatrix(NULL), Displacement(NULL),
 Force(NULL) {};
 
-FEM* FEM::Instance()
+Domain* Domain::Instance()
 {
-	if (!_instance) _instance = new FEM;
+	if (!_instance) _instance = new Domain;
 	return _instance;
 }
 
 // Initial从文件初始化
 // 调用Reader的读取数据函数
 // 这样做的原因是可以通过继承的方式改写文件读取方法，从而适配不同的文件格式
-bool FEM::Initial(FileReader* Reader)
+bool Domain::Initial(FileReader* Reader)
 {
 	return Reader->ReadFile(this);
 }
@@ -62,63 +59,63 @@ FileReader::FileReader(string Filename)
 }
 
 // 读取数据文件
-bool FileReader::ReadFile(FEM* FEMData)
+bool FileReader::ReadFile(Domain* FEMData)
 {
 	int N, LL;
 
 	Input >> FEMData->Title;
 
 	// 读入控制行
-	Input >> FEMData->NodeNumber >> FEMData->ElementGroupNumber >> FEMData->LoadCaseNumber
-		>> FEMData->Mode;
+	Input >> FEMData->NUMNP >> FEMData->NUMEG >> FEMData->NLCASE
+		>> FEMData->MODEX;
 
 	// 读入结点
-	FEMData->NodeList = new Node[FEMData->NodeNumber];
+	FEMData->NodeList = new Node[FEMData->NUMNP];
 	Node* NodeList = FEMData->NodeList;
-	for (int i = 0; i < FEMData->NodeNumber; i++)
+	for (int i = 0; i < FEMData->NUMNP; i++)
 	{
 		Input >> N;
 		if (N != i + 1) return false;
-		Input >> NodeList[i].Fix[0] >> NodeList[i].Fix[1] >> NodeList[i].Fix[2]
+		Input >> NodeList[i].bcode[0] >> NodeList[i].bcode[1] >> NodeList[i].bcode[2]
 			>> NodeList[i].XYZ[0] >> NodeList[i].XYZ[1] >> NodeList[i].XYZ[2];
 	}
 
 	// 读入工况
-	FEMData->LoadList = new LoadData*[FEMData->LoadCaseNumber];
+	FEMData->LoadList = new LoadData*[FEMData->NLCASE];
 
-	FEMData->LoadNumber = new unsigned int[FEMData->LoadCaseNumber];
+	FEMData->NLOAD = new unsigned int[FEMData->NLCASE];
 	LoadData** LoadList = FEMData->LoadList;
 
-	unsigned int* LoadNumber = FEMData->LoadNumber;
+	unsigned int* NLOAD = FEMData->NLOAD;
 	
-	for (int i = 0; i < FEMData->LoadCaseNumber; i++)
+	for (int i = 0; i < FEMData->NLCASE; i++)
 	{
 		Input >> LL >> N;
 
 		if (LL != i + 1) 
 			return false;
 		
-		LoadNumber[i] = N;
-		LoadList[i] = new LoadData[LoadNumber[i]];
-		for (int j = 0; j < LoadNumber[i]; j++)
+		NLOAD[i] = N;
+		LoadList[i] = new LoadData[NLOAD[i]];
+		for (int j = 0; j < NLOAD[i]; j++)
 		{
-			Input >>LoadList[i][j].NodeNumber >> LoadList[i][j].Direction >> LoadList[i][j].Force;
+			Input >>LoadList[i][j].node >> LoadList[i][j].dof >> LoadList[i][j].load;
 		}
 	}
 
 	// 读入单元组数据
-	FEMData->ElementNumber = new unsigned int[FEMData->ElementGroupNumber];
-	unsigned int* ElementNumber = FEMData->ElementNumber;
+	FEMData->NUME = new unsigned int[FEMData->NUMEG];
+	unsigned int* NUME = FEMData->NUME;
 	
-	FEMData->ElementGroupList = new Element*[FEMData->ElementGroupNumber];
-	FEMData->MaterialNumber = new unsigned int[FEMData->ElementGroupNumber];
-	unsigned int* MaterialNumber = FEMData->MaterialNumber;
-	FEMData->MaterialGroupList = new Material*[FEMData->ElementGroupNumber];
+	FEMData->ElementList = new Element*[FEMData->NUMEG];
+	FEMData->NUMMAT = new unsigned int[FEMData->NUMEG];
+	unsigned int* NUMMAT = FEMData->NUMMAT;
+	FEMData->MaterialList = new Material*[FEMData->NUMEG];
 
 	unsigned int ElementType;
-	for (int i = 0; i < FEMData->ElementGroupNumber; i++)
+	for (int i = 0; i < FEMData->NUMEG; i++)
 	{
-		Input >> ElementType >> ElementNumber[i] >> MaterialNumber[i];
+		Input >> ElementType >> NUME[i] >> NUMMAT[i];
 
 		// 根据不同的单元类型读取数据 
 		// 此处可以尝试改写得更加灵活
@@ -126,17 +123,17 @@ bool FileReader::ReadFile(FEM* FEMData)
 		{
 		case 1:
 		{
-			BarMaterial* MaterialGroup = new BarMaterial[MaterialNumber[i]];
-			FEMData->MaterialGroupList[i] = MaterialGroup;
-			for (int j = 0; j < MaterialNumber[i]; j++)
+			BarMaterial* MaterialGroup = new BarMaterial[NUMMAT[i]];
+			FEMData->MaterialList[i] = MaterialGroup;
+			for (int j = 0; j < NUMMAT[i]; j++)
 			{
 				Input >> N;
 				if (N != j + 1) return false;
 				Input >> MaterialGroup[j].E >> MaterialGroup[j].Area;
 			}
-			Bar* ElementList = new Bar[ElementNumber[i]];
-			FEMData->ElementGroupList[i] = ElementList;
-			for (int j = 0; j < ElementNumber[i]; j++)
+			Bar* ElementList = new Bar[NUME[i]];
+			FEMData->ElementList[i] = ElementList;
+			for (int j = 0; j < NUME[i]; j++)
 			{
 				Input >> N;
 				if (N != j + 1) return false;
@@ -144,8 +141,8 @@ bool FileReader::ReadFile(FEM* FEMData)
 				int N1, N2;
 				Input >> N1 >> N2 >> MNumber;
 				ElementList[j].ElementMaterial = &MaterialGroup[MNumber - 1];
-				ElementList[j].NodeList[0] = &NodeList[N1 - 1];
-				ElementList[j].NodeList[1] = &NodeList[N2 - 1];
+				ElementList[j].nodes[0] = &NodeList[N1 - 1];
+				ElementList[j].nodes[1] = &NodeList[N2 - 1];
 			}
 			break;
 		}
@@ -157,75 +154,72 @@ bool FileReader::ReadFile(FEM* FEMData)
 	return true;
 }
 
-/***FEM***/
-// 计算自由度数
-// 算法：若此处约束，则Freedom置0
-//       若自由，则总自由度 + 1
-void FEM::GenerateFreedom()
+//	Calculate global equation numbers corresponding to every degree of freedom of each node
+void Domain::EquationNumber()
 {
-	int CurFreedom = 0;
-	for (int i = 0; i < NodeNumber; i++)
+	NEQ = 0;
+	for (int i = 0; i < NUMNP; i++)
 	{
-		for (int j = 0; j < Node::Dimension; j++)
+		for (int j = 0; j < Node::NDF; j++)
 		{
-			if (NodeList[i].Fix[j]) 
-				NodeList[i].Freedom[j] = 0;
+			if (NodeList[i].bcode[j]) 
+				NodeList[i].EquationNo[j] = 0;
 			else
 			{
-				CurFreedom++;
-				NodeList[i].Freedom[j] = CurFreedom;
+				NEQ++;
+				NodeList[i].EquationNo[j] = NEQ;
 			}
 		}
 	}
-	Freedom = CurFreedom;
 }
 
-// 分配刚度阵的存储空间，同时生成DiagonalAddress矩阵
-void FEM::AllocateStiffnessMatrix()
+//	Allocate storage for the one dimensional array storing the global stiffness matrix,
+//	and generate the address of diagonal elements
+void Domain::AllocateStiffnessMatrix()
 {
-	Displacement = new double[Freedom];
-	Force = new double[Freedom];
-	DiagonalAddress = new unsigned int[Freedom + 1];
+	Displacement = new double[NEQ];
+	Force = new double[NEQ];
+	DiagonalAddress = new unsigned int[NEQ + 1];
 
 	// 考虑每个单元的不同自由度I < J, 说明在第(I,J)位置有元素，那么第J列的列高至少为J - I
-	for (int i = 0; i < Freedom + 1; i++) 
+	for (int i = 0; i < NEQ + 1; i++) 
 		DiagonalAddress[i] = 0;
 
-	for (int EG = 0; EG < ElementGroupNumber; EG++)
+	for (int EG = 0; EG < NUMEG; EG++)
 	{
-		for (int EN = 0; EN < ElementNumber[EG]; EN++)
+		for (int EN = 0; EN < NUME[EG]; EN++)
 		{
-			ElementGroupList[EG][EN].ComputeColumnHeight(DiagonalAddress);
+			ElementList[EG][EN].ComputeColumnHeight(DiagonalAddress);
 		}
 	}
 
 	// 根据计算得到的列高DiagonalAddress来分配空间，计算对角元地址
 	DiagonalAddress[0] = 1;
-	for (int C = 1; C <= Freedom; C++)
+	for (int C = 1; C <= NEQ; C++)
 	{
 		DiagonalAddress[C] = DiagonalAddress[C - 1] + DiagonalAddress[C] + 1;
 	}
 
-	StiffnessMatrix = new double[DiagonalAddress[Freedom] - 1];
+	StiffnessMatrix = new double[DiagonalAddress[NEQ] - 1];
 
-	for (int i = 0; i < DiagonalAddress[Freedom] - 1; i++) 
+	for (int i = 0; i < DiagonalAddress[NEQ] - 1; i++) 
 		StiffnessMatrix[i] = 0;
 }
 
 //组装刚度阵
 //对每个单元组（同种单元）分配一次Matrix空间
-//调用每个单元的Assembly函数
+//调用每个单元的assembly函数
 //组装方式在单元中实现
-void FEM::AssemblyStiffnessMatrix()
+void Domain::AssembleStiffnessMatrix()
 {
-	for (int EG = 0; EG < ElementGroupNumber; EG++)
+	for (int EG = 0; EG < NUMEG; EG++)
 	{
-		unsigned int Space = ElementGroupList[EG][0].LocalMatrixSpace();
+		unsigned int Space = ElementList[EG][0].LocalMatrixSpace();
 		double* Matrix = new double[Space];
 
-		for (int E = 0; E < ElementNumber[EG]; E++)
+		for (int E = 0; E < NUME[EG]; E++)
 		{
-			ElementGroupList[EG][E].Assembly(Matrix);
+			ElementList[EG][E].assembly(Matrix);
 		}
 
 		delete [] Matrix;
@@ -233,22 +227,22 @@ void FEM::AssemblyStiffnessMatrix()
 }
 
 //组装力向量
-bool FEM::AssemblyForce(unsigned int LoadCase)
+bool Domain::AssembleForce(unsigned int LoadCase)
 {
-	if (LoadCase > LoadCaseNumber) 
+	if (LoadCase > NLCASE) 
 		return false;
 
 	LoadData* Load = LoadList[LoadCase - 1];
 
 	//先将力置为零
-	for (int i = 0; i < Freedom; i++) 
+	for (int i = 0; i < NEQ; i++) 
 		Force[i] = 0;
 
 	//组装力向量
-	for (int FN = 0; FN < LoadNumber[LoadCase - 1]; FN++)
+	for (int FN = 0; FN < NLOAD[LoadCase - 1]; FN++)
 	{
-		int FreedomDegree = NodeList[Load[FN].NodeNumber - 1].Freedom[Load[FN].Direction - 1];
-		Force[FreedomDegree - 1] += Load[FN].Force;
+		int FreedomDegree = NodeList[Load[FN].node - 1].EquationNo[Load[FN].dof - 1];
+		Force[FreedomDegree - 1] += Load[FN].load;
 	}
 
 	return true;
@@ -258,22 +252,22 @@ bool FEM::AssemblyForce(unsigned int LoadCase)
 //Info
 //debug时用的数据输出函数
 //当前可以输出刚度阵的一维存储方式，对角元素的位置以及二维的刚度阵
-void FEM::Info()
+void Domain::Info()
 {
 	cout << "StiffnessMatrix : " << endl;
-	for (int i = 0; i < DiagonalAddress[Freedom] - 1; i++) 
+	for (int i = 0; i < DiagonalAddress[NEQ] - 1; i++) 
 		cout << StiffnessMatrix[i] << " ";
 	cout << endl;
 
 	cout << "Address : " << endl;
-	for (int i = 0; i < Freedom + 1; i++) 
+	for (int i = 0; i < NEQ + 1; i++) 
 		cout << DiagonalAddress[i] << " ";
 	cout << endl;
 
 	cout << "Matrix : " << endl;
-	for (int I = 0; I < Freedom; I++)
+	for (int I = 0; I < NEQ; I++)
 	{
-		for (int J = 0; J < Freedom; J++)
+		for (int J = 0; J < NEQ; J++)
 		{
 			int i = I;
 			int j = J;
@@ -298,7 +292,7 @@ void FEM::Info()
 	cout << endl;
 
 	cout << "U : " << endl;
-	for (int I = 0; I < Freedom; I++)
+	for (int I = 0; I < NEQ; I++)
 	{
 		cout << Displacement[I] << " ";
 	}

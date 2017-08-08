@@ -15,8 +15,8 @@ using namespace std;
 
 Bar::Bar()
 {
-	NodeNumber = 2;
-	NodeList = new Node*[2];
+	NEN = 2;
+	nodes = new Node*[2];
 	ElementMaterial = NULL;
 }
 
@@ -27,10 +27,10 @@ void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 	//存储所有的自由度
 	for (int N = 0; N < 2; N++)
 	{
-		Node* CurNode = NodeList[N];
-		for (int D = 0; D < Node::Dimension; D++)
+		Node* CurNode = nodes[N];
+		for (int D = 0; D < Node::NDF; D++)
 		{
-			if (CurNode->Freedom[D]) Freedom.push_back(CurNode->Freedom[D]);
+			if (CurNode->EquationNo[D]) Freedom.push_back(CurNode->EquationNo[D]);
 		}
 	}
 
@@ -61,7 +61,7 @@ void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 unsigned int Bar::LocalMatrixSpace() { return 21; }
 
 //计算单元刚度阵
-void Bar::LocalStiffness(double* Matrix)
+void Bar::ElementStiffness(double* Matrix)
 {
 	for (int i = 0; i < 21; i++) 
 		Matrix[i] = 0;
@@ -75,7 +75,7 @@ void Bar::LocalStiffness(double* Matrix)
 	int XYZ2[6];    //保存XYZ的二次项，分别为X^2, Y^2, Z^2, XY, YZ, XZ
 	for (int i = 0; i < 3; i++)
 	{
-		XYZ[i] = NodeList[1]->XYZ[i] - NodeList[0]->XYZ[i];
+		XYZ[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
 	}	
 
 	XYZ2[0] = XYZ[0] * XYZ[0];
@@ -115,26 +115,26 @@ void Bar::LocalStiffness(double* Matrix)
 }
 
 //组装总刚
-void Bar::Assembly(double* Matrix)
+void Bar::assembly(double* Matrix)
 {
 	//计算单元刚度阵
-	LocalStiffness(Matrix);
+	ElementStiffness(Matrix);
 
 	//组装总刚度阵
 	unsigned int Freedom[6];
-	Freedom[0] = NodeList[0]->Freedom[0];
-	Freedom[1] = NodeList[0]->Freedom[1];
-	Freedom[2] = NodeList[0]->Freedom[2];
-	Freedom[3] = NodeList[1]->Freedom[0];
-	Freedom[4] = NodeList[1]->Freedom[1];
-	Freedom[5] = NodeList[1]->Freedom[2];
+	Freedom[0] = nodes[0]->EquationNo[0];
+	Freedom[1] = nodes[0]->EquationNo[1];
+	Freedom[2] = nodes[0]->EquationNo[2];
+	Freedom[3] = nodes[1]->EquationNo[0];
+	Freedom[4] = nodes[1]->EquationNo[1];
+	Freedom[5] = nodes[1]->EquationNo[2];
 
 	//进行组装
 	int K = 0;   //当前元素在单元刚度阵中的编号
 	int KK = 0;  //当前元素在总刚中的编号
 	int I, J;    //自由度编号
 
-	FEM* FEMData = FEM::Instance();
+	Domain* FEMData = Domain::Instance();
 
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
 
