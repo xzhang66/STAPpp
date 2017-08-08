@@ -1,23 +1,29 @@
-/************************************************/
-/*              FEMCPP 教学程序                 */
-/*     清华大学航天航空学院计算动力学教研室     */
-/*     Truss.cpp  杆单元源文件                  */
-/*     作者：宋言                               */
-/*     最近修改：2017/06/02                     */
-/************************************************/
+/***************************************************************/
+/*  FEM++ ：A C++ finite element method code for teaching      */
+/*     Computational Dynamics Laboratory                       */
+/*     School of Aerospace Engineering, Tsinghua University    */
+/*                                                             */
+/*     http://www.comdyn.cn/                                   */
+/***************************************************************/
+
 #include "Truss.h"
+
 #include <math.h>
 #include <iostream>
+
 using namespace std;
+
 Bar::Bar()
 {
 	NodeNumber = 2;
 	NodeList = new Node*[2];
 	ElementMaterial = NULL;
 }
+
 void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 {
 	vector<int> Freedom;
+
 	//存储所有的自由度
 	for (int N = 0; N < 2; N++)
 	{
@@ -27,6 +33,7 @@ void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 			if (CurNode->Freedom[D]) Freedom.push_back(CurNode->Freedom[D]);
 		}
 	}
+
 	//计算列高
 	//寻找第Freedom[j]列的最高的单元
 	for (int i = 0; i < Freedom.size(); i++)
@@ -47,16 +54,22 @@ void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 		}
 	}
 }
+
 //返回单元刚度阵所占空间大小
 //由于杆单元的单元刚度阵为满阵，所以Matrix的大小为上三角阵的21个元素
 //返回的方式依然为按列存储
 unsigned int Bar::LocalMatrixSpace() { return 21; }
+
 //计算单元刚度阵
 void Bar::LocalStiffness(double* Matrix)
 {
-	for (int i = 0; i < 21; i++) Matrix[i] = 0;
+	for (int i = 0; i < 21; i++) 
+		Matrix[i] = 0;
+
 	BarMaterial* CurMaterial = (BarMaterial*)ElementMaterial;
+
 	double k = CurMaterial->Area * CurMaterial->E;
+
 	// 计算杆长
 	int XYZ[3];
 	int XYZ2[6];    //保存XYZ的二次项，分别为X^2, Y^2, Z^2, XY, YZ, XZ
@@ -64,15 +77,19 @@ void Bar::LocalStiffness(double* Matrix)
 	{
 		XYZ[i] = NodeList[1]->XYZ[i] - NodeList[0]->XYZ[i];
 	}	
+
 	XYZ2[0] = XYZ[0] * XYZ[0];
 	XYZ2[1] = XYZ[1] * XYZ[1];
 	XYZ2[2] = XYZ[2] * XYZ[2];
 	XYZ2[3] = XYZ[0] * XYZ[1];
 	XYZ2[4] = XYZ[1] * XYZ[2];
 	XYZ2[5] = XYZ[0] * XYZ[2];
+
 	double L2 = XYZ2[0] + XYZ2[1] + XYZ2[2];
 	double L = sqrt(L2);
+
 	k = k / L / L2;
+
 	// 计算刚度阵
 	Matrix[0] = k*XYZ2[0];
 	Matrix[1] = k*XYZ2[1];
@@ -96,11 +113,13 @@ void Bar::LocalStiffness(double* Matrix)
 	Matrix[19] = -k*XYZ2[4];
 	Matrix[20] = -k*XYZ2[5];
 }
+
 //组装总刚
 void Bar::Assembly(double* Matrix)
 {
 	//计算单元刚度阵
 	LocalStiffness(Matrix);
+
 	//组装总刚度阵
 	unsigned int Freedom[6];
 	Freedom[0] = NodeList[0]->Freedom[0];
@@ -109,23 +128,33 @@ void Bar::Assembly(double* Matrix)
 	Freedom[3] = NodeList[1]->Freedom[0];
 	Freedom[4] = NodeList[1]->Freedom[1];
 	Freedom[5] = NodeList[1]->Freedom[2];
+
 	//进行组装
 	int K = 0;   //当前元素在单元刚度阵中的编号
 	int KK = 0;  //当前元素在总刚中的编号
 	int I, J;    //自由度编号
+
 	FEM* FEMData = FEM::Instance();
+
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
+
 	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+
 	for (int j = 0; j < 6; j++)
 	{
 		J = Freedom[j];
 		if (!J) continue;
+
 		K = (1 + j)*j / 2 + 1;  //此列对角元素位置
+
 		KK = DiagonalAddress[J - 1];
+
 		for (int i = 0; i <= j; i++)
 		{
 			I = Freedom[i];
-			if (!I) continue;
+			if (!I) 
+				continue;
+
 			StiffnessMatrix[KK + J - I - 1] += Matrix[K + j - i - 1];
 		}
 	}
