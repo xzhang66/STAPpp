@@ -59,7 +59,6 @@ public:
 
 //	Element base class
 //	All type of element classes should be derived from this base class
-//	
 class Element
 {
 protected:
@@ -85,10 +84,10 @@ public:
 	virtual void assembly(double* stiffness) = 0;        
 
 //  Calculate the column height, used with the skyline storage scheme
-	virtual void ComputeColumnHeight(unsigned int* ColumnHeight) = 0; 
+	virtual void ColumnHeight(unsigned int* ColumnHeight) = 0; 
 
-//	Return the size of the element stiffness (stored as an array column by column)
-	virtual unsigned int LocalMatrixSpace() = 0;     
+//	Return the size of the element stiffness matrix (stored as an array column by column)
+	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
 
 	friend FileReader;
 };
@@ -111,7 +110,7 @@ public:
 
 	FileReader(string InputFile);
 
-	virtual bool ReadFile(Domain* FEMData);
+	virtual bool ReadData(Domain* FEMData);
 };
 
 //	Domain class : Define the problem domain
@@ -165,11 +164,11 @@ private:
 //	Total number of equations in the system
 	unsigned int NEQ;
 
-//	Global stiffness matrix. A one-dimensional array storing only the elements below the 
+//	Banded stiffness matrix : A one-dimensional array storing only the elements below the 
 //	skyline of the global stiffness matrix. 
 	double* StiffnessMatrix;
 
-//	Address of the diagonal elements of the one dimensional array StiffnessMatrix
+//	Address of diagonal elements in banded stiffness matrix
 	unsigned int* DiagonalAddress;
 
 //	Global nodal displacement vector
@@ -189,10 +188,10 @@ public:
 	friend FileReader;
 	friend Outputter;
 
-//	Return pointer to the one dimensional array storing the global stiffness matrix
+//	Return pointer to the banded stiffness matrix
 	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
 
-//	Return pointer to the array storing the address of the diagonal elements
+//	Return pointer to the array storing the address of diagonal elements
 	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
 
 //	Return the total number of equations
@@ -214,14 +213,17 @@ public:
 //	and generate the address of diagonal elements
 	void AllocateStiffnessMatrix();
 
-//	Assemble the gloabl stiffness matrix
+//	Assemble the banded gloabl stiffness matrix
 	void AssembleStiffnessMatrix();
 
-//	Assemble global nodal force vector for load case LoadCase
+//	Assemble the global nodal force vector for load case LoadCase
 	bool AssembleForce(unsigned int LoadCase); 
 
 //	Initialize the class data member by reading input data file
 	bool Initial(FileReader* Reader); 
+
+//	Clear an array
+	template <class type> void clear( type* a, int N );
 
 #ifdef _DEBUG_
 //	Print debug information

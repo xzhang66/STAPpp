@@ -13,14 +13,17 @@
 
 using namespace std;
 
+//	Constructor
 Bar::Bar()
 {
-	NEN = 2;
-	nodes = new Node*[2];
+	NEN = 2;	// Each element has 2 nodes
+	nodes = new Node*[NEN];
+
 	ElementMaterial = NULL;
 }
 
-void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
+//  Calculate the column height, used with the skyline storage scheme
+void Bar::ColumnHeight(unsigned int* ColumnHeight)
 {
 	vector<int> Freedom;
 
@@ -58,7 +61,7 @@ void Bar::ComputeColumnHeight(unsigned int* ColumnHeight)
 //返回单元刚度阵所占空间大小
 //由于杆单元的单元刚度阵为满阵，所以Matrix的大小为上三角阵的21个元素
 //返回的方式依然为按列存储
-unsigned int Bar::LocalMatrixSpace() { return 21; }
+unsigned int Bar::SizeOfStiffnessMatrix() { return 21; }
 
 //计算单元刚度阵
 void Bar::ElementStiffness(double* Matrix)

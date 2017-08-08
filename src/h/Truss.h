@@ -24,9 +24,9 @@ public:
 
 	virtual void assembly(double* Matrix);
 
-	virtual void ComputeColumnHeight(unsigned int* ColumnHeight);
+	virtual void ColumnHeight(unsigned int* ColumnHeight);
 
-	virtual unsigned int LocalMatrixSpace();
+	virtual unsigned int SizeOfStiffnessMatrix();
 };
 
 // ¸ËµÄ²ÄÁÏ
