@@ -12,6 +12,8 @@
 #include <fstream>
 #include <vector>
 
+#include "Node.h"
+#include "Truss.h"
 #include "Outputter.h"
 #include "Solver.h"
 
@@ -23,77 +25,7 @@ using namespace std;
 template <class type> void clear( type* a, int N );
 
 class FileReader;
-
 class Domain;
-
-/*
-   Material base class which only define one data member
-   All type of material classes should be derived from this base class
-*/
-class Material
-{
-public:
-	double E;  // Young's modulus
-};
-
-//	Node class
-class Node
-{
-public:
-
-//	Maximum number of degrees of freedom per node
-//	For 3D bar and solid elements, NDF = 3. For 3D beam or shell elements NDF = 5 or 6
-	const static unsigned int NDF = 3; 
-
-//	x, y and z coordinates of the node
-	double XYZ[NDF];
-
-//	Boundary code of each degree of freedom of the node
-//		0: The corresponding degree of freedom is active (defined in the global system)
-//		1: The corresponding degree of freedom in nonactive (not defined)
-	int bcode[NDF];
-
-//	Global equation number corresponding to each degree of freedom
-	unsigned int EquationNo[NDF]; 
-
-//	Constructor
-	Node(double X, double Y, double Z);
-};
-
-//	Element base class
-//	All type of element classes should be derived from this base class
-class Element
-{
-protected:
-
-//	Number of nodes per element in this type of element
-	int NEN;
-
-//	Nodes of the element
-	Node** nodes;
-
-//	Material of the element
-	Material* ElementMaterial;
-
-public:
-
-//	Constructor
-	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
-
-//	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
-	virtual void ElementStiffness(double* stiffness) = 0;  
-
-//  Calculate the column height, used with the skyline storage scheme
-	void ColumnHeight(unsigned int* ColumnHeight); 
-
-//	Assemble the element stiffness matrix to the global stiffness matrix
-	void assembly(double* stiffness);
-
-//	Return the size of the element stiffness matrix (stored as an array column by column)
-	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
-
-	friend FileReader;
-};
 
 // Structure LoadData is used to store load data
 struct LoadData

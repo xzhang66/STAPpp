@@ -6,7 +6,7 @@
 /*     http://www.comdyn.cn/                                   */
 /***************************************************************/
 
-#include "FEM.h"
+#include "Domain.h"
 #include "Outputter.h"
 
 #include <iostream>
