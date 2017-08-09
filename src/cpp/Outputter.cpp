@@ -1,5 +1,5 @@
 /***************************************************************/
-/*  FEM++ £ºA C++ finite element method code for teaching      */
+/*  FEM++ : A C++ finite element method code for teaching      */
 /*     Computational Dynamics Laboratory                       */
 /*     School of Aerospace Engineering, Tsinghua University    */
 /*                                                             */
@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include <time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -81,7 +81,12 @@ void Outputter::OutputHeading()
 	struct tm *local = new struct tm;
 	now = time(NULL);
 
-	localtime_s(local, &now);
+//  localtime_r is used only in unix
+    localtime_r(&now, local);
+ 
+//  localtime_s is used only in windows
+//	localtime_s(local, &now);
+    
 	PrintTime(local, cout);
 	PrintTime(local, OutputFile);
 }

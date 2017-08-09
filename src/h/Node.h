@@ -1,5 +1,5 @@
 /***************************************************************/
-/*  FEM++ £ºA C++ finite element method code for teaching      */
+/*  FEM++ : A C++ finite element method code for teaching      */
 /*     Computational Dynamics Laboratory                       */
 /*     School of Aerospace Engineering, Tsinghua University    */
 /*                                                             */
@@ -31,5 +31,5 @@ public:
 	unsigned int EquationNo[NDF]; 
 
 //	Constructor
-	Node(double X, double Y, double Z);
+	Node(double X = 0, double Y = 0, double Z = 0);
 };

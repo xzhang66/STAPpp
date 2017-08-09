@@ -1,5 +1,5 @@
 /***************************************************************/
-/*  FEM++ £ºA C++ finite element method code for teaching      */
+/*  FEM++ : A C++ finite element method code for teaching      */
 /*     Computational Dynamics Laboratory                       */
 /*     School of Aerospace Engineering, Tsinghua University    */
 /*                                                             */

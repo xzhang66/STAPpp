@@ -1,5 +1,5 @@
 /***************************************************************/
-/*  FEM++ £ºA C++ finite element method code for teaching      */
+/*  FEM++ : A C++ finite element method code for teaching      */
 /*     Computational Dynamics Laboratory                       */
 /*     School of Aerospace Engineering, Tsinghua University    */
 /*                                                             */
@@ -20,21 +20,6 @@ template <class type> void clear( type* a, int N )
 	for (int i = 0; i < N; i++)
 		a[i] = 0;
 }
-
-Node::Node(double X = 0, double Y = 0, double Z = 0) 
-{
-	XYZ[0] = X;		// Coordinates of the node
-	XYZ[1] = Y;
-	XYZ[2] = Z;
-
-	bcode[0] = 0;	// Boundary codes
-	bcode[1] = 0;
-	bcode[2] = 0;
-
-	EquationNo[0] = 0;	// Equation numbers 
-	EquationNo[1] = 0;
-	EquationNo[2] = 0;
-};
 
 Domain* Domain::_instance = NULL;
 
@@ -297,15 +282,21 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 void Domain::Info()
 {
 	cout << endl << endl;
-	cout << "**************** Debug Infomation ******************" << endl;
+	cout << "**************** Debug Infomation ******************" << endl << endl;
+    
 	cout << "StiffnessMatrix : " << endl;
-	for (int i = 0; i < DiagonalAddress[NEQ] - 1; i++) 
-		cout << StiffnessMatrix[i] << " ";
-	cout << endl << endl;
+	for (int i = 0; i < DiagonalAddress[NEQ] - 1; i++)
+    {
+        if (i%6 == 0)
+            cout << endl;
+        
+		cout << setw(15) << StiffnessMatrix[i];
+    }
+    cout << endl << endl;
 
 	cout << "Address : " << endl;
 	for (int i = 0; i < NEQ + 1; i++) 
-		cout << DiagonalAddress[i] << " ";
+		cout << setw(8) << DiagonalAddress[i];
 	cout << endl << endl;
 
 	cout << "Matrix : " << endl;
@@ -328,7 +319,7 @@ void Domain::Info()
 			if (j - i - H >= 0) 
 				cout << setw(15) << 0.0;
 			else 
-				cout << setw(15) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1] << "  ";
+				cout << setw(15) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
 		}
 
 		cout << endl;
@@ -338,7 +329,7 @@ void Domain::Info()
 
 	cout << "U : " << endl;
 	for (int I = 0; I < NEQ; I++)
-		cout << Displacement[I] << " ";
+		cout << setw(15) << Displacement[I];
 
 	cout << endl;
 }

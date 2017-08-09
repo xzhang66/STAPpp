@@ -1,5 +1,5 @@
 /***************************************************************/
-/*  FEM++ ：A C++ finite element method code for teaching      */
+/*  FEM++ : A C++ finite element method code for teaching      */
 /*     Computational Dynamics Laboratory                       */
 /*     School of Aerospace Engineering, Tsinghua University    */
 /*                                                             */
@@ -8,7 +8,8 @@
 
 #include "Solver.h"
 
-#include <math.h>
+#include <cmath>
+#include <cfloat>
 #include <iostream>
 
 using namespace std;
@@ -31,7 +32,7 @@ int MAX(int I, int J)
 
 Solver::Solver(Domain* FEMData) : FEMData(FEMData) {};
 
-// LDLT分解
+// LDLT facterization
 void LDLTSolver::LDLT()
 {
 	double* K = FEMData->GetStiffnessMatrix();
@@ -40,22 +41,29 @@ void LDLTSolver::LDLT()
 
 	unsigned int N = FEMData->GetNEQ();
 
-	for (int j = 0; j < N; j++)      //对列循环
+	for (int j = 0; j < N; j++)      // Loop for column
 	{
 		double* Columnj = &K[Address[j] - 1];
 
-		int ColumnNumberj = Address[j + 1] - Address[j];   //此列的非零元素数量
+        // Total number of non-zero elements in column j
+		int ColumnNumberj = Address[j + 1] - Address[j];
 
-		int Heightj = j - ColumnNumberj + 1;               //第j列的最高非零元素位置
-		for (int i = Heightj; i <= j; i++)                 //对所有列的非零元素循环
+        // Row number of the first non-zero element in column j
+		int Heightj = j - ColumnNumberj + 1;
+        
+		for (int i = Heightj; i <= j; i++)  // Loop for all nonzero elements in column j
 		{
-			int ColumnNumberi = Address[i + 1] - Address[i];  //第i列的非零元素数量
+            // Total number of nonzero elements in column i
+			int ColumnNumberi = Address[i + 1] - Address[i];
 			double* Columni = &K[Address[i] - 1];
 			int CurPostion = Address[j] + j - i - 1;
 
 			double C = 0;
-			int Heighti = i - ColumnNumberi + 1;           //第i列的最高非零元素位置
-			int Height = MAX(Heighti, Heightj);            //Height为i,j两列最低的高度
+            
+            // Row number of the first nonzero element in column i
+			int Heighti = i - ColumnNumberi + 1;
+            
+			int Height = MAX(Heighti, Heightj);
 			for (int M = Height; M < i; M++)
 			{
 				int AddressI = Address[i] + i - M - 1;
@@ -66,10 +74,12 @@ void LDLTSolver::LDLT()
 			if (i == j)
 			{
 				K[CurPostion] = K[CurPostion] - C;
-				if (abs(K[CurPostion]) < FLT_MIN)
+				if (fabs(K[CurPostion]) < FLT_MIN)
 				{
-					cout << "在组装第" << i + 1 << "个自由度时，刚度阵不正定" << endl;
-					exit(4);
+					cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
+                         << "    Euqation no = " << i + 1 << endl;
+
+                    exit(4);
 				}
 			}
 			else 
@@ -78,20 +88,20 @@ void LDLTSolver::LDLT()
 	}
 };
 
-// 解方程，计算位移
+// Solve displacement by back substitution
 void LDLTSolver::ComputeDisplacement()
 {
-	double* Force = FEMData->GetForce();        //力向量
-	double* K = FEMData->GetStiffnessMatrix();  //已经做过LDLT分解的刚度阵
-	double* U = FEMData->GetDisplacement();     //位移
+	double* Force = FEMData->GetForce();        //  Force vector
+	double* K = FEMData->GetStiffnessMatrix();  //  Factorized stiffness matrix
+	double* U = FEMData->GetDisplacement();     //  Displacement vector
 
-	unsigned int* Address = FEMData->GetDiagonalAddress();  //对角元素位置
-	unsigned int Freedom = FEMData->GetNEQ(); //自由度数
+	unsigned int* Address = FEMData->GetDiagonalAddress();
+	unsigned int NEQ = FEMData->GetNEQ();
 
-	// L * V = F , V与F占用同样的位置
-	for (int i = 0; i < Freedom; i++)
+	// L * V = F , V and F share same storage
+	for (int i = 0; i < NEQ; i++)
 	{
-		int Height = Address[i + 1] - Address[i]; //第i行非零元素个数
+		int Height = Address[i + 1] - Address[i];
 		int CurPos = Address[i + 1] - 2;
 		for (int M = i - Height + 1; M < i; M++)
 		{
@@ -100,17 +110,17 @@ void LDLTSolver::ComputeDisplacement()
 		}
 	}
 
-	// D * S = V,  S V F占用同样的位置
-	for (int i = 0; i < Freedom; i++)
+	// D * S = V,  S, V and F share same storage
+	for (int i = 0; i < NEQ; i++)
 	{
 		Force[i] = Force[i] / K[Address[i] - 1];
 	}
 
 	// LT * U = V
-	for (int i = Freedom - 1; i >= 0; i--)
+	for (int i = NEQ - 1; i >= 0; i--)
 	{
 		double C = 0;
-		for (int M = Freedom - 1; M > i; M--)
+		for (int M = NEQ - 1; M > i; M--)
 		{
 			int Height = Address[M + 1] - Address[M];
 			if (M - Height + 1 <= i) 
@@ -119,7 +129,7 @@ void LDLTSolver::ComputeDisplacement()
 		Force[i] = Force[i] - C;
 	}
 
-	for (int i = 0; i < Freedom; i++) 
+	for (int i = 0; i < NEQ; i++) 
 		U[i] = Force[i];
 };
 
