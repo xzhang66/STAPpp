@@ -12,33 +12,36 @@
 
 using namespace std;
 
-// 求解器类，提供求解器的唯一接口Solve
-// 实现新的求解器需要继承此类
-// 需要与FEM类的数据存储格式相匹配
-
-class Domain;
-
+//	Base class for a solver
+//	New solver should be derived from this base class, and match the storage scheme 
+//	of the global stiffness matrix employed in Domain class.
 class Solver
 {
 protected:
+
 	Domain* FEMData;
 
 public:
+
 	Solver(Domain* FEMData);
 
 	virtual void Solve() = 0;
 };
 
-// LDLT分解求解器
-// 与skyline存储格式匹配
+//	LDLT solver for skyline storage scheme
 class LDLTSolver : public Solver
 {
 public:
+
+//	Constructor
 	LDLTSolver(Domain* FEMData) :Solver(FEMData) {};
 
-	void LDLT();                // 对总刚度阵执行LDLT分解，分解后存储于原位置 
+//	Perform LDLT factorization of the global stiffness matrix
+	void LDLT();
 
-	void ComputeDisplacement(); // 使用当前的力向量计算位移 
+//	Calculate global nodal displacement vector
+	void ComputeDisplacement(); 
 
+//	Solve
 	virtual void Solve();       // 解FEM问题
 };

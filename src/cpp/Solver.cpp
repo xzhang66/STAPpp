@@ -11,8 +11,6 @@
 #include <math.h>
 #include <iostream>
 
-#define Error 1e-24  // 用来判断刚度阵是否正定
-
 using namespace std;
 
 int MIN(int I, int J)
@@ -68,7 +66,7 @@ void LDLTSolver::LDLT()
 			if (i == j)
 			{
 				K[CurPostion] = K[CurPostion] - C;
-				if (abs(K[CurPostion]) < Error)
+				if (abs(K[CurPostion]) < FLT_MIN)
 				{
 					cout << "在组装第" << i + 1 << "个自由度时，刚度阵不正定" << endl;
 					exit(4);
