@@ -134,11 +134,9 @@ void LDLTSolver::Solve()
 	for (int i = 0; i < FEMData->GetNLCASE(); i++)
 	{
 		FEMData->AssembleForce(i + 1);
-
-		ComputeDisplacement();
-
 		Output->OutputLoadInfo(i + 1);
 
+		ComputeDisplacement();
 		Output->OutputDisplacement();
 	}
 

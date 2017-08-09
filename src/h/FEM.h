@@ -75,25 +75,19 @@ protected:
 //	Material of the element
 	Material* ElementMaterial;
 
-//	Location matrix of the element: The global equation number that corresponding to each element's DOF
-	vector<int> LocationMatrix;
-
 public:
 
 //	Constructor
 	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
 
-//	Generate the location matrix of the element
-	void GetLocationMatrix();
-
 //	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0;  
 
-//	Assemble the element stiffness matrix to the global stiffness matrix
-	virtual void assembly(double* stiffness) = 0;        
-
 //  Calculate the column height, used with the skyline storage scheme
-	virtual void ColumnHeight(unsigned int* ColumnHeight) = 0; 
+	void ColumnHeight(unsigned int* ColumnHeight); 
+
+//	Assemble the element stiffness matrix to the global stiffness matrix
+	void assembly(double* stiffness);
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     

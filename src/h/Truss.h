@@ -24,12 +24,6 @@ public:
 //	Calculate element stiffness matrix
 	virtual void ElementStiffness(double* Matrix);
 
-//	Assemble global stiffness matrix (this should be same for all element type ? to be moved to approriate posion)
-	virtual void assembly(double* Matrix);
-
-//	Calculate column height  (this should be same for all element type ? to be moved to approriate posion)
-	virtual void ColumnHeight(unsigned int* ColumnHeight);
-
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix();
 };

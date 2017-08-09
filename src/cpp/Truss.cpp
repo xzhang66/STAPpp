@@ -22,40 +22,6 @@ Bar::Bar()
 	ElementMaterial = NULL;
 }
 
-//  Calculate the column height, used with the skyline storage scheme
-void Bar::ColumnHeight(unsigned int* ColumnHeight)
-{
-
-//	Obtain the location matrix of the element 
-	GetLocationMatrix();
-
-//	Calculate the column height contributed by this element
-	for (int i = 0; i < NEN*Node::NDF; i++)
-	{
-		int Ilocation = LocationMatrix[i];
-		if (!Ilocation)
-			return;
-
-		for (int j = i + 1; j < NEN*Node::NDF; j++)
-		{
-			int Jlocation = LocationMatrix[j];
-			if (!Jlocation)
-				return;
-
-			// Upper triagular (Ilocation < Jlocation)
-			if (Ilocation >= Jlocation)
-			{
-				int temp = Ilocation;
-				Ilocation = Jlocation;
-				Jlocation = temp;
-			}
-
-			int Height = Jlocation - Ilocation;
-			if (ColumnHeight[Jlocation] < Height) ColumnHeight[Jlocation] = Height;
-		}
-	}
-}
-
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 //	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
 //	has 21 elements
@@ -110,44 +76,4 @@ void Bar::ElementStiffness(double* Matrix)
 	Matrix[18] = -k*DX2[2];
 	Matrix[19] = -k*DX2[4];
 	Matrix[20] = -k*DX2[5];
-}
-
-//	Assemble global stiffness matrix (this should be same for all element type ? to be moved to approriate posion)
-void Bar::assembly(double* Matrix)
-{
-//	Calculate element stiffness matrix
-	ElementStiffness(Matrix);
-
-//	Obtain the location matrix of the element 
-	GetLocationMatrix();
-
-//	Assemble global stiffness matrix
-
-	Domain* FEMData = Domain::Instance();
-	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
-	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
-
-	for (int j = 0; j < NEN*Node::NDF; j++)
-	{
-		int Lj = LocationMatrix[j];	// Global equation number corresponding to jth DOF of the element
-		if (!Lj) 
-			continue;
-
-//		Address of diagonal element of column j in the one dimensional element stiffness matrix
-		int DiagjElement = (j+1)*j/2 + 1;
-
-//		Address of diagonal element of column j in the banded global stiffness matrix
-		int DiagjGlobal = DiagonalAddress[Lj - 1];
-
-		for (int i = 0; i <= j; i++)
-		{
-			int Li = LocationMatrix[i];	// Global equation number corresponding to ith DOF of the element
-			if (!Li) 
-				continue;
-
-			StiffnessMatrix[DiagjGlobal + Lj - Li - 1] += Matrix[DiagjElement + j - i - 1];
-		}
-	}
-
-	return;
 }
