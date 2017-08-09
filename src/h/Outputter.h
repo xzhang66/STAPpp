@@ -13,23 +13,34 @@
 
 using namespace std;
 
-// 输出器文件，使用单例模式，可以在各出进行调用
+// Outputer class for outputing results
 class Outputter
 {
 private:
+
+//	Designed as a single instance class
 	static Outputter* _instance;
 
-	ofstream OutputFile;      //数据文件输出流
+//	Print program logo
+void PrintLogo(ostream& output);
+
+	ofstream OutputFile;		// File stream for output
 	Outputter(string FileName);
 
 public:
+
+//	Constructor
 	static Outputter* Instance(string FileName = " ");
 
-	void OutputLogo();
+//	Output logo and heading 
+	void OutputHeading();
 
+//	Output nodal point data
 	void OutputNodeInfo();
 
-	void OutputLoadInfo(int LoadCase);  //输出第LoadCase个工况的信息
+//	Output load data for load case LoadCase
+	void OutputLoadInfo(int LoadCase); 
 
-	void OutputDisplacement();          //输出位移
+//	Output displacement data
+	void OutputDisplacement();
 };

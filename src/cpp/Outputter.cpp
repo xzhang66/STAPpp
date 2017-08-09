@@ -15,112 +15,111 @@
 
 using namespace std;
 
-// 时间输出函数
-// 可以给定输出流output
-void dsptime(const struct tm * ptm, ostream& output)
+//	Output current time and date
+void PrintTime(const struct tm * ptm, ostream& output)
 {
-	char *pxq[] = { "日","一","二","三","四","五","六" };
-	output << ptm->tm_year + 1900 << "年" << ptm->tm_mon + 1 << "月" << ptm->tm_mday << "日 ";
+	char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August", 
+		             "September", "October", "November", "December"};
+
+	output << endl << "        ";
 	output << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << " ";
-	output << " 星期" << pxq[ptm->tm_wday] << endl;
+	output << month[ptm->tm_mon+1] << " " << ptm->tm_mday << ", " << ptm->tm_year + 1900 << " " 
+		   << weekday[ptm->tm_wday] << endl << endl;
 }
 
 Outputter* Outputter::_instance = NULL;
 
-// 构造函数
+//	Constructor
 Outputter::Outputter(string FileName)
 {
 	OutputFile.open(FileName);
 
 	if (!OutputFile) 
+	{
+		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
 		exit(3);
+	}
 }
 
-// 单例函数
+//	Return the single instance of the class
 Outputter* Outputter::Instance(string FileName)
 {
 	if (!_instance) _instance = new Outputter(FileName);
 	return _instance;
 }
 
-// 打印文件头
-void Outputter::OutputLogo()
+//	Print program logo
+void Outputter::PrintLogo(ostream& output)
 {
-	cout << "***********************************************************" << endl;
-	cout << "xxxxxx  xxxxxx  xxx       xx      xxxxx  xxxxxx   xxxxxx" << endl;
-	cout << "xx      xx      xxxx     xxx    xxx      xx   xx  xx   xx" << endl;
-	cout << "xx      xx      xxxx     x x    xx       xx    xx xx    xx" << endl;
-	cout << "xx      xx      xx x    xx x   xx        xx    xx xx    xx" << endl;
-	cout << "xx      xx      xx xx   xx x   xx        xx    xx xx    xx" << endl;
-	cout << "xxxxxx  xxxxxx  xx xx   x  x   xx        xx   xx  xx   xx" << endl;
-	cout << "xx      xx      xx  xx xx  x   xx        xxxxxx   xxxxxx" << endl;
-	cout << "xx      xx      xx  xx x   x   xx        xx       xx" << endl;
-	cout << "xx      xx      xx   xxx   x   xx        xx       xx" << endl;
-	cout << "xx      xx      xx   xxx   x    xxx   x  xx       xx" << endl;
-	cout << "xx      xxxxxxx xx    x    x      xxxxx  xx       xx" << endl;
-	cout << "***********************************************************" << endl;
-	cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
-
-	OutputFile << "***********************************************************" << endl;
-	OutputFile << "xxxxxx  xxxxxx  xxx       xx      xxxxx  xxxxxx   xxxxxx" << endl;
-	OutputFile << "xx      xx      xxxx     xxx    xxx      xx   xx  xx   xx" << endl;
-	OutputFile << "xx      xx      xxxx     x x    xx       xx    xx xx    xx" << endl;
-	OutputFile << "xx      xx      xx x    xx x   xx        xx    xx xx    xx" << endl;
-	OutputFile << "xx      xx      xx xx   xx x   xx        xx    xx xx    xx" << endl;
-	OutputFile << "xxxxxx  xxxxxx  xx xx   x  x   xx        xx   xx  xx   xx" << endl;
-	OutputFile << "xx      xx      xx  xx xx  x   xx        xxxxxx   xxxxxx" << endl;
-	OutputFile << "xx      xx      xx  xx x   x   xx        xx       xx" << endl;
-	OutputFile << "xx      xx      xx   xxx   x   xx        xx       xx" << endl;
-	OutputFile << "xx      xx      xx   xxx   x    xxx   x  xx       xx" << endl;
-	OutputFile << "xx      xxxxxxx xx    x    x      xxxxx  xx       xx" << endl;
-	OutputFile << "***********************************************************" << endl;
-	OutputFile << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+	output << "***********************************************************" << endl;
+	output << "* xxxxxx  xxxxxx  xxx       xx        x            x      *" << endl;
+	output << "* xx      xx      xxxx     xxx        x            x      *" << endl;
+	output << "* xx      xx      xxxx     x x        x            x      *" << endl;
+	output << "* xx      xx      xx x    xx x        x            x      *" << endl;
+	output << "* xx      xx      xx xx   xx x        x            x      *" << endl;
+	output << "* xxxxxx  xxxxxx  xx xx   x  x   xxxxxxxxxxx  xxxxxxxxxxx *" << endl;
+	output << "* xx      xx      xx  xx xx  x        x            x      *" << endl;
+	output << "* xx      xx      xx  xx x   x        x            x      *" << endl;
+	output << "* xx      xx      xx   xxx   x        x            x      *" << endl;
+	output << "* xx      xx      xx   xxx   x        x            x      *" << endl;
+	output << "* xx      xxxxxxx xx    x    x        x            x      *" << endl;
+	output << "***********************************************************" << endl << endl;
+}
+//	Print program logo
+void Outputter::OutputHeading()
+{
+	PrintLogo(cout);
+	PrintLogo(OutputFile);
 
 	Domain* FEMData = Domain::Instance();
 
 	cout << "TITLE : " << FEMData->Title << endl;
 	OutputFile << "TITLE : " << FEMData->Title << endl;
 
-	time_t nowtime;
+	time_t now;
 	struct tm *local = new struct tm;
-	nowtime = time(NULL);
+	now = time(NULL);
 
-	localtime_s(local, &nowtime);
-	dsptime(local, cout);
-	dsptime(local, OutputFile);
+	localtime_s(local, &now);
+	PrintTime(local, cout);
+	PrintTime(local, OutputFile);
 }
 
-// 打印结点信息
+//	Print nodal data
 void Outputter::OutputNodeInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
 	Node* NodeList = FEMData->NodeList;
 
-	int Page = 30;      // 每页行数
+//	Number of lines printed in each page
+	int Page = 30;
 
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
 
-	cout << "*********************  N O D E **************************" << endl;
-	OutputFile << "*********************  N O D E **************************" << endl;
+	cout << "*********************  N O D E ****************************" << endl;
+	OutputFile << "*********************  N O D E ****************************" << endl;
 
 	for (int i = 0; i < FEMData->NUMNP; i++)
 	{
 		if (i % Page == 0)
 		{
-			cout << "No. ......... X ........... Y ........... Z ..........." << endl;
-			OutputFile << "No. ......... X ........... Y ........... Z ..........." << endl;
+			cout << setw(10) << "Node" << setw(15) << "X" << setw(15) << "Y" << setw(15) << "Z" << endl;
+			OutputFile << setw(10) << "Node" << setw(15) << "X" << setw(15) << "Y" << setw(15) << "Z" << endl;
 		}
 
-		cout << setw(12) << i + 1 << setw(14) << NodeList[i].XYZ[0] << setw(14) << NodeList[i].XYZ[1] 
-		     << setw(14) << NodeList[i].XYZ[2] << endl;
-		OutputFile << setw(12) << i + 1 << setw(14) << NodeList[i].XYZ[0] << setw(14) << NodeList[i].XYZ[1] 
-		           << setw(14) << NodeList[i].XYZ[2] << endl;
+		cout << setw(10) << i + 1 << setw(15) << NodeList[i].XYZ[0] << setw(15) << NodeList[i].XYZ[1] 
+		     << setw(15) << NodeList[i].XYZ[2] << endl;
+		OutputFile << setw(10) << i + 1 << setw(15) << NodeList[i].XYZ[0] << setw(15) << NodeList[i].XYZ[1] 
+		           << setw(15) << NodeList[i].XYZ[2] << endl;
 	}
+	cout << endl;
+	OutputFile << endl;
 }
 
-// 打印载荷信息
+//	Print load data for load case LoadCase
 void Outputter::OutputLoadInfo(int LoadCase)
 {
 	Domain* FEMData = Domain::Instance();
@@ -135,11 +134,11 @@ void Outputter::OutputLoadInfo(int LoadCase)
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
 
-	cout << "****************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
-	OutputFile << "****************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
+	cout << "******************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
+	OutputFile << "******************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
 
-	cout << "No. ...... NUMNP .. DIR ....... ....Force .........." << endl;
-	OutputFile << "No. ...... NUMNP .. DIR ....... ....Force .........." << endl;
+	cout << setw(10) << "Load case" << setw(14) << "Node" << setw(12) << "DOF" << setw(17) << "Load" << endl;
+	OutputFile << setw(10) << "Load case" << setw(14) << "Node" << setw(12) << "DOF" << setw(17) << "Load" << endl;
 
 	for (int i = 0; i < NLOAD[LoadCase - 1]; i++)
 	{
@@ -148,9 +147,11 @@ void Outputter::OutputLoadInfo(int LoadCase)
 		OutputFile << setw(10) << i + 1 << setw(14) << Load[i].node << setw(12) << Load[i].dof 
 			       << setw(17) << Load[i].load << endl;
 	}
+	cout << endl;
+	OutputFile << endl;
 }
 
-// 输出位移
+//	Print nodal displacement
 void Outputter::OutputDisplacement()
 {
 	Domain* FEMData = Domain::Instance();
@@ -171,8 +172,8 @@ void Outputter::OutputDisplacement()
 	{
 		if (i % Page == 0)
 		{
-			cout << "No. ......... X ........... Y ........... Z ..........." << endl;
-			OutputFile << "No. ......... X ........... Y ........... Z ..........." << endl;
+			cout << setw(12) << "Node" << setw(14) << "X" << setw(14) << "Y" << setw(14) << "Z" << endl;
+			OutputFile << setw(12) << "Node" << setw(14) << "X" << setw(14) << "Y" << setw(14) << "Z" << endl;
 		}
 
 		cout << setw(12) << i + 1;

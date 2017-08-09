@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	}
 
 	Outputter* Output = Outputter::Instance(OutFile);
-	Output->OutputLogo();
+	Output->OutputHeading();
 	Output->OutputNodeInfo();
 
 	FEMData->EquationNumber();
