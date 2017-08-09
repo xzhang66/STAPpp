@@ -25,141 +25,129 @@ Bar::Bar()
 //  Calculate the column height, used with the skyline storage scheme
 void Bar::ColumnHeight(unsigned int* ColumnHeight)
 {
-	vector<int> Freedom;
 
-	//存储所有的自由度
-	for (int N = 0; N < 2; N++)
-	{
-		Node* CurNode = nodes[N];
-		for (int D = 0; D < Node::NDF; D++)
-		{
-			if (CurNode->EquationNo[D]) Freedom.push_back(CurNode->EquationNo[D]);
-		}
-	}
+//	Obtain the location matrix of the element 
+	GetLocationMatrix();
 
-	//计算列高
-	//寻找第Freedom[j]列的最高的单元
-	for (int i = 0; i < Freedom.size(); i++)
+//	Calculate the column height contributed by this element
+	for (int i = 0; i < NEN*Node::NDF; i++)
 	{
-		int I = Freedom[i];
-		for (int j = i + 1; j < Freedom.size(); j++)
+		int Ilocation = LocationMatrix[i];
+		if (!Ilocation)
+			return;
+
+		for (int j = i + 1; j < NEN*Node::NDF; j++)
 		{
-			int J = Freedom[j];
-			// 使得I < J
-			if (I >= J)
+			int Jlocation = LocationMatrix[j];
+			if (!Jlocation)
+				return;
+
+			// Upper triagular (Ilocation < Jlocation)
+			if (Ilocation >= Jlocation)
 			{
-				int temp = I;
-				I = J;
-				J = temp;
+				int temp = Ilocation;
+				Ilocation = Jlocation;
+				Jlocation = temp;
 			}
-			int Height = J - I;
-			if (ColumnHeight[J] < Height) ColumnHeight[J] = Height;
+
+			int Height = Jlocation - Ilocation;
+			if (ColumnHeight[Jlocation] < Height) ColumnHeight[Jlocation] = Height;
 		}
 	}
 }
 
-//返回单元刚度阵所占空间大小
-//由于杆单元的单元刚度阵为满阵，所以Matrix的大小为上三角阵的21个元素
-//返回的方式依然为按列存储
+//	Return the size of the element stiffness matrix (stored as an array column by column)
+//	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
+//	has 21 elements
 unsigned int Bar::SizeOfStiffnessMatrix() { return 21; }
 
-//计算单元刚度阵
+//	Calculate element stiffness matrix 
+//	Upper triangular matrix, stored as an array column by colum starting from the diagonal element
 void Bar::ElementStiffness(double* Matrix)
 {
-	for (int i = 0; i < 21; i++) 
-		Matrix[i] = 0;
+	clear(Matrix, SizeOfStiffnessMatrix());
 
-	BarMaterial* CurMaterial = (BarMaterial*)ElementMaterial;
-
-	double k = CurMaterial->Area * CurMaterial->E;
-
-	// 计算杆长
-	int XYZ[3];
-	int XYZ2[6];    //保存XYZ的二次项，分别为X^2, Y^2, Z^2, XY, YZ, XZ
+//	Calculate bar length
+	int DX[3];		//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	for (int i = 0; i < 3; i++)
-	{
-		XYZ[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
-	}	
+		DX[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
 
-	XYZ2[0] = XYZ[0] * XYZ[0];
-	XYZ2[1] = XYZ[1] * XYZ[1];
-	XYZ2[2] = XYZ[2] * XYZ[2];
-	XYZ2[3] = XYZ[0] * XYZ[1];
-	XYZ2[4] = XYZ[1] * XYZ[2];
-	XYZ2[5] = XYZ[0] * XYZ[2];
+	int DX2[6];	//  Quadratic polynomial (dx^2, dy^2, dz^2, dx*dy, dy*dz, dx*dz)
+	DX2[0] = DX[0] * DX[0];
+	DX2[1] = DX[1] * DX[1];
+	DX2[2] = DX[2] * DX[2];
+	DX2[3] = DX[0] * DX[1];
+	DX2[4] = DX[1] * DX[2];
+	DX2[5] = DX[0] * DX[2];
 
-	double L2 = XYZ2[0] + XYZ2[1] + XYZ2[2];
+	double L2 = DX2[0] + DX2[1] + DX2[2];
 	double L = sqrt(L2);
 
-	k = k / L / L2;
+//	Calculate element stiffness matrix
 
-	// 计算刚度阵
-	Matrix[0] = k*XYZ2[0];
-	Matrix[1] = k*XYZ2[1];
-	Matrix[2] = k*XYZ2[3];
-	Matrix[3] = k*XYZ2[2];
-	Matrix[4] = k*XYZ2[4];
-	Matrix[5] = k*XYZ2[5];
-	Matrix[6] = k*XYZ2[0];
-	Matrix[7] = -k*XYZ2[5];
-	Matrix[8] = -k*XYZ2[3];
-	Matrix[9] = -k*XYZ2[0];
-	Matrix[10] = k*XYZ2[1];
-	Matrix[11] = k*XYZ2[3];
-	Matrix[12] = -k*XYZ2[4];
-	Matrix[13] = -k*XYZ2[1];
-	Matrix[14] = -k*XYZ2[3];
-	Matrix[15] = k*XYZ2[2];
-	Matrix[16] = k*XYZ2[4];
-	Matrix[17] = k*XYZ2[5];
-	Matrix[18] = -k*XYZ2[2];
-	Matrix[19] = -k*XYZ2[4];
-	Matrix[20] = -k*XYZ2[5];
+	BarMaterial* material = (BarMaterial*)ElementMaterial;	// Pointer to material of the element
+
+	double k = material->E * material->Area / L / L2;
+
+	Matrix[0] = k*DX2[0];
+	Matrix[1] = k*DX2[1];
+	Matrix[2] = k*DX2[3];
+	Matrix[3] = k*DX2[2];
+	Matrix[4] = k*DX2[4];
+	Matrix[5] = k*DX2[5];
+	Matrix[6] = k*DX2[0];
+	Matrix[7] = -k*DX2[5];
+	Matrix[8] = -k*DX2[3];
+	Matrix[9] = -k*DX2[0];
+	Matrix[10] = k*DX2[1];
+	Matrix[11] = k*DX2[3];
+	Matrix[12] = -k*DX2[4];
+	Matrix[13] = -k*DX2[1];
+	Matrix[14] = -k*DX2[3];
+	Matrix[15] = k*DX2[2];
+	Matrix[16] = k*DX2[4];
+	Matrix[17] = k*DX2[5];
+	Matrix[18] = -k*DX2[2];
+	Matrix[19] = -k*DX2[4];
+	Matrix[20] = -k*DX2[5];
 }
 
-//组装总刚
+//	Assemble global stiffness matrix (this should be same for all element type ? to be moved to approriate posion)
 void Bar::assembly(double* Matrix)
 {
-	//计算单元刚度阵
+//	Calculate element stiffness matrix
 	ElementStiffness(Matrix);
 
-	//组装总刚度阵
-	unsigned int Freedom[6];
-	Freedom[0] = nodes[0]->EquationNo[0];
-	Freedom[1] = nodes[0]->EquationNo[1];
-	Freedom[2] = nodes[0]->EquationNo[2];
-	Freedom[3] = nodes[1]->EquationNo[0];
-	Freedom[4] = nodes[1]->EquationNo[1];
-	Freedom[5] = nodes[1]->EquationNo[2];
+//	Obtain the location matrix of the element 
+	GetLocationMatrix();
 
-	//进行组装
-	int K = 0;   //当前元素在单元刚度阵中的编号
-	int KK = 0;  //当前元素在总刚中的编号
-	int I, J;    //自由度编号
+//	Assemble global stiffness matrix
 
 	Domain* FEMData = Domain::Instance();
-
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
-
 	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
 
-	for (int j = 0; j < 6; j++)
+	for (int j = 0; j < NEN*Node::NDF; j++)
 	{
-		J = Freedom[j];
-		if (!J) continue;
+		int Lj = LocationMatrix[j];	// Global equation number corresponding to jth DOF of the element
+		if (!Lj) 
+			continue;
 
-		K = (1 + j)*j / 2 + 1;  //此列对角元素位置
+//		Address of diagonal element of column j in the one dimensional element stiffness matrix
+		int DiagjElement = (j+1)*j/2 + 1;
 
-		KK = DiagonalAddress[J - 1];
+//		Address of diagonal element of column j in the banded global stiffness matrix
+		int DiagjGlobal = DiagonalAddress[Lj - 1];
 
 		for (int i = 0; i <= j; i++)
 		{
-			I = Freedom[i];
-			if (!I) 
+			int Li = LocationMatrix[i];	// Global equation number corresponding to ith DOF of the element
+			if (!Li) 
 				continue;
 
-			StiffnessMatrix[KK + J - I - 1] += Matrix[K + j - i - 1];
+			StiffnessMatrix[DiagjGlobal + Lj - Li - 1] += Matrix[DiagjElement + j - i - 1];
 		}
 	}
+
 	return;
 }

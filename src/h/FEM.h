@@ -19,6 +19,9 @@
 
 using namespace std;
 
+//	Clear an array
+template <class type> void clear( type* a, int N );
+
 class FileReader;
 
 class Domain;
@@ -64,7 +67,7 @@ class Element
 protected:
 
 //	Number of nodes per element in this type of element
-	unsigned int NEN;
+	int NEN;
 
 //	Nodes of the element
 	Node** nodes;
@@ -72,10 +75,16 @@ protected:
 //	Material of the element
 	Material* ElementMaterial;
 
+//	Location matrix of the element: The global equation number that corresponding to each element's DOF
+	vector<int> LocationMatrix;
+
 public:
 
 //	Constructor
 	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+
+//	Generate the location matrix of the element
+	void GetLocationMatrix();
 
 //	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0;  
@@ -221,9 +230,6 @@ public:
 
 //	Initialize the class data member by reading input data file
 	bool Initial(FileReader* Reader); 
-
-//	Clear an array
-	template <class type> void clear( type* a, int N );
 
 #ifdef _DEBUG_
 //	Print debug information

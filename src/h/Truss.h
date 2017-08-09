@@ -12,27 +12,31 @@
 
 using namespace std;
 
-// 杆单元类
+// Bar element class
 class Bar : public Element
 {
 public:
+
 	Bar();
 
 	friend FileReader;
 
+//	Calculate element stiffness matrix
 	virtual void ElementStiffness(double* Matrix);
 
+//	Assemble global stiffness matrix (this should be same for all element type ? to be moved to approriate posion)
 	virtual void assembly(double* Matrix);
 
+//	Calculate column height  (this should be same for all element type ? to be moved to approriate posion)
 	virtual void ColumnHeight(unsigned int* ColumnHeight);
 
+//	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix();
 };
 
-// 杆的材料
-// 增加了截面积变量
+//	Material class for bar element
 class BarMaterial : public Material
 {
 public:
-	double Area;
+	double Area;	// Sectional area of a bar element
 };

@@ -14,6 +14,13 @@
 
 using namespace std;
 
+//	Clear an array
+template <class type> void clear( type* a, int N )
+{
+	for (int i = 0; i < N; i++)
+		a[i] = 0;
+}
+
 Node::Node(double X = 0, double Y = 0, double Z = 0) 
 {
 	XYZ[0] = X;		// Coordinates of the node
@@ -29,6 +36,13 @@ Node::Node(double X = 0, double Y = 0, double Z = 0)
 	EquationNo[2] = 0;
 };
 
+//	Generate the location matrix of the element
+void Element :: GetLocationMatrix()
+{
+	for (int N = 0; N < NEN; N++)
+		for (int D = 0; D < Node::NDF; D++)
+			LocationMatrix.push_back(nodes[N]->EquationNo[D]);
+}
 
 Domain* Domain::_instance = NULL;
 
@@ -65,13 +79,6 @@ Domain* Domain::Instance()
 		_instance = new Domain;
 	
 	return _instance;
-}
-
-//	Clear an array
-template <class type> void Domain :: clear( type* a, int N )
-{
-	for (int i = 0; i < N; i++)
-		a[i] = 0;
 }
 
 //	Initialize the class data member by reading input data file
