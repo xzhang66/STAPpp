@@ -6,7 +6,6 @@
 /*     http://www.comdyn.cn/                                   */
 /***************************************************************/
 
-#include "Reader.h"
 #include "Domain.h"
 #include "Truss.h"
 #include "Outputter.h"
@@ -28,13 +27,11 @@ int main(int argc, char *argv[])
 	string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
-	FileReader* Reader = new FileReader(InFile);
-
 	Domain* FEMData = Domain::Instance();
 
-	if (!FEMData->Initial(Reader))
+	if (!FEMData->ReadData(InFile))
 	{
-		cout << "Input Failed!" << endl;
+		cout << "*** Error *** Data input failed!" << endl;
 		exit(1);
 	}
 

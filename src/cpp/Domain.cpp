@@ -48,11 +48,11 @@ Domain::Domain()
 	NodeList = NULL;
 	
 	NUMEG = 0;
-	ElementList = NULL;
+	ElementSetList = NULL;
 	
 	NUME = NULL;
 	NUMMAT = NULL;
-	MaterialList = NULL;
+	MaterialSetList = NULL;
 	
 	NLCASE = 0;
 	NLOAD = NULL;
@@ -73,40 +73,29 @@ Domain* Domain::Instance()
 	return _instance;
 }
 
-//	Initialize the class data member by reading input data file
-bool Domain::Initial(FileReader* Reader)
+//	Read domain data from the input data file
+bool Domain::ReadData(string FileName)
 {
-	return Reader->ReadData(this);
-}
-
-// Constructor
-FileReader::FileReader(string Filename)
-{
-	Input.open(Filename);
+	Input.open(FileName);
 
 	if (!Input) 
 	{
-		cout << "*** Error *** File " << Filename << " does not exist !" << endl;
+		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
 		exit(3);
 	}
-}
 
-// Read data from input data file and initialize the data member of FEMData
-bool FileReader::ReadData(Domain* FEMData)
-{
 	int N, LL, NL;
 
 //	Read the heading line
-	Input >> FEMData->Title;
+	Input >> Title;
 
 //	Read the control line
-	Input >> FEMData->NUMNP >> FEMData->NUMEG >> FEMData->NLCASE >> FEMData->MODEX;
+	Input >> NUMNP >> NUMEG >> NLCASE >> MODEX;
 
 //	Read nodal point data lines
-	FEMData->NodeList = new Node[FEMData->NUMNP];
-	Node* NodeList = FEMData->NodeList;
+	NodeList = new Node[NUMNP];
 	
-	for (int i = 0; i < FEMData->NUMNP; i++)
+	for (int i = 0; i < NUMNP; i++)
 	{
 		Input >> N;
 		if (N != i + 1) 
@@ -123,13 +112,10 @@ bool FileReader::ReadData(Domain* FEMData)
 	}
 
 //	Read load data lines
-	FEMData->LoadList = new LoadData*[FEMData->NLCASE];
-	FEMData->NLOAD = new unsigned int[FEMData->NLCASE];
-
-	LoadData** LoadList = FEMData->LoadList;
-	unsigned int* NLOAD = FEMData->NLOAD;
+	LoadList = new LoadData*[NLCASE];
+	NLOAD = new unsigned int[NLCASE];
 	
-	for (int i = 0; i < FEMData->NLCASE; i++)
+	for (int i = 0; i < NLCASE; i++)
 	{
 		Input >> LL >> NL;
 
@@ -152,17 +138,15 @@ bool FileReader::ReadData(Domain* FEMData)
 	}
 
 //	Read element group control line
-	FEMData->NUME = new unsigned int[FEMData->NUMEG];
-	unsigned int* NUME = FEMData->NUME;
+	NUME = new unsigned int[NUMEG];
 	
-	FEMData->ElementList = new Element*[FEMData->NUMEG];
+	ElementSetList = new Element*[NUMEG];
 
-	FEMData->NUMMAT = new unsigned int[FEMData->NUMEG];
-	unsigned int* NUMMAT = FEMData->NUMMAT;
-	FEMData->MaterialList = new Material*[FEMData->NUMEG];
+	NUMMAT = new unsigned int[NUMEG];
+	MaterialSetList = new Material*[NUMEG];
 
 	unsigned int ElementType;
-	for (int i = 0; i < FEMData->NUMEG; i++)
+	for (int i = 0; i < NUMEG; i++)
 	{
 		Input >> ElementType >> NUME[i] >> NUMMAT[i];
 
@@ -173,7 +157,7 @@ bool FileReader::ReadData(Domain* FEMData)
 		{
 //			Read material/section property lines
 			BarMaterial* MaterialGroup = new BarMaterial[NUMMAT[i]];
-			FEMData->MaterialList[i] = MaterialGroup;
+			MaterialSetList[i] = MaterialGroup;
 
 			for (int j = 0; j < NUMMAT[i]; j++)
 			{
@@ -192,8 +176,8 @@ bool FileReader::ReadData(Domain* FEMData)
 			}
 
 //			Read element data lines
-			Bar* ElementList = new Bar[NUME[i]];
-			FEMData->ElementList[i] = ElementList;
+			Bar* ElementGroup = new Bar[NUME[i]];
+			ElementSetList[i] = ElementGroup;
 
 			for (int j = 0; j < NUME[i]; j++)
 			{
@@ -212,9 +196,9 @@ bool FileReader::ReadData(Domain* FEMData)
 				int N1, N2;	// Node number of the left and right node
 
 				Input >> N1 >> N2 >> MSet;
-				ElementList[j].ElementMaterial = &MaterialGroup[MSet - 1];
-				ElementList[j].nodes[0] = &NodeList[N1 - 1];
-				ElementList[j].nodes[1] = &NodeList[N2 - 1];
+				ElementGroup[j].ElementMaterial = &MaterialGroup[MSet - 1];
+				ElementGroup[j].nodes[0] = &NodeList[N1 - 1];
+				ElementGroup[j].nodes[1] = &NodeList[N2 - 1];
 			}
 			break;
 		}
@@ -259,7 +243,7 @@ void Domain::AllocateStiffnessMatrix()
 	for (int EG = 0; EG < NUMEG; EG++)
 	{
 		for (int EN = 0; EN < NUME[EG]; EN++)
-			ElementList[EG][EN].ColumnHeight(DiagonalAddress);
+			ElementSetList[EG][EN].ColumnHeight(DiagonalAddress);
 	}
 
 //	Calculate the address of diagonal elements (Overwrite DiagonalAddress)
@@ -278,11 +262,11 @@ void Domain::AssembleStiffnessMatrix()
 {
 	for (int EG = 0; EG < NUMEG; EG++)
 	{
-		unsigned int size = ElementList[EG][0].SizeOfStiffnessMatrix();
+		unsigned int size = ElementSetList[EG][0].SizeOfStiffnessMatrix();
 		double* Matrix = new double[size];
 
 		for (int E = 0; E < NUME[EG]; E++)
-			ElementList[EG][E].assembly(Matrix, StiffnessMatrix, DiagonalAddress);
+			ElementSetList[EG][E].assembly(Matrix, StiffnessMatrix, DiagonalAddress);
 
 		delete [] Matrix;
 	}

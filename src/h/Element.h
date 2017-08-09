@@ -15,7 +15,7 @@
 
 using namespace std;
 
-class FileReader;
+class Domain;
 
 template <class type> void clear( type* a, int N );	// Clear an array
 
@@ -59,5 +59,5 @@ public:
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
 
-	friend FileReader;
+	friend Domain;
 };

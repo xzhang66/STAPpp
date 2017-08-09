@@ -24,7 +24,6 @@ using namespace std;
 //	Clear an array
 template <class type> void clear( type* a, int N );
 
-class FileReader;
 class Domain;
 
 // Structure LoadData is used to store load data
@@ -35,19 +34,6 @@ struct LoadData
 	double load;	// Magnitude of load
 };
 
-// FileReader : The reader of the input data file
-class FileReader
-{
-private:
-	ifstream Input;
-
-public:
-
-	FileReader(string InputFile);
-
-	virtual bool ReadData(Domain* FEMData);
-};
-
 //	Domain class : Define the problem domain
 //				Only a single instance of Domain class can be created
 class Domain
@@ -56,6 +42,9 @@ private:
 
 //	The instance of the Domain class
 	static Domain* _instance;
+
+//	Input file stream for reading data from input data file
+	ifstream Input;
 
 //	Heading information for use in labeling the outpu
 	string Title; 
@@ -78,14 +67,18 @@ private:
 //	Number of elements in each element group
 	unsigned int* NUME;
 
-//	List of all elements in each element group
-	Element** ElementList;
+//	Element Set List 
+//		ElementSetList[i] - ith element set
+//		ElementSetList[i][j] - jth element in ith set
+	Element** ElementSetList;
 
 //	Number of different sets of material/section properties in each element group
 	unsigned int* NUMMAT;
 
-//	List of all material sets
-	Material** MaterialList;
+//	Material set list
+//		MaterialSetList[i] - ith material set
+//		MaterialSetList[i][j] - jth material in ith set
+	Material** MaterialSetList;
 
 //	Number of load cases
 	unsigned int NLCASE;
@@ -120,7 +113,6 @@ public:
 //	Return pointer to the instance of the Domain class
 	static Domain* Instance();
 
-	friend FileReader;
 	friend Outputter;
 
 //	Return pointer to the banded stiffness matrix
@@ -154,8 +146,8 @@ public:
 //	Assemble the global nodal force vector for load case LoadCase
 	bool AssembleForce(unsigned int LoadCase); 
 
-//	Initialize the class data member by reading input data file
-	bool Initial(FileReader* Reader); 
+//	Read domain data from the input data file
+	bool ReadData(string FileName);
 
 #ifdef _DEBUG_
 //	Print debug information

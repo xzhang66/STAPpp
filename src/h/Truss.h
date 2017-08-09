@@ -19,8 +19,6 @@ public:
 
 	Bar();
 
-	friend FileReader;
-
 //	Calculate element stiffness matrix
 	virtual void ElementStiffness(double* Matrix);
 
