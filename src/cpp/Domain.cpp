@@ -95,6 +95,8 @@ bool Domain::ReadData(string FileName)
 		Input >> NodeList[np].bcode[0] >> NodeList[np].bcode[1] >> NodeList[np].bcode[2]
 			  >> NodeList[np].XYZ[0] >> NodeList[np].XYZ[1] >> NodeList[np].XYZ[2];
 	}
+	
+	CalculateEquationNumber();
 
 //	Read load data lines
 	LoadList = new LoadData*[NLCASE];
@@ -205,7 +207,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
-void Domain::EquationNumber()
+void Domain::CalculateEquationNumber()
 {
 	NEQ = 0;
 	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
@@ -282,12 +284,17 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 	return true;
 }
 
-//	Allocate storage for the one dimensional array storing the global stiffness matrix,
-//	and generate the address of diagonal elements
-void Domain::AllocateStiffnessMatrix()
+//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
+//	and calculate the column heights and address of diagonal elements
+void Domain::AllocateMatrices()
 {
+//	Allocate for global force/displacement vector
 	Force = new double[NEQ];
+
+//	Allocate for column heights 
 	ColumnHeights = new unsigned int[NEQ];
+
+//	Allocate for address of diagonal elements
 	DiagonalAddress = new unsigned int[NEQ + 1];
 
 //	Calculate column heights
@@ -296,6 +303,7 @@ void Domain::AllocateStiffnessMatrix()
 //	Calculate address of diagonal elements in banded matrix
 	CalculateDiagnoalAddress();
 
+//	Allocate for banded global stiffness matrix
 	StiffnessMatrix = new double[DiagonalAddress[NEQ] - 1];
 	clear(StiffnessMatrix, DiagonalAddress[NEQ] - 1);
 }

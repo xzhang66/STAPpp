@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
 	string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
+	Outputter* Output = Outputter::Instance(OutFile);
+
 	Domain* FEMData = Domain::Instance();
 
 	if (!FEMData->ReadData(InFile))
@@ -35,13 +37,10 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	Outputter* Output = Outputter::Instance(OutFile);
 	Output->OutputHeading();
 	Output->OutputNodeInfo();
-
-	FEMData->EquationNumber();
 	
-	FEMData->AllocateStiffnessMatrix();
+	FEMData->AllocateMatrices();
 	
 	FEMData->AssembleStiffnessMatrix();
 	

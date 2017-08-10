@@ -134,7 +134,7 @@ public:
 	inline unsigned int GetNLCASE() { return NLCASE; }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
-	void EquationNumber();
+	void CalculateEquationNumber();
 
 //	Calculate column heights
 	void Domain::CalculateColumnHeights();
@@ -142,9 +142,9 @@ public:
 //	Calculate address of diagonal elements in banded matrix
 	void Domain::CalculateDiagnoalAddress();
 
-//	Allocate storage for the one dimensional array storing the global stiffness matrix,
-//	and generate the address of diagonal elements
-	void AllocateStiffnessMatrix();
+//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
+//	and calculate the column heights and address of diagonal elements
+	void AllocateMatrices();
 
 //	Assemble the banded gloabl stiffness matrix
 	void AssembleStiffnessMatrix();
