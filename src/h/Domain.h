@@ -35,7 +35,7 @@ struct LoadData
 };
 
 //	Domain class : Define the problem domain
-//				Only a single instance of Domain class can be created
+//	Only a single instance of Domain class can be created
 class Domain
 {
 private:
@@ -96,6 +96,9 @@ private:
 //	skyline of the global stiffness matrix. 
 	double* StiffnessMatrix;
 
+//	Column heights
+	unsigned int* ColumnHeights;
+
 //	Address of diagonal elements in banded stiffness matrix
 	unsigned int* DiagonalAddress;
 
@@ -136,6 +139,12 @@ public:
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
 	void EquationNumber();
 
+//	Calculate column heights
+	void Domain::CalculateColumnHeights();
+
+//	Calculate address of diagonal elements in banded matrix
+	void Domain::CalculateDiagnoalAddress();
+
 //	Allocate storage for the one dimensional array storing the global stiffness matrix,
 //	and generate the address of diagonal elements
 	void AllocateStiffnessMatrix();
@@ -148,6 +157,9 @@ public:
 
 //	Read domain data from the input data file
 	bool ReadData(string FileName);
+
+//	Read bar element data from the input data file
+	bool ReadBarElementData(int EleGrp);
 
 #ifdef _DEBUG_
 //	Print debug information

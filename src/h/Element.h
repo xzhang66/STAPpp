@@ -48,7 +48,7 @@ public:
 	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
 
 //  Calculate the column height, used with the skyline storage scheme
-	void ColumnHeight(unsigned int* ColumnHeight); 
+	void CalculateColumnHeight(unsigned int* ColumnHeight); 
 
 //	Assemble the element stiffness matrix to the global stiffness matrix
 	void assembly(double* Matrix, double* StiffnessMatrix, unsigned int* DiagonalAddress);
@@ -59,5 +59,5 @@ public:
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
 
-	friend Domain;
+	friend Domain;	// Allow class Domain to access its protected member
 };

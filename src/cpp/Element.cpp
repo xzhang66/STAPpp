@@ -9,7 +9,7 @@
 #include "Element.h"
 
 //  Calculate the column height, used with the skyline storage scheme
-void Element::ColumnHeight(unsigned int* ColumnHeight)
+void Element::CalculateColumnHeight(unsigned int* ColumnHeight)
 {
 //	Obtain the location matrix: the global equation number that corresponding to each DOF of the element
 	vector<int> LocationMatrix;
@@ -32,11 +32,7 @@ void Element::ColumnHeight(unsigned int* ColumnHeight)
 
 			// Upper triangular part (row number <= column number)
 			if (Ilocation > Jlocation)
-			{
-				int temp = Ilocation;
-				Ilocation = Jlocation;
-				Jlocation = temp;
-			}
+				swap(Ilocation, Jlocation);
 
 			int Height = Jlocation - Ilocation;
 			if (ColumnHeight[Jlocation] < Height) ColumnHeight[Jlocation] = Height;
@@ -44,7 +40,7 @@ void Element::ColumnHeight(unsigned int* ColumnHeight)
 	}
 }
 
-//	Assemble global stiffness matrix (this should be same for all element type ? to be moved to approriate posion)
+//	Assemble the banded global stiffness matrix (skyline storage scheme)
 void Element::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* DiagonalAddress)
 {
 //	Calculate element stiffness matrix
