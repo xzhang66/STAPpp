@@ -163,8 +163,19 @@ public:
 	friend Outputter;
 
 #ifdef _DEBUG_
-//	Print debug information
-	void Info(); 
+
+//	Print banded and full stiffness matrix for debuging
+	void PrintStiffnessMatrix();
+
+//	Print address of diagonal elements for debuging
+	void PrintDiagonalAddress();
+
+//	Print column heights for debuging
+	void PrintColumnHeights();
+
+//	Print displacement vector
+	void PrintDisplacement(int loadcase);
+
 #endif
 
 };

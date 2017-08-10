@@ -6,37 +6,40 @@
 /*     http://www.comdyn.cn/                                   */
 /***************************************************************/
 
+#include <algorithm>
+
 #include "Element.h"
 
 //  Calculate the column height, used with the skyline storage scheme
 void Element::CalculateColumnHeight(unsigned int* ColumnHeight)
 {
 //	Obtain the location matrix: the global equation number that corresponding to each DOF of the element
+//	Caution:  Equation number is numbered from 1 !
 	vector<int> LocationMatrix;
+
 	for (int N = 0; N < NEN; N++)
 		for (int D = 0; D < Node::NDF; D++)
-			LocationMatrix.push_back(nodes[N]->bcode[D]);
+			if (nodes[N]->bcode[D])
+				LocationMatrix.push_back(nodes[N]->bcode[D]);
+
+#ifdef _DEBUG_
+//	List location matrix
+	for (int i = 0; i < LocationMatrix.size(); i++)
+		cout <<	LocationMatrix[i] << " ";
+	cout << endl;
+#endif
+
+	int nfirstrow = *std::min_element(LocationMatrix.begin(), LocationMatrix.end());
 
 //	Calculate the column height contributed by this element
 	for (int i = 0; i < LocationMatrix.size(); i++)
 	{
-		int Ilocation = LocationMatrix[i];
-		if (!Ilocation)
+		int column = LocationMatrix[i];
+		if (!column)
 			continue;
 
-		for (int j = i + 1; j < LocationMatrix.size(); j++)
-		{
-			int Jlocation = LocationMatrix[j];
-			if (!Jlocation)
-				continue;
-
-			// Upper triangular part (row number <= column number)
-			if (Ilocation > Jlocation)
-				swap(Ilocation, Jlocation);
-
-			int Height = Jlocation - Ilocation;
-			if (ColumnHeight[Jlocation] < Height) ColumnHeight[Jlocation] = Height;
-		}
+		int Height = column - nfirstrow;
+		if (ColumnHeight[column-1] < Height) ColumnHeight[column-1] = Height;
 	}
 }
 

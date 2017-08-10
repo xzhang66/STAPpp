@@ -145,6 +145,11 @@ void LDLTSolver::Solve()
 		Output->OutputLoadInfo(i + 1);
 
 		ComputeDisplacement();
+	
+#ifdef _DEBUG_
+		FEMData->PrintDisplacement(i);
+#endif
+
 		Output->OutputDisplacement();
 	}
 

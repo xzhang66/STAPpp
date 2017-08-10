@@ -47,10 +47,6 @@ int main(int argc, char *argv[])
 	
 	LDLTSolver* S = new LDLTSolver(FEMData);
 	S->Solve();
-	
-#ifdef _DEBUG_
-	FEMData->Info();
-#endif
 
 	return 0;
 }
