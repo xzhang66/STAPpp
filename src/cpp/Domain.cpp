@@ -204,11 +204,11 @@ void Domain::EquationNumber()
 		for (int j = 0; j < Node::NDF; j++)
 		{
 			if (NodeList[i].bcode[j]) 
-				NodeList[i].EquationNo[j] = 0;
+				NodeList[i].bcode[j] = 0;
 			else
 			{
 				NEQ++;
-				NodeList[i].EquationNo[j] = NEQ;
+				NodeList[i].bcode[j] = NEQ;
 			}
 		}
 	}
@@ -269,7 +269,7 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 
 	for (int FN = 0; FN < NLOAD[LoadCase - 1]; FN++)
 	{
-		int dof = NodeList[Load[FN].node - 1].EquationNo[Load[FN].dof - 1];
+		int dof = NodeList[Load[FN].node - 1].bcode[Load[FN].dof - 1];
 		Force[dof - 1] += Load[FN].load;
 	}
 

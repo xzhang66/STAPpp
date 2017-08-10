@@ -18,8 +18,4 @@ Node::Node(double X, double Y, double Z)
     bcode[0] = 0;	// Boundary codes
     bcode[1] = 0;
     bcode[2] = 0;
-    
-    EquationNo[0] = 0;	// Equation numbers
-    EquationNo[1] = 0;
-    EquationNo[2] = 0;
 };

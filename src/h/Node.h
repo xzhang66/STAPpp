@@ -25,10 +25,9 @@ public:
 //	Boundary code of each degree of freedom of the node
 //		0: The corresponding degree of freedom is active (defined in the global system)
 //		1: The corresponding degree of freedom in nonactive (not defined)
+//	After call Domain::EquationNumber(), bcode stores the global equation number 
+//	corresponding to each degree of freedom of the node
 	int bcode[NDF];
-
-//	Global equation number corresponding to each degree of freedom
-	unsigned int EquationNo[NDF]; 
 
 //	Constructor
 	Node(double X = 0, double Y = 0, double Z = 0);

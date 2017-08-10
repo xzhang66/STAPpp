@@ -186,15 +186,15 @@ void Outputter::OutputDisplacement()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (NodeList[i].EquationNo[j] == 0)
+			if (NodeList[i].bcode[j] == 0)
 			{
 				cout << setw(14) << 0.0;
 				OutputFile << setw(14) << 0.0;
 			}
 			else
 			{
-				cout << setw(14) << Displacement[NodeList[i].EquationNo[j] - 1];
-				OutputFile << setw(14) << Displacement[NodeList[i].EquationNo[j] - 1];
+				cout << setw(14) << Displacement[NodeList[i].bcode[j] - 1];
+				OutputFile << setw(14) << Displacement[NodeList[i].bcode[j] - 1];
 			}
 		}
 
