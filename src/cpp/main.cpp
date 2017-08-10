@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 	Outputter* Output = Outputter::Instance(OutFile);
 
 	Domain* FEMData = Domain::Instance();
+	FEMData->SetOutputFile(Output->GetOutputFile());
 
 	if (!FEMData->ReadData(InFile))
 	{

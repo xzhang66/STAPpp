@@ -17,8 +17,6 @@
 #include "Outputter.h"
 #include "Solver.h"
 
-#define _DEBUG_
-
 using namespace std;
 
 //	Clear an array
@@ -45,6 +43,9 @@ private:
 
 //	Input file stream for reading data from input data file
 	ifstream Input;
+
+//	File stream for output (obtained from Outputter class)
+	ofstream* OutputFile;
 
 //	Heading information for use in labeling the outpu
 	string Title; 
@@ -113,7 +114,8 @@ public:
 //	Return pointer to the instance of the Domain class
 	static Domain* Instance();
 
-	friend Outputter;
+//	Set Output file stream
+	inline void SetOutputFile(ofstream* ofs) { OutputFile = ofs; }
 
 //	Return pointer to the banded stiffness matrix
 	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
@@ -157,6 +159,8 @@ public:
 
 //	Read bar element data from the input data file
 	bool ReadBarElementData(int EleGrp);
+
+	friend Outputter;
 
 #ifdef _DEBUG_
 //	Print debug information

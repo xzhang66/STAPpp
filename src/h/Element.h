@@ -8,12 +8,14 @@
 
 #pragma once
 
+using namespace std;
+
 #include <stddef.h>
 #include <vector>
+#include <string>
+#include <iostream>
 
 #include "Node.h"
-
-using namespace std;
 
 class Domain;
 

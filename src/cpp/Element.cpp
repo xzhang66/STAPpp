@@ -51,7 +51,7 @@ void Element::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* Di
 	for (int i=0; i<NEN; i++)
 		for (int j=0; j<Node::NDF; j++)
 			LocationMatrix.push_back(nodes[i]->bcode[j]);
-
+	
 //	Assemble global stiffness matrix
 	for (int j = 0; j < LocationMatrix.size(); j++)
 	{

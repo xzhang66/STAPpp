@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define _DEBUG_
+
 //	Node class
 class Node
 {

@@ -233,6 +233,26 @@ void Domain::CalculateColumnHeights()
 	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
 		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
 			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
+
+#ifdef _DEBUG_
+	cout << "********************* Column Heights ***********************" << endl;
+	*OutputFile << "********************* Column Heights ***********************" << endl;
+
+	for (int col = 0; col < NEQ; col++)
+	{
+		if (col+1 % 10 == 0)
+		{
+			cout << endl;
+			*OutputFile << endl;
+		}
+
+		cout << setw(8) << ColumnHeights[col];
+		*OutputFile << setw(8) << ColumnHeights[col];
+	}
+	cout << endl;
+	*OutputFile << endl;
+#endif
+
 }
 
 //	Calculate address of diagonal elements in banded matrix
@@ -245,6 +265,26 @@ void Domain::CalculateDiagnoalAddress()
 	DiagonalAddress[0] = 1;
 	for (int col = 1; col <= NEQ; col++)
 		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
+
+#ifdef _DEBUG_
+	cout << "********************* Address of Diagonal Element ***********************" << endl;
+	*OutputFile << "********************* Address of Diagonal Element ***********************" << endl;
+
+	for (int col = 0; col <= NEQ; col++)
+	{
+		if (col+1 % 10 == 0)
+		{
+			cout << endl;
+			*OutputFile << endl;
+		}
+
+		cout << setw(8) << DiagonalAddress[col];
+		*OutputFile << setw(8) << DiagonalAddress[col];
+	}
+	cout << endl;
+	*OutputFile << endl;
+#endif
+
 }
 
 //	Assemble the banded gloabl stiffness matrix
@@ -262,6 +302,29 @@ void Domain::AssembleStiffnessMatrix()
 
 		delete [] Matrix;
 	}
+
+#ifdef _DEBUG_
+	cout << "********************* Banded stiffness matrix ***********************" << endl;
+	*OutputFile << "********************* Banded stiffness matrix ***********************" << endl;
+
+	cout << setiosflags(ios::scientific) <<setprecision(5);
+	*OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+
+	for (int i = 0; i <= DiagonalAddress[NEQ]; i++)
+	{
+		if (i+1 % 10 == 0)
+		{
+			cout << endl;
+			*OutputFile << endl;
+		}
+
+		cout << setw(14) << StiffnessMatrix[i];
+		*OutputFile << setw(14) << StiffnessMatrix[i];
+	}
+	cout << endl;
+	*OutputFile << endl;
+#endif
+
 }
 
 //	Assemble the global nodal force vector for load case LoadCase
@@ -316,7 +379,7 @@ void Domain::Info()
 	cout << endl << endl;
 	cout << "**************** Debug Infomation ******************" << endl << endl;
     
-	cout << "StiffnessMatrix : " << endl;
+	cout << "Banded global stiffness matrix : " << endl;
 	for (int i = 0; i < DiagonalAddress[NEQ] - 1; i++)
     {
         if (i%6 == 0)
@@ -326,7 +389,7 @@ void Domain::Info()
     }
     cout << endl << endl;
 
-	cout << "Address : " << endl;
+	cout << "Address of diagonal element in the banded matrix: " << endl;
 	for (int i = 0; i < NEQ + 1; i++) 
 		cout << setw(8) << DiagonalAddress[i];
 	cout << endl << endl;
@@ -359,7 +422,7 @@ void Domain::Info()
 
 	cout << endl;
 
-	cout << "U : " << endl;
+	cout << "Displacement  vector " << endl;
 	for (int I = 0; I < NEQ; I++)
 		cout << setw(15) << Force[I];
 
