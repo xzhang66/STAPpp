@@ -81,12 +81,12 @@ void Outputter::OutputHeading()
 	struct tm *local = new struct tm;
 	now = time(NULL);
 
-//  localtime_r is used only in unix
-    localtime_r(&now, local);
- 
-//  localtime_s is used only in windows
-//	localtime_s(local, &now);
-    
+#if defined(WIN32) 
+	localtime_s(local, &now);	//  localtime_s is used only in windows
+#else
+    localtime_r(&now, local);	//  localtime_r is used only in unix
+#endif
+
 	PrintTime(local, cout);
 	PrintTime(local, OutputFile);
 }
