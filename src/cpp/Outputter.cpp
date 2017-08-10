@@ -165,7 +165,7 @@ void Outputter::OutputDisplacement()
 
 	Node* NodeList = FEMData->NodeList;
 
-	double* Displacement = FEMData->Displacement;
+	double* Displacement = FEMData->GetDisplacement();
 
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);

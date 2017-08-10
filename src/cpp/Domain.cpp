@@ -45,7 +45,6 @@ Domain::Domain()
 	
 	NEQ = 0;
 	StiffnessMatrix = NULL;
-	Displacement = NULL;
 	Force = NULL; 
 }
 
@@ -287,7 +286,6 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 //	and generate the address of diagonal elements
 void Domain::AllocateStiffnessMatrix()
 {
-	Displacement = new double[NEQ];
 	Force = new double[NEQ];
 	ColumnHeights = new unsigned int[NEQ];
 	DiagonalAddress = new unsigned int[NEQ + 1];
@@ -355,7 +353,7 @@ void Domain::Info()
 
 	cout << "U : " << endl;
 	for (int I = 0; I < NEQ; I++)
-		cout << setw(15) << Displacement[I];
+		cout << setw(15) << Force[I];
 
 	cout << endl;
 }

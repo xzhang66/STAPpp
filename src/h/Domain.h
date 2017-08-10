@@ -102,10 +102,7 @@ private:
 //	Address of diagonal elements in banded stiffness matrix
 	unsigned int* DiagonalAddress;
 
-//	Global nodal displacement vector
-	double* Displacement;
-
-//	Global nodal force vector
+//	Global nodal force/displacement vector
 	double* Force;
 
 //	Constructor
@@ -131,7 +128,7 @@ public:
 	inline double* GetForce() { return Force; }
 
 //	Return pointer to the global nodal displacement vector
-	inline double* GetDisplacement() { return Displacement; }
+	inline double* GetDisplacement() { return Force; }
 
 //	Return the total number of load cases
 	inline unsigned int GetNLCASE() { return NLCASE; }
