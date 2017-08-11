@@ -126,14 +126,8 @@ public:
 //	Read element data
 	bool ReadElements();
 
-//	Return column heights
-	inline unsigned int* GetColumnHeights() { return ColumnHeights; }
-
-//	Return pointer to the banded stiffness matrix
-	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
-
-//	Return pointer to the array storing the address of diagonal elements
-	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
+//	Return solution mode
+	inline int GetMODEX() { return MODEX; }
 
 //	Return the title of problem
 	inline string GetTitle() { return Title; }
@@ -146,6 +140,21 @@ public:
 
 //	Return the node list
 	inline Node* GetNodeList() { return NodeList; }
+
+//	Return the number of elements in each element group
+	inline unsigned int* GetNUME() { return NUME; }
+
+//	Return total number of element groups
+	inline unsigned int GetNUMEG() { return NUMEG; }
+
+//	Return element Set List 
+	inline Element** GetElementSetList() { return ElementSetList; }
+
+//	Return number of different sets of material/section properties in each element group
+	inline unsigned int* GetNUMMAT() { return NUMMAT; }
+
+//	Return material set list
+	inline Material** GetMaterialSetList() { return MaterialSetList; }
 
 //	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }
@@ -161,6 +170,15 @@ public:
 
 //	Return the list of loads in each load case
 	inline LoadData** GetLoadList() { return LoadList; }
+
+//	Return column heights
+	inline unsigned int* GetColumnHeights() { return ColumnHeights; }
+
+//	Return pointer to the banded stiffness matrix
+	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
+
+//	Return pointer to the array storing the address of diagonal elements
+	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
 	void CalculateEquationNumber();

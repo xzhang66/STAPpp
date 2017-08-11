@@ -34,11 +34,11 @@ protected:
 
 public:
 
-//	Return the single instance of the class
-	static Outputter* Instance(string FileName = " ");
-
 //	Return pointer to the output file stream
 	inline ofstream* GetOutputFile() { return &OutputFile; }
+
+//	Return the single instance of the class
+	static Outputter* Instance(string FileName = " ");
 
 //	Output current time and date
 	void PrintTime(const struct tm * ptm, ostream& output);
@@ -48,6 +48,12 @@ public:
 
 //	Output nodal point data
 	void OutputNodeInfo();
+
+//	Output equation numbers
+	void Outputter::OutputEquationNumber();
+
+//	Output element data
+	void OutputElementInfo();
 
 //	Output load data for load case LoadCase
 	void OutputLoadInfo(int LoadCase); 

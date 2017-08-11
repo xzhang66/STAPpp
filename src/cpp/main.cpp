@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 	string OutFile = filename + ".out";
 
 	Outputter* Output = Outputter::Instance(OutFile);
+	Output->OutputHeading();
 
 	Domain* FEMData = Domain::Instance();
 	FEMData->SetOutputFile(Output->GetOutputFile());
@@ -38,8 +39,10 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	Output->OutputHeading();
 	Output->OutputNodeInfo();
+
+	FEMData->CalculateEquationNumber();
+	Output->OutputEquationNumber();
 	
 	FEMData->AllocateMatrices();
 	

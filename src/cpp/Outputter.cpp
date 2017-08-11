@@ -20,12 +20,12 @@ void Outputter::PrintTime(const struct tm * ptm, ostream& output)
 {
 	char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August", 
-		             "September", "October", "November", "December"};
+		               "September", "October", "November", "December"};
 
-	output << endl << "        ";
-	output << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << " ";
-	output << month[ptm->tm_mon+1] << " " << ptm->tm_mday << ", " << ptm->tm_year + 1900 << " " 
-		   << weekday[ptm->tm_wday] << endl << endl;
+	output << "        (";
+	output << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << " on ";
+	output << month[ptm->tm_mon+1] << " " << ptm->tm_mday << ", " << ptm->tm_year + 1900 << ", " 
+		   << weekday[ptm->tm_wday] << ")" << endl << endl;
 }
 
 Outputter* Outputter::_instance = NULL;
@@ -98,30 +98,126 @@ void Outputter::OutputNodeInfo()
 
 	Node* NodeList = FEMData->GetNodeList();
 
+	cout << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
+	OutputFile << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
+
 //	Number of lines printed in each page
 	int Page = 30;
 
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
 
-	cout << "*********************  N O D E ****************************" << endl;
-	OutputFile << "*********************  N O D E ****************************" << endl;
+	cout << "*********************  Nodal Point Data ****************************" << endl;
+	OutputFile << "*********************  Nodal Point Data ****************************" << endl;
 
-	for (int i = 0; i < FEMData->GetNUMNP(); i++)
+	int NUMNP = FEMData->GetNUMNP();
+	int NUMEG = FEMData->GetNUMEG();
+	int NLCASE = FEMData->GetNLCASE();
+	int MODEX = FEMData->GetMODEX();
+
+	cout << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
+	cout << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
+	cout << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
+	cout << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
+	cout << "         EQ.0, DATA CHECK" 
+		 << "         EQ.1, EXECUTION" << endl << endl;
+
+	OutputFile << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
+	OutputFile << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
+	OutputFile << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
+	OutputFile << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
+	OutputFile << "         EQ.0, DATA CHECK" 
+			   << "         EQ.1, EXECUTION" << endl << endl;
+
+	cout << " N O D A L   P O I N T   D A T A" << endl << endl;
+	cout << "    NODE       BOUNDARY                         NODAL POINT" << endl
+		 << "   NUMBER  CONDITION  CODES                     COORDINATES" << endl;
+	OutputFile << " N O D A L   P O I N T   D A T A" << endl << endl;
+	OutputFile << "    NODE       BOUNDARY                         NODAL POINT" << endl
+			   << "   NUMBER  CONDITION CODES                      COORDINATES" << endl;
+ 
+	for (int i = 0; i < NUMNP; i++)
 	{
-		if (i % Page == 0)
-		{
-			cout << setw(10) << "Node" << setw(15) << "X" << setw(15) << "Y" << setw(15) << "Z" << endl;
-			OutputFile << setw(10) << "Node" << setw(15) << "X" << setw(15) << "Y" << setw(15) << "Z" << endl;
-		}
-
-		cout << setw(10) << i + 1 << setw(15) << NodeList[i].XYZ[0] << setw(15) << NodeList[i].XYZ[1] 
-		     << setw(15) << NodeList[i].XYZ[2] << endl;
-		OutputFile << setw(10) << i + 1 << setw(15) << NodeList[i].XYZ[0] << setw(15) << NodeList[i].XYZ[1] 
-		           << setw(15) << NodeList[i].XYZ[2] << endl;
+		Node node = NodeList[i];
+		cout << setw(9) << i + 1 << setw(5) << node.bcode[0] << setw(5) << node.bcode[1] << setw(5) << node.bcode[2]
+			 << setw(18) << node.XYZ[0] << setw(15) << node.XYZ[1] << setw(15) << node.XYZ[2] << endl;
+		OutputFile << setw(9) << i + 1 << setw(5) << node.bcode[0] << setw(5) << node.bcode[1] << setw(5) << node.bcode[2]
+				   << setw(18) << node.XYZ[0] << setw(15) << node.XYZ[1] << setw(15) << node.XYZ[2] << endl;
 	}
+
 	cout << endl;
 	OutputFile << endl;
+}
+
+//	Output equation numbers
+void Outputter::OutputEquationNumber()
+{
+	Domain* FEMData = Domain::Instance();
+	int NUMNP = FEMData->GetNUMNP();
+
+	Node* NodeList = FEMData->GetNodeList();
+
+	cout << " EQUATION NUMBERS" << endl << endl;
+	cout << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
+	cout << "        N           X    Y    Z" << endl;
+
+	OutputFile << " EQUATION NUMBERS" << endl << endl;
+	OutputFile << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
+	OutputFile << "        N           X    Y    Z" << endl;
+
+	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
+	{
+		cout << setw(9) << np+1 << "       ";
+		OutputFile << setw(9) << np+1 << "       ";
+
+		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
+		{
+			cout << setw(5) << NodeList[np].bcode[dof];
+			OutputFile << setw(5) << NodeList[np].bcode[dof];
+		}
+
+		cout << endl;
+		OutputFile << endl;
+	}
+
+	cout << endl;
+	OutputFile << endl;
+}
+
+//	Output element data
+void Outputter::OutputElementInfo()
+{
+//	Print element group control line
+
+	Domain* FEMData = Domain::Instance();
+
+	unsigned int NUMEG = FEMData->GetNUMEG();
+	unsigned int* NUME = FEMData->GetNUME();
+	Element** ElementSetList = FEMData->GetElementSetList();
+
+	unsigned int* NUMMAT = FEMData->GetNUMMAT();
+	Material** MaterialSetList = FEMData->GetMaterialSetList();
+
+	cout << "*********************  E L M E N T  ****************************" << endl;
+	OutputFile << "*********************  E L M E N T ****************************" << endl;
+
+	unsigned int ElementType;
+	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	{
+/*		cout << 
+		Input >> ElementType >> NUME[EleGrp] >> NUMMAT[EleGrp];
+
+//		Will try to move to element class
+		switch (ElementType)
+		{
+		case 1:	// Bar element
+			ReadBarElementData(EleGrp);
+			break;
+
+		default:
+			return false;
+		} */
+	}
 }
 
 //	Print load data for load case LoadCase

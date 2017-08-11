@@ -110,8 +110,6 @@ bool Domain::ReadNodalPoints()
 		Input >> NodeList[np].bcode[0] >> NodeList[np].bcode[1] >> NodeList[np].bcode[2]
 			  >> NodeList[np].XYZ[0] >> NodeList[np].XYZ[1] >> NodeList[np].XYZ[2];
 	}
-	
-	CalculateEquationNumber();
 }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
