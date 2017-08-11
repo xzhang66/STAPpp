@@ -74,6 +74,21 @@ bool Domain::ReadData(string FileName)
 //	Read the control line
 	Input >> NUMNP >> NUMEG >> NLCASE >> MODEX;
 
+//	Read nodal point data
+	ReadNodalPoints();
+
+//	Read load data
+	ReadLoadCases();
+
+//	Read element data
+	ReadElements();
+
+}
+
+//	Read nodal point data
+bool Domain::ReadNodalPoints()
+{
+
 //	Read nodal point data lines
 	NodeList = new Node[NUMNP];
 	
@@ -97,6 +112,30 @@ bool Domain::ReadData(string FileName)
 	}
 	
 	CalculateEquationNumber();
+}
+
+//	Calculate global equation numbers corresponding to every degree of freedom of each node
+void Domain::CalculateEquationNumber()
+{
+	NEQ = 0;
+	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
+	{
+		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
+		{
+			if (NodeList[np].bcode[dof]) 
+				NodeList[np].bcode[dof] = 0;
+			else
+			{
+				NEQ++;
+				NodeList[np].bcode[dof] = NEQ;
+			}
+		}
+	}
+}
+
+//	Read load case data
+bool Domain::ReadLoadCases()
+{
 
 //	Read load data lines
 	LoadList = new LoadData*[NLCASE];
@@ -125,6 +164,11 @@ bool Domain::ReadData(string FileName)
 		for (int load = 0; load < NLOAD[lcase]; load++)
 			Input >>LoadList[lcase][load].node >> LoadList[lcase][load].dof >> LoadList[lcase][load].load;
 	}
+}
+
+// Read element data
+bool Domain::ReadElements()
+{
 
 //	Read element group control line
 	NUME = new unsigned int[NUMEG];
@@ -203,25 +247,6 @@ bool Domain::ReadBarElementData(int EleGrp)
 		ElementGroup[Ele].ElementMaterial = &MaterialGroup[MSet - 1];
 		ElementGroup[Ele].nodes[0] = &NodeList[N1 - 1];
 		ElementGroup[Ele].nodes[1] = &NodeList[N2 - 1];
-	}
-}
-
-//	Calculate global equation numbers corresponding to every degree of freedom of each node
-void Domain::CalculateEquationNumber()
-{
-	NEQ = 0;
-	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
-	{
-		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
-		{
-			if (NodeList[np].bcode[dof]) 
-				NodeList[np].bcode[dof] = 0;
-			else
-			{
-				NEQ++;
-				NodeList[np].bcode[dof] = NEQ;
-			}
-		}
 	}
 }
 

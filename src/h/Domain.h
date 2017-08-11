@@ -117,6 +117,15 @@ public:
 //	Set Output file stream
 	inline void SetOutputFile(ofstream* ofs) { OutputFile = ofs; }
 
+//	Read nodal point data
+	bool ReadNodalPoints();
+
+//	Read load case data
+	bool ReadLoadCases();
+
+//	Read element data
+	bool ReadElements();
+
 //	Return pointer to the banded stiffness matrix
 	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
 
