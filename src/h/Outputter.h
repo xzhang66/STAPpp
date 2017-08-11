@@ -55,6 +55,9 @@ public:
 //	Output element data
 	void OutputElementInfo();
 
+//	Output bar element data
+	void PrintBarElementData(int EleGrp);
+
 //	Output load data for load case LoadCase
 	void OutputLoadInfo(int LoadCase); 
 

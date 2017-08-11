@@ -65,6 +65,9 @@ private:
 //	collection of elements with same type
 	unsigned int NUMEG;
 
+//	Element type of each group
+	unsigned int* ElementTypes;
+
 //	Number of elements in each element group
 	unsigned int* NUME;
 
@@ -146,6 +149,9 @@ public:
 
 //	Return total number of element groups
 	inline unsigned int GetNUMEG() { return NUMEG; }
+
+//	Element type of each group
+	inline unsigned int* GetElementTypes() {return ElementTypes; }
 
 //	Return element Set List 
 	inline Element** GetElementSetList() { return ElementSetList; }

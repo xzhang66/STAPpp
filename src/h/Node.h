@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define _DEBUG_    /* Used for print results for debuging purpose */
+// #define _DEBUG_    /* Used for print results for debuging purpose */
 
 //	Node class
 class Node
@@ -20,6 +20,9 @@ public:
 //	Maximum number of degrees of freedom per node
 //	For 3D bar and solid elements, NDF = 3. For 3D beam or shell elements NDF = 5 or 6
 	const static unsigned int NDF = 3; 
+
+//	Node numer
+	unsigned int num;
 
 //	x, y and z coordinates of the node
 	double XYZ[NDF];

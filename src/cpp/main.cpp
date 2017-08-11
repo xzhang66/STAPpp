@@ -43,7 +43,9 @@ int main(int argc, char *argv[])
 
 	FEMData->CalculateEquationNumber();
 	Output->OutputEquationNumber();
-	
+
+	Output->OutputElementInfo();
+
 	FEMData->AllocateMatrices();
 	
 	FEMData->AssembleStiffnessMatrix();

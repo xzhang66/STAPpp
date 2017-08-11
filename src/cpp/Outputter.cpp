@@ -119,14 +119,14 @@ void Outputter::OutputNodeInfo()
 	cout << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
 	cout << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
 	cout << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
-	cout << "         EQ.0, DATA CHECK" 
+	cout << "         EQ.0, DATA CHECK" << endl
 		 << "         EQ.1, EXECUTION" << endl << endl;
 
 	OutputFile << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
 	OutputFile << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
 	OutputFile << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
 	OutputFile << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
-	OutputFile << "         EQ.0, DATA CHECK" 
+	OutputFile << "         EQ.0, DATA CHECK" << endl
 			   << "         EQ.1, EXECUTION" << endl << endl;
 
 	cout << " N O D A L   P O I N T   D A T A" << endl << endl;
@@ -198,26 +198,98 @@ void Outputter::OutputElementInfo()
 	unsigned int* NUMMAT = FEMData->GetNUMMAT();
 	Material** MaterialSetList = FEMData->GetMaterialSetList();
 
-	cout << "*********************  E L M E N T  ****************************" << endl;
-	OutputFile << "*********************  E L M E N T ****************************" << endl;
+	cout << " E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
+	OutputFile << "E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
 
-	unsigned int ElementType;
 	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-/*		cout << 
-		Input >> ElementType >> NUME[EleGrp] >> NUMMAT[EleGrp];
+		cout << " E L E M E N T   D E F I N I T I O N" << endl << endl;
+		OutputFile << " E L E M E N T   D E F I N I T I O N" << endl << endl;
 
-//		Will try to move to element class
+		unsigned int ElementType = FEMData->GetElementTypes()[EleGrp];
+		unsigned int NUME = FEMData->GetNUME()[EleGrp];
+
+		cout << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5) << ElementType << endl;
+		cout << "     EQ.1, TRUSS ELEMENTS" << endl 
+			 << "     EQ.2, ELEMENTS CURRENTLY" << endl
+			 << "     EQ.3, NOT AVAILABLE" << endl << endl;
+
+		cout << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME << endl << endl;
+
+		OutputFile << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5) << ElementType << endl;
+		OutputFile << "     EQ.1, TRUSS ELEMENTS" << endl 
+				   << "     EQ.2, ELEMENTS CURRENTLY" << endl
+				   << "     EQ.3, NOT AVAILABLE" << endl << endl;
+
+		OutputFile << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME << endl << endl;
+
 		switch (ElementType)
 		{
 		case 1:	// Bar element
-			ReadBarElementData(EleGrp);
+			PrintBarElementData(EleGrp);
 			break;
 
-		default:
-			return false;
-		} */
+		} 
 	}
+}
+
+//	Output bar element data
+void Outputter::PrintBarElementData(int EleGrp)
+{
+
+	Domain* FEMData = Domain::Instance();
+
+	int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
+	BarMaterial* MaterialGroup = (BarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
+
+	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
+	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
+	cout << " AND CROSS-SECTIONAL  CONSTANTS  . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT << endl << endl;
+
+	cout << "  SET       YOUNG'S     CROSS-SECTIONAL" << endl
+		 << " NUMBER     MODULUS          AREA" << endl
+		 << "               E              A" << endl;
+	
+	OutputFile << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
+	OutputFile << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
+	OutputFile << " AND CROSS-SECTIONAL  CONSTANTS  . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT << endl << endl;
+
+	OutputFile << "  SET       YOUNG'S     CROSS-SECTIONAL" << endl
+			   << " NUMBER     MODULUS          AREA" << endl
+			   << "               E              A" << endl;
+
+//	Loop over for all property sets
+	for (int mset = 0; mset < NUMMAT; mset++)
+	{
+		cout << setw(5) << mset+1 << setw(16) << MaterialGroup->E << MaterialGroup->Area << endl;
+		OutputFile << setw(5) << mset+1 << setw(16) << MaterialGroup->E << MaterialGroup->Area << endl;
+	}
+
+	cout << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
+	cout << " ELEMENT     NODE     NODE       MATERIAL" << endl
+		 << " NUMBER-N      I        J       SET NUMBER" << endl; 
+
+	OutputFile << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
+	OutputFile << " ELEMENT     NODE     NODE       MATERIAL" << endl
+			   << " NUMBER-N      I        J       SET NUMBER" << endl; 
+
+	Element** ElementSetList = FEMData->GetElementSetList();
+	Bar* ElementGroup = (Bar* ) ElementSetList[EleGrp];
+
+//	Loop over for all elements in group EleGrp
+	for (int Ele = 0; Ele < FEMData->GetNUME()[EleGrp]; Ele++)
+	{
+		Node** nodes = ElementGroup[Ele].GetNodes();
+		Material* ElementMaterial = ElementGroup[Ele].GetElementMaterial();
+
+		cout << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
+			 << setw(12) << ElementMaterial->SetNumber << endl;
+		OutputFile << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
+				   << setw(12) << ElementMaterial->SetNumber << endl;
+	}
+
+	cout << endl;
+	OutputFile << endl;
 }
 
 //	Print load data for load case LoadCase
@@ -235,21 +307,29 @@ void Outputter::OutputLoadInfo(int LoadCase)
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
 
-	cout << "******************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
-	OutputFile << "******************** L O A D C A S E " << LoadCase <<  " ********************" << endl;
+	cout << " L O A D   C A S E   D A T A" << endl << endl;
+	OutputFile << " L O A D   C A S E   D A T A" << endl << endl;
 
-	cout << setw(10) << "Load case" << setw(14) << "Node" << setw(12) << "DOF" << setw(17) << "Load" << endl;
-	OutputFile << setw(10) << "Load case" << setw(14) << "Node" << setw(12) << "DOF" << setw(17) << "Load" << endl;
-
-	for (int i = 0; i < NLOAD[LoadCase - 1]; i++)
+	for (int lcase = 0; lcase < LoadCase; lcase++)
 	{
-		cout << setw(10) << i + 1 << setw(14) << Load[i].node << setw(12) << Load[i].dof 
-			 << setw(17) << Load[i].load << endl;
-		OutputFile << setw(10) << i + 1 << setw(14) << Load[i].node << setw(12) << Load[i].dof 
-			       << setw(17) << Load[i].load << endl;
+		cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+		cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
+		cout << "    NODE       DIRECTION      LOAD" << endl
+			 << "   NUMBER                   MAGNITUDE" << endl;
+		OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+		OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
+		OutputFile << "    NODE       DIRECTION      LOAD" << endl
+				   << "   NUMBER                   MAGNITUDE" << endl;
+
+		for (int i = 0; i < NLOAD[lcase]; i++)
+		{
+			cout << setw(7) << Load[i].node << setw(13) << Load[i].dof  << setw(19) << Load[i].load << endl;
+			OutputFile << setw(7) << Load[i].node << setw(13) << Load[i].dof << setw(19) << Load[i].load << endl;
+		}
+
+		cout << endl;
+		OutputFile << endl;
 	}
-	cout << endl;
-	OutputFile << endl;
 }
 
 //	Print nodal displacement

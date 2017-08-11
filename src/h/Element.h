@@ -26,6 +26,7 @@ template <class type> void clear( type* a, int N );	// Clear an array
 class Material
 {
 public:
+	unsigned int SetNumber;	// Set number
 	double E;  // Young's modulus
 };
 
@@ -57,6 +58,12 @@ public:
 
 //	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0;  
+
+//	Return nodes of the element
+	inline Node** GetNodes() { return nodes; }
+
+//	Return material of the element
+	inline Material* GetElementMaterial() { return ElementMaterial; }
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     

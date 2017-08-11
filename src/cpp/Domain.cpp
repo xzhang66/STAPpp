@@ -107,6 +107,8 @@ bool Domain::ReadNodalPoints()
 			return false;
 		}
 
+		NodeList[np].num = N;
+
 		Input >> NodeList[np].bcode[0] >> NodeList[np].bcode[1] >> NodeList[np].bcode[2]
 			  >> NodeList[np].XYZ[0] >> NodeList[np].XYZ[1] >> NodeList[np].XYZ[2];
 	}
@@ -169,19 +171,19 @@ bool Domain::ReadElements()
 {
 
 //	Read element group control line
+	ElementTypes = new unsigned int[NUMEG];
 	NUME = new unsigned int[NUMEG];
 	ElementSetList = new Element*[NUMEG];
 
 	NUMMAT = new unsigned int[NUMEG];
 	MaterialSetList = new Material*[NUMEG];
 
-	unsigned int ElementType;
 	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		Input >> ElementType >> NUME[EleGrp] >> NUMMAT[EleGrp];
+		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
 
 //		Will try to move to element class
-		switch (ElementType)
+		switch (ElementTypes[EleGrp])
 		{
 		case 1:	// Bar element
 			ReadBarElementData(EleGrp);
@@ -243,6 +245,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 
 		Input >> N1 >> N2 >> MSet;
 		ElementGroup[Ele].ElementMaterial = &MaterialGroup[MSet - 1];
+		ElementGroup[Ele].ElementMaterial->SetNumber = MSet;
 		ElementGroup[Ele].nodes[0] = &NodeList[N1 - 1];
 		ElementGroup[Ele].nodes[1] = &NodeList[N2 - 1];
 	}
