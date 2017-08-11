@@ -16,6 +16,7 @@
 #include "Truss.h"
 #include "Outputter.h"
 #include "Solver.h"
+#include "LoadCaseData.h"
 
 using namespace std;
 
@@ -23,25 +24,6 @@ using namespace std;
 template <class type> void clear( type* a, int N );
 
 class Domain;
-
-// Structure LoadData is used to store load data
-class LoadCaseData
-{
-public:
-
-	unsigned int nloads;	// Number of concentrated loads in this load case
-	unsigned int* node;		// Node number to which this load is applied
-	unsigned int* dof;		// Degree of freedom number for this load component
-	double* load;			// Magnitude of load
-
-public:
-
-	LoadCaseData() : nloads(0), node(NULL), dof(NULL), load(NULL) {}; 
-	~LoadCaseData();
-
-	void Allocate(int num);
-	bool Read(ifstream& Input, int lcase);
-};
 
 //	Domain class : Define the problem domain
 //	Only a single instance of Domain class can be created
