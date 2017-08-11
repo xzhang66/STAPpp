@@ -39,15 +39,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	Output->OutputNodeInfo();
-
-	FEMData->CalculateEquationNumber();
-	Output->OutputEquationNumber();
-
-	Output->OutputElementInfo();
-
 	FEMData->AllocateMatrices();
-	
 	FEMData->AssembleStiffnessMatrix();
 	
 	LDLTSolver* S = new LDLTSolver(FEMData);

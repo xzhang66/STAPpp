@@ -44,6 +44,8 @@ Domain::Domain()
 	LoadList = NULL;
 	
 	NEQ = 0;
+	NWK = 0;
+	MK = 0;
 	StiffnessMatrix = NULL;
 	Force = NULL; 
 }
@@ -62,6 +64,8 @@ bool Domain::ReadData(string FileName)
 {
 	Input.open(FileName);
 
+	Outputter* Output = Outputter::Instance();
+
 	if (!Input) 
 	{
 		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
@@ -76,13 +80,19 @@ bool Domain::ReadData(string FileName)
 
 //	Read nodal point data
 	ReadNodalPoints();
+	Output->OutputNodeInfo();
+
+//	Update equation number
+	CalculateEquationNumber();
+	Output->OutputEquationNumber();
 
 //	Read load data
 	ReadLoadCases();
+	Output->OutputLoadInfo();
 
 //	Read element data
 	ReadElements();
-
+	Output->OutputElementInfo();
 }
 
 //	Read nodal point data
@@ -260,6 +270,13 @@ void Domain::CalculateColumnHeights()
 		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
 			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
 
+//	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
+	MK = ColumnHeights[0];
+	for (int i=1; i<NEQ; i++)
+		if (MK < ColumnHeights[i])
+			MK = ColumnHeights[i];
+	MK = MK + 1;
+
 #ifdef _DEBUG_
 	Outputter* Output = Outputter::Instance();
 	Output->PrintColumnHeights();
@@ -278,6 +295,9 @@ void Domain::CalculateDiagnoalAddress()
 	DiagonalAddress[0] = 1;
 	for (int col = 1; col <= NEQ; col++)
 		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
+
+//	Number of elements in banded global stiffness matrix
+	NWK = DiagonalAddress[NEQ] - DiagonalAddress[0];
 
 #ifdef _DEBUG_
 	Outputter* Output = Outputter::Instance();
@@ -329,6 +349,17 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 	return true;
 }
 
+//	Calculate stresses 
+void Domain::CalculateStress()
+{
+	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	{
+		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+		{
+		}
+	}
+}
+
 //	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
 //	and calculate the column heights and address of diagonal elements
 void Domain::AllocateMatrices()
@@ -349,6 +380,9 @@ void Domain::AllocateMatrices()
 	CalculateDiagnoalAddress();
 
 //	Allocate for banded global stiffness matrix
-	StiffnessMatrix = new double[DiagonalAddress[NEQ] - 1];
-	clear(StiffnessMatrix, DiagonalAddress[NEQ] - 1);
+	StiffnessMatrix = new double[NWK];
+	clear(StiffnessMatrix, NWK);
+
+	Outputter* Output = Outputter::Instance();
+	Output->OutputTotalSystemData();
 }

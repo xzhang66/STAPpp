@@ -104,11 +104,8 @@ void Outputter::OutputNodeInfo()
 //	Number of lines printed in each page
 	int Page = 30;
 
-	cout << setiosflags(ios::scientific);
-	OutputFile << setiosflags(ios::scientific);
-
-	cout << "*********************  Nodal Point Data ****************************" << endl;
-	OutputFile << "*********************  Nodal Point Data ****************************" << endl;
+	cout << setiosflags(ios::scientific) <<setprecision(5);
+	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
 	int NUMNP = FEMData->GetNUMNP();
 	int NUMEG = FEMData->GetNUMEG();
@@ -258,11 +255,14 @@ void Outputter::PrintBarElementData(int EleGrp)
 			   << " NUMBER     MODULUS          AREA" << endl
 			   << "               E              A" << endl;
 
+	cout << setiosflags(ios::scientific) <<setprecision(5);
+	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+
 //	Loop over for all property sets
 	for (int mset = 0; mset < NUMMAT; mset++)
 	{
-		cout << setw(5) << mset+1 << setw(16) << MaterialGroup->E << MaterialGroup->Area << endl;
-		OutputFile << setw(5) << mset+1 << setw(16) << MaterialGroup->E << MaterialGroup->Area << endl;
+		cout << setw(5) << mset+1 << setw(16) << MaterialGroup->E << setw(16) << MaterialGroup->Area << endl;
+		OutputFile << setw(5) << mset+1 << setw(16) << MaterialGroup->E  << setw(16) << MaterialGroup->Area << endl;
 	}
 
 	cout << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
@@ -292,85 +292,80 @@ void Outputter::PrintBarElementData(int EleGrp)
 	OutputFile << endl;
 }
 
-//	Print load data for load case LoadCase
-void Outputter::OutputLoadInfo(int LoadCase)
+//	Print load data
+void Outputter::OutputLoadInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
 	unsigned int* NLOAD = FEMData->GetNLOAD();
 
-	if (LoadCase > FEMData->GetNLCASE()) 
-		return;
-
-	LoadData* Load = FEMData->GetLoadList()[LoadCase - 1];
-
-	cout << setiosflags(ios::scientific);
-	OutputFile << setiosflags(ios::scientific);
-
-	cout << " L O A D   C A S E   D A T A" << endl << endl;
-	OutputFile << " L O A D   C A S E   D A T A" << endl << endl;
-
-	for (int lcase = 0; lcase < LoadCase; lcase++)
+	for (int LoadCase = 1; LoadCase <= FEMData->GetNLCASE(); LoadCase++)
 	{
-		cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-		cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
-		cout << "    NODE       DIRECTION      LOAD" << endl
-			 << "   NUMBER                   MAGNITUDE" << endl;
-		OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-		OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
-		OutputFile << "    NODE       DIRECTION      LOAD" << endl
-				   << "   NUMBER                   MAGNITUDE" << endl;
+		LoadData* Load = FEMData->GetLoadList()[LoadCase - 1];
 
-		for (int i = 0; i < NLOAD[lcase]; i++)
+		cout << setiosflags(ios::scientific);
+		OutputFile << setiosflags(ios::scientific);
+
+		cout << " L O A D   C A S E   D A T A" << endl << endl;
+		OutputFile << " L O A D   C A S E   D A T A" << endl << endl;
+
+		for (int lcase = 0; lcase < LoadCase; lcase++)
 		{
-			cout << setw(7) << Load[i].node << setw(13) << Load[i].dof  << setw(19) << Load[i].load << endl;
-			OutputFile << setw(7) << Load[i].node << setw(13) << Load[i].dof << setw(19) << Load[i].load << endl;
-		}
+			cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+			cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
+			cout << "    NODE       DIRECTION      LOAD" << endl
+				 << "   NUMBER                   MAGNITUDE" << endl;
+			OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+			OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
+			OutputFile << "    NODE       DIRECTION      LOAD" << endl
+					   << "   NUMBER                   MAGNITUDE" << endl;
 
-		cout << endl;
-		OutputFile << endl;
+			for (int i = 0; i < NLOAD[lcase]; i++)
+			{
+				cout << setw(7) << Load[i].node << setw(13) << Load[i].dof  << setw(19) << Load[i].load << endl;
+				OutputFile << setw(7) << Load[i].node << setw(13) << Load[i].dof << setw(19) << Load[i].load << endl;
+			}
+
+			cout << endl;
+			OutputFile << endl;
+		}
 	}
 }
 
 //	Print nodal displacement
-void Outputter::OutputNodalDisplacement()
+void Outputter::OutputNodalDisplacement(int lcase)
 {
 	Domain* FEMData = Domain::Instance();
-
-	int Page = 30;
-
 	Node* NodeList = FEMData->GetNodeList();
-
 	double* Displacement = FEMData->GetDisplacement();
+
+	cout << " LOAD CASE" << setw(5) << lcase+1 << endl << endl << endl;
+	OutputFile << " LOAD CASE" << setw(5) << lcase+1 << endl << endl << endl;
 
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
 
-	cout << "************* D I S P L A C E l M E N T *****************" << endl;
-	OutputFile << "************* D I S P L A C E l M E N T *****************" << endl;
+	cout << " D I S P L A C E M E N T S" << endl << endl;
+	cout << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
+	OutputFile << " D I S P L A C E M E N T S" << endl << endl;
+	OutputFile << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
 	for (int i = 0; i < FEMData->GetNUMNP(); i++)
 	{
-		if (i % Page == 0)
-		{
-			cout << setw(12) << "Node" << setw(14) << "X" << setw(14) << "Y" << setw(14) << "Z" << endl;
-			OutputFile << setw(12) << "Node" << setw(14) << "X" << setw(14) << "Y" << setw(14) << "Z" << endl;
-		}
+		cout << setw(5) << i + 1 << "        ";
+		OutputFile << setw(5) << i + 1 << "        ";
 
-		cout << setw(12) << i + 1;
-		OutputFile << setw(12) << i + 1;
-
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < Node::NDF; j++)
 		{
 			if (NodeList[i].bcode[j] == 0)
 			{
-				cout << setw(14) << 0.0;
-				OutputFile << setw(14) << 0.0;
+				cout << setw(18) << 0.0;
+				OutputFile << setw(18) << 0.0;
 			}
 			else
 			{
-				cout << setw(14) << Displacement[NodeList[i].bcode[j] - 1];
-				OutputFile << setw(14) << Displacement[NodeList[i].bcode[j] - 1];
+				cout << setw(18) << Displacement[NodeList[i].bcode[j] - 1];
+				OutputFile << setw(18) << Displacement[NodeList[i].bcode[j] - 1];
 			}
 		}
 
@@ -379,6 +374,26 @@ void Outputter::OutputNodalDisplacement()
 	}
 }
 
+//	Print total system data
+void Outputter::OutputTotalSystemData()
+{
+	Domain* FEMData = Domain::Instance();
+
+	cout << "	TOTAL SYSTEM DATA" << endl << endl;
+	OutputFile << "	TOTAL SYSTEM DATA" << endl << endl;
+
+	cout << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) =" << FEMData->GetNEQ() << endl
+		 << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) =" << FEMData->GetNWK() << endl
+		 << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) =" << FEMData->GetMK() << endl
+		 << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) =" << FEMData->GetNWK()/FEMData->GetNEQ() 
+		 << endl << endl << endl;
+
+	OutputFile << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) =" << FEMData->GetNEQ() << endl
+			   << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) =" << FEMData->GetNWK() << endl
+			   << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) =" << FEMData->GetMK() << endl
+			   << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) =" << FEMData->GetNWK()/FEMData->GetNEQ() 
+			   << endl << endl << endl;
+}
 
 #ifdef _DEBUG_
 

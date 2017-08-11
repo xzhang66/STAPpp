@@ -50,7 +50,7 @@ public:
 	void OutputNodeInfo();
 
 //	Output equation numbers
-	void Outputter::OutputEquationNumber();
+	void OutputEquationNumber();
 
 //	Output element data
 	void OutputElementInfo();
@@ -58,11 +58,14 @@ public:
 //	Output bar element data
 	void PrintBarElementData(int EleGrp);
 
-//	Output load data for load case LoadCase
-	void OutputLoadInfo(int LoadCase); 
+//	Output load data 
+	void OutputLoadInfo(); 
 
 //	Output displacement data
-	void OutputNodalDisplacement();
+	void OutputNodalDisplacement(int lcase);
+
+//	Print total system data
+	void OutputTotalSystemData();
 
 #ifdef _DEBUG_
 

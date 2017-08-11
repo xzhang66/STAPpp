@@ -139,10 +139,9 @@ void LDLTSolver::Solve()
 
 	LDLT();
 
-	for (int i = 0; i < FEMData->GetNLCASE(); i++)
+	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
 	{
-		FEMData->AssembleForce(i + 1);
-		Output->OutputLoadInfo(i + 1);
+		FEMData->AssembleForce(lcase + 1);
 
 		ComputeDisplacement();
 	
@@ -151,7 +150,7 @@ void LDLTSolver::Solve()
 		Output->PrintDisplacement(i);
 #endif
 
-		Output->OutputNodalDisplacement();
+		Output->OutputNodalDisplacement(lcase);
 	}
 
 	return; 

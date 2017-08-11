@@ -96,6 +96,12 @@ private:
 //	Total number of equations in the system
 	unsigned int NEQ;
 
+//	Number of elements in banded global stiffness matrix
+	unsigned int NWK;
+
+//	Maximum half bandwith
+	unsigned int MK;
+
 //	Banded stiffness matrix : A one-dimensional array storing only the elements below the 
 //	skyline of the global stiffness matrix. 
 	double* StiffnessMatrix;
@@ -109,16 +115,19 @@ private:
 //	Global nodal force/displacement vector
 	double* Force;
 
+public:
+
 //	Constructor
 	Domain();
-
-public:
 
 //	Return pointer to the instance of the Domain class
 	static Domain* Instance();
 
 //	Set Output file stream
 	inline void SetOutputFile(ofstream* ofs) { OutputFile = ofs; }
+
+//	Read domain data from the input data file
+	bool ReadData(string FileName);
 
 //	Read nodal point data
 	bool ReadNodalPoints();
@@ -128,6 +137,31 @@ public:
 
 //	Read element data
 	bool ReadElements();
+
+//	Read bar element data from the input data file
+	bool ReadBarElementData(int EleGrp);
+
+//	Calculate global equation numbers corresponding to every degree of freedom of each node
+	void CalculateEquationNumber();
+
+//	Calculate column heights
+	void Domain::CalculateColumnHeights();
+
+//	Calculate address of diagonal elements in banded matrix
+	void Domain::CalculateDiagnoalAddress();
+
+//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
+//	and calculate the column heights and address of diagonal elements
+	void AllocateMatrices();
+
+//	Assemble the banded gloabl stiffness matrix
+	void AssembleStiffnessMatrix();
+
+//	Assemble the global nodal force vector for load case LoadCase
+	bool AssembleForce(unsigned int LoadCase); 
+
+//	Calculate stresses 
+	void CalculateStress();
 
 //	Return solution mode
 	inline int GetMODEX() { return MODEX; }
@@ -140,6 +174,12 @@ public:
 
 //	Return the total number of nodal points
 	inline unsigned int GetNUMNP() { return NUMNP; }
+
+//	Return the number of banded global stiffness matrix elements
+	inline unsigned int GetNWK() { return NWK; }
+
+//	Return the maximum half bandwith
+	inline unsigned int GetMK() { return MK; }
 
 //	Return the node list
 	inline Node* GetNodeList() { return NodeList; }
@@ -172,7 +212,7 @@ public:
 	inline unsigned int GetNLCASE() { return NLCASE; }
 
 //	Return the number of concentrated loads applied in each load case
-	unsigned int* GetNLOAD() { return NLOAD; }
+	inline unsigned int* GetNLOAD() { return NLOAD; }
 
 //	Return the list of loads in each load case
 	inline LoadData** GetLoadList() { return LoadList; }
@@ -185,30 +225,5 @@ public:
 
 //	Return pointer to the array storing the address of diagonal elements
 	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
-
-//	Calculate global equation numbers corresponding to every degree of freedom of each node
-	void CalculateEquationNumber();
-
-//	Calculate column heights
-	void Domain::CalculateColumnHeights();
-
-//	Calculate address of diagonal elements in banded matrix
-	void Domain::CalculateDiagnoalAddress();
-
-//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
-//	and calculate the column heights and address of diagonal elements
-	void AllocateMatrices();
-
-//	Assemble the banded gloabl stiffness matrix
-	void AssembleStiffnessMatrix();
-
-//	Assemble the global nodal force vector for load case LoadCase
-	bool AssembleForce(unsigned int LoadCase); 
-
-//	Read domain data from the input data file
-	bool ReadData(string FileName);
-
-//	Read bar element data from the input data file
-	bool ReadBarElementData(int EleGrp);
 
 };
