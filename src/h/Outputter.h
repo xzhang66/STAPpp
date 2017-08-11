@@ -7,6 +7,7 @@
 /***************************************************************/
 
 #pragma once
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -28,9 +29,6 @@ protected:
 
 //	Designed as a single instance class
 	static Outputter* _instance;
-
-//	Print program logo
-	void PrintLogo(ostream& output);
 
 public:
 

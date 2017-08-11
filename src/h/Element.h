@@ -17,29 +17,11 @@ using namespace std;
 #include <fstream>
 
 #include "Node.h"
+#include "Material.h"
 
 class Domain;
 
 template <class type> void clear( type* a, int N );	// Clear an array
-
-//	Material base class which only define one data member
-//	All type of material classes should be derived from this base class
-class Material
-{
-public:
-
-	unsigned int num;	// Set number
-	
-	double E;  // Young's modulus
-
-public:
-
-//	Read material data from stream Input
-	virtual bool Read(ifstream& Input, int mset) = 0;
-
-//	Write material data to Stream OutputFile
-//	virtual void Output(ofstream* OutputFile);
-};
 
 //	Element base class
 //	All type of element classes should be derived from this base class
@@ -63,6 +45,9 @@ public:
 
 //	Read element data from stream Input
 	virtual bool Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList) = 0;
+
+//	Write element data to stream OutputFile
+	virtual void Write(ofstream& OutputFile, int Ele) = 0;
 
 //  Calculate the column height, used with the skyline storage scheme
 	void CalculateColumnHeight(unsigned int* ColumnHeight); 

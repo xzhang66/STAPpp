@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
 	string OutFile = filename + ".out";
 
 	Outputter* Output = Outputter::Instance(OutFile);
-	Output->OutputHeading();
 
 	Domain* FEMData = Domain::Instance();
 	FEMData->SetOutputFile(Output->GetOutputFile());

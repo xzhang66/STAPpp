@@ -41,7 +41,15 @@ public:
 	Node(double X = 0, double Y = 0, double Z = 0);
 
 //	Read nodal point data from stream Input
-
-//	Read element data from stream Input
 	bool Read(ifstream& Input, int np);
+
+//	Output nodal point data to stream OutputFile
+	void Write(ofstream& OutputFile, int np);
+
+//	Output equation numbers of nodal point to stream OutputFile
+	void WriteEquationNo(ofstream& OutputFile, int np);
+
+//	Write nodal displacement
+	void WriteNodalDisplacement(ofstream& OutputFile, int np, double* Displacement);
+
 };

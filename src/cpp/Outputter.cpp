@@ -50,28 +50,8 @@ Outputter* Outputter::Instance(string FileName)
 }
 
 //	Print program logo
-void Outputter::PrintLogo(ostream& output)
-{
-	output << "***********************************************************" << endl;
-	output << "* xxxxxx  xxxxxx  xxx       xx        x            x      *" << endl;
-	output << "* xx      xx      xxxx     xxx        x            x      *" << endl;
-	output << "* xx      xx      xxxx     x x        x            x      *" << endl;
-	output << "* xx      xx      xx x    xx x        x            x      *" << endl;
-	output << "* xx      xx      xx xx   xx x        x            x      *" << endl;
-	output << "* xxxxxx  xxxxxx  xx xx   x  x   xxxxxxxxxxx  xxxxxxxxxxx *" << endl;
-	output << "* xx      xx      xx  xx xx  x        x            x      *" << endl;
-	output << "* xx      xx      xx  xx x   x        x            x      *" << endl;
-	output << "* xx      xx      xx   xxx   x        x            x      *" << endl;
-	output << "* xx      xx      xx   xxx   x        x            x      *" << endl;
-	output << "* xx      xxxxxxx xx    x    x        x            x      *" << endl;
-	output << "***********************************************************" << endl << endl;
-}
-//	Print program logo
 void Outputter::OutputHeading()
 {
-	PrintLogo(cout);
-	PrintLogo(OutputFile);
-
 	Domain* FEMData = Domain::Instance();
 
 	cout << "TITLE : " << FEMData->GetTitle() << endl;
@@ -133,14 +113,8 @@ void Outputter::OutputNodeInfo()
 	OutputFile << "    NODE       BOUNDARY                         NODAL POINT" << endl
 			   << "   NUMBER  CONDITION CODES                      COORDINATES" << endl;
  
-	for (int i = 0; i < NUMNP; i++)
-	{
-		Node node = NodeList[i];
-		cout << setw(9) << i + 1 << setw(5) << node.bcode[0] << setw(5) << node.bcode[1] << setw(5) << node.bcode[2]
-			 << setw(18) << node.XYZ[0] << setw(15) << node.XYZ[1] << setw(15) << node.XYZ[2] << endl;
-		OutputFile << setw(9) << i + 1 << setw(5) << node.bcode[0] << setw(5) << node.bcode[1] << setw(5) << node.bcode[2]
-				   << setw(18) << node.XYZ[0] << setw(15) << node.XYZ[1] << setw(15) << node.XYZ[2] << endl;
-	}
+	for (int np = 0; np < NUMNP; np++)
+		NodeList[np].Write(OutputFile, np);
 
 	cout << endl;
 	OutputFile << endl;
@@ -163,19 +137,7 @@ void Outputter::OutputEquationNumber()
 	OutputFile << "        N           X    Y    Z" << endl;
 
 	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
-	{
-		cout << setw(9) << np+1 << "       ";
-		OutputFile << setw(9) << np+1 << "       ";
-
-		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
-		{
-			cout << setw(5) << NodeList[np].bcode[dof];
-			OutputFile << setw(5) << NodeList[np].bcode[dof];
-		}
-
-		cout << endl;
-		OutputFile << endl;
-	}
+		NodeList[np].WriteEquationNo(OutputFile, np);
 
 	cout << endl;
 	OutputFile << endl;
@@ -237,7 +199,7 @@ void Outputter::PrintBarElementData(int EleGrp)
 	Domain* FEMData = Domain::Instance();
 
 	int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
-	BarMaterial* MaterialGroup = (BarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
+	BarMaterial* MaterialSet = (BarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
 	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
@@ -260,10 +222,7 @@ void Outputter::PrintBarElementData(int EleGrp)
 
 //	Loop over for all property sets
 	for (int mset = 0; mset < NUMMAT; mset++)
-	{
-		cout << setw(5) << mset+1 << setw(16) << MaterialGroup->E << setw(16) << MaterialGroup->Area << endl;
-		OutputFile << setw(5) << mset+1 << setw(16) << MaterialGroup->E  << setw(16) << MaterialGroup->Area << endl;
-	}
+		MaterialSet[mset].Write(OutputFile, mset);
 
 	cout << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
 	cout << " ELEMENT     NODE     NODE       MATERIAL" << endl
@@ -278,15 +237,7 @@ void Outputter::PrintBarElementData(int EleGrp)
 
 //	Loop over for all elements in group EleGrp
 	for (int Ele = 0; Ele < FEMData->GetNUME()[EleGrp]; Ele++)
-	{
-		Node** nodes = ElementGroup[Ele].GetNodes();
-		Material* ElementMaterial = ElementGroup[Ele].GetElementMaterial();
-
-		cout << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
-			 << setw(12) << ElementMaterial->num << endl;
-		OutputFile << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
-				   << setw(12) << ElementMaterial->num << endl;
-	}
+		ElementGroup[Ele].Write(OutputFile, Ele);
 
 	cout << endl;
 	OutputFile << endl;
@@ -316,11 +267,7 @@ void Outputter::OutputLoadInfo()
 		OutputFile << "    NODE       DIRECTION      LOAD" << endl
 				   << "   NUMBER                   MAGNITUDE" << endl;
 
-		for (int i = 0; i < LoadData->nloads; i++)
-		{
-			cout << setw(7) << LoadData->node[i] << setw(13) << LoadData->dof[i]  << setw(19) << LoadData->load[i] << endl;
-			OutputFile << setw(7) << LoadData->node[i] << setw(13) << LoadData->dof[i]  << setw(19) << LoadData->load[i] << endl;
-		}
+		LoadData->Write(OutputFile, lcase);
 
 		cout << endl;
 		OutputFile << endl;
@@ -345,28 +292,8 @@ void Outputter::OutputNodalDisplacement(int lcase)
 	OutputFile << " D I S P L A C E M E N T S" << endl << endl;
 	OutputFile << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
-	for (int i = 0; i < FEMData->GetNUMNP(); i++)
-	{
-		cout << setw(5) << i + 1 << "        ";
-		OutputFile << setw(5) << i + 1 << "        ";
-
-		for (int j = 0; j < Node::NDF; j++)
-		{
-			if (NodeList[i].bcode[j] == 0)
-			{
-				cout << setw(18) << 0.0;
-				OutputFile << setw(18) << 0.0;
-			}
-			else
-			{
-				cout << setw(18) << Displacement[NodeList[i].bcode[j] - 1];
-				OutputFile << setw(18) << Displacement[NodeList[i].bcode[j] - 1];
-			}
-		}
-
-		cout << endl;
-		OutputFile << endl;
-	}
+	for (int np = 0; np < FEMData->GetNUMNP(); np++)
+		NodeList[np].WriteNodalDisplacement(OutputFile, np, Displacement);
 }
 
 //	Print total system data

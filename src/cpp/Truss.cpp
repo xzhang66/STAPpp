@@ -8,29 +8,10 @@
 
 #include "Truss.h"
 
-#include <math.h>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
-
-//	Read material data from stream Input
-bool BarMaterial::Read(ifstream& Input, int mset)
-{
-	Input >> num;	// Number of property set
-
-	if (num != mset + 1)
-	{
-		cout << "*** Error *** Material sets must be inputted in order !" << endl 
-			 << "   Expected set : " << mset + 1 << endl
-			 << "   Provided set : " << num << endl;
-
-		return false;
-	}
-
-	Input >> E >> Area;	// Young's modulus and section area
-
-	return true;
-}
 
 //	Constructor
 Bar::Bar()
@@ -66,6 +47,15 @@ bool Bar::Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList)
 	nodes[1] = &NodeList[N2 - 1];
 
 	return true;
+}
+
+//	Write element data to stream OutputFile
+void Bar::Write(ofstream& OutputFile, int Ele)
+{
+	cout << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
+		 << setw(12) << ElementMaterial->num << endl;
+	OutputFile << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
+			   << setw(12) << ElementMaterial->num << endl;
 }
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)

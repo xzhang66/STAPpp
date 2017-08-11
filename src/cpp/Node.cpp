@@ -6,6 +6,9 @@
 /*     http://www.comdyn.cn/                                   */
 /***************************************************************/
 
+#include <iostream>
+#include <iomanip>
+
 #include "Node.h"
 
 
@@ -42,4 +45,53 @@ bool Node::Read(ifstream& Input, int np)
 		  >> XYZ[0] >> XYZ[1] >> XYZ[2];
 
 	return true;
+}
+
+//	Output nodal point data to stream OutputFile
+void Node::Write(ofstream& OutputFile, int np)
+{
+	cout << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
+		 << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
+	OutputFile << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
+			   << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
+}
+
+//	Output equation numbers of nodal point to stream OutputFile
+void Node::WriteEquationNo(ofstream& OutputFile, int np)
+{
+	cout << setw(9) << np+1 << "       ";
+	OutputFile << setw(9) << np+1 << "       ";
+
+	for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
+	{
+		cout << setw(5) << bcode[dof];
+		OutputFile << setw(5) << bcode[dof];
+	}
+
+	cout << endl;
+	OutputFile << endl;
+}
+
+//	Write nodal displacement
+void Node::WriteNodalDisplacement(ofstream& OutputFile, int np, double* Displacement)
+{
+	cout << setw(5) << np + 1 << "        ";
+	OutputFile << setw(5) << np + 1 << "        ";
+
+	for (int j = 0; j < NDF; j++)
+	{
+		if (bcode[j] == 0)
+		{
+			cout << setw(18) << 0.0;
+			OutputFile << setw(18) << 0.0;
+		}
+		else
+		{
+			cout << setw(18) << Displacement[bcode[j] - 1];
+			OutputFile << setw(18) << Displacement[bcode[j] - 1];
+		}
+	}
+
+	cout << endl;
+	OutputFile << endl;
 }

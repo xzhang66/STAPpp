@@ -8,6 +8,7 @@
 
 #include "Domain.h"
 #include "Truss.h"
+#include "Material.h"
 
 #include <iomanip>
 #include <iostream>
@@ -74,6 +75,7 @@ bool Domain::ReadData(string FileName)
 
 //	Read the heading line
 	Input >> Title;
+	Output->OutputHeading();
 
 //	Read the control line
 	Input >> NUMNP >> NUMEG >> NLCASE >> MODEX;
@@ -178,8 +180,7 @@ bool Domain::ReadElements()
 bool Domain::ReadBarElementData(int EleGrp)
 {
 //	Read material/section property lines
-	BarMaterial* MaterialSets = new BarMaterial[NUMMAT[EleGrp]];
-	MaterialSetList[EleGrp] = MaterialSets;
+	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];
 
 //	Loop over for all material property sets
 	for (int mset = 0; mset < NUMMAT[EleGrp]; mset++)
@@ -192,7 +193,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 
 //	Loop over for all elements in group EleGrp
 	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		if (!ElementGroup[Ele].Read(Input, Ele, MaterialSets, NodeList))
+		if (!ElementGroup[Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
 			return false;
 
 	return true;
