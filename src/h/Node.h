@@ -8,6 +8,9 @@
 
 #pragma once
 
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 // #define _DEBUG_    /* Used for print results for debuging purpose */
@@ -36,4 +39,9 @@ public:
 
 //	Constructor
 	Node(double X = 0, double Y = 0, double Z = 0);
+
+//	Read nodal point data from stream Input
+
+//	Read element data from stream Input
+	bool Read(ifstream& Input, int np);
 };

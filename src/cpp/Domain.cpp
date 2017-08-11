@@ -21,6 +21,48 @@ template <class type> void clear( type* a, int N )
 		a[i] = 0;
 }
 
+LoadCaseData :: ~LoadCaseData()
+{
+	delete [] node;
+	delete [] dof;
+	delete [] load;
+}
+
+void LoadCaseData :: Allocate(int num)
+{
+	nloads = num;
+	node = new unsigned int[nloads];
+	dof = new unsigned int[nloads];
+	load = new double[nloads];
+}; 
+
+//	Read load case data from stream Input
+bool LoadCaseData :: Read(ifstream& Input, int lcase)
+{
+//	Load case number (LL) and number of concentrated loads in this load case(NL)
+	
+	int LL, NL;
+
+	Input >> LL >> NL;	
+
+	if (LL != lcase + 1) 
+	{
+		cout << "*** Error *** Load case must be inputted in order !" << endl 
+			 << "   Expected load case : " << lcase + 1 << endl
+			 << "   Provided load case : " << LL << endl;
+
+		return false;
+	}
+
+	Allocate(NL);
+
+	for (int i = 0; i < NL; i++)
+		Input >> node[i] >> dof[i] >> load[i];
+
+	return true;
+}
+
+
 Domain* Domain::_instance = NULL;
 
 //	Constructor
@@ -41,7 +83,7 @@ Domain::Domain()
 	
 	NLCASE = 0;
 	NLOAD = NULL;
-	LoadList = NULL;
+	LoadCases = NULL;
 	
 	NEQ = 0;
 	NWK = 0;
@@ -103,27 +145,11 @@ bool Domain::ReadNodalPoints()
 
 //	Read nodal point data lines
 	NodeList = new Node[NUMNP];
-	
-	int N;
 
 //	Loop over for all nodal points
 	for (int np = 0; np < NUMNP; np++)
-	{
-		Input >> N;	// node number
-		if (N != np + 1) 
-		{
-			cout << "*** Error *** Nodes must be inputted in order !" << endl 
-				 << "   Expected node number : " << np + 1 << endl
-				 << "   Provided node number : " << N << endl;
-
+		if (!NodeList[np].Read(Input, np))
 			return false;
-		}
-
-		NodeList[np].num = N;
-
-		Input >> NodeList[np].bcode[0] >> NodeList[np].bcode[1] >> NodeList[np].bcode[2]
-			  >> NodeList[np].XYZ[0] >> NodeList[np].XYZ[1] >> NodeList[np].XYZ[2];
-	}
 
 	return true;
 }
@@ -150,34 +176,13 @@ void Domain::CalculateEquationNumber()
 //	Read load case data
 bool Domain::ReadLoadCases()
 {
-
 //	Read load data lines
-	LoadList = new LoadData*[NLCASE];
-	NLOAD = new unsigned int[NLCASE];
-	
-	int LL, NL;
+	LoadCases = new LoadCaseData[NLCASE];
 
 //	Loop over for all load cases
 	for (int lcase = 0; lcase < NLCASE; lcase++)
-	{
-//		Load case number (LL) and number of concentrated loads in this load case(NL)
-		Input >> LL >> NL;	
-
-		if (LL != lcase + 1) 
-		{
-			cout << "*** Error *** Load case must be inputted in order !" << endl 
-				 << "   Expected load case : " << lcase + 1 << endl
-				 << "   Provided load case : " << LL << endl;
-
+		if (!LoadCases[lcase].Read(Input, lcase))
 			return false;
-		}
-
-		NLOAD[lcase] = NL;
-
-		LoadList[lcase] = new LoadData[NLOAD[lcase]];
-		for (int load = 0; load < NLOAD[lcase]; load++)
-			Input >>LoadList[lcase][load].node >> LoadList[lcase][load].dof >> LoadList[lcase][load].load;
-	}
 
 	return true;
 }
@@ -198,7 +203,6 @@ bool Domain::ReadElements()
 	{
 		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
 
-//		Will try to move to element class
 		switch (ElementTypes[EleGrp])
 		{
 		case 1:	// Bar element
@@ -310,15 +314,15 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 	if (LoadCase > NLCASE) 
 		return false;
 
-	LoadData* Load = LoadList[LoadCase - 1];
+	LoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
 	clear(Force, NEQ);
 
 //	Loop over for all concentrated loads in load case LoadCase
-	for (int lnum = 0; lnum < NLOAD[LoadCase - 1]; lnum++)
+	for (int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
-		int dof = NodeList[Load[lnum].node - 1].bcode[Load[lnum].dof - 1];
-		Force[dof - 1] += Load[lnum].load;
+		int dof = NodeList[LoadData->node[lnum] - 1].bcode[LoadData->dof[lnum] - 1];
+		Force[dof - 1] += LoadData->load[lnum];
 	}
 
 	return true;

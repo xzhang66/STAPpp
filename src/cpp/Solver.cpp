@@ -147,7 +147,7 @@ void LDLTSolver::Solve()
 	
 #ifdef _DEBUG_
 		Outputter* Output = Outputter::Instance();
-		Output->PrintDisplacement(i);
+		Output->PrintDisplacement(lcase);
 #endif
 
 		Output->OutputNodalDisplacement(lcase);

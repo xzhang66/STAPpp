@@ -19,3 +19,27 @@ Node::Node(double X, double Y, double Z)
     bcode[1] = 0;
     bcode[2] = 0;
 };
+
+
+//	Read element data from stream Input
+bool Node::Read(ifstream& Input, int np)
+{
+	int N;
+
+	Input >> N;	// node number
+	if (N != np + 1) 
+	{
+		cout << "*** Error *** Nodes must be inputted in order !" << endl 
+			 << "   Expected node number : " << np + 1 << endl
+			 << "   Provided node number : " << N << endl;
+
+		return false;
+	}
+
+	num = N;
+
+	Input >> bcode[0] >> bcode[1] >> bcode[2]
+		  >> XYZ[0] >> XYZ[1] >> XYZ[2];
+
+	return true;
+}

@@ -297,11 +297,9 @@ void Outputter::OutputLoadInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
-	unsigned int* NLOAD = FEMData->GetNLOAD();
-
-	for (int LoadCase = 1; LoadCase <= FEMData->GetNLCASE(); LoadCase++)
+	for (int lcase = 1; lcase <= FEMData->GetNLCASE(); lcase++)
 	{
-		LoadData* Load = FEMData->GetLoadList()[LoadCase - 1];
+		LoadCaseData* LoadData = &FEMData->GetLoadCases()[lcase - 1];
 
 		cout << setiosflags(ios::scientific);
 		OutputFile << setiosflags(ios::scientific);
@@ -309,26 +307,23 @@ void Outputter::OutputLoadInfo()
 		cout << " L O A D   C A S E   D A T A" << endl << endl;
 		OutputFile << " L O A D   C A S E   D A T A" << endl << endl;
 
-		for (int lcase = 0; lcase < LoadCase; lcase++)
+		cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+		cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << LoadData->nloads << endl << endl;
+		cout << "    NODE       DIRECTION      LOAD" << endl
+			 << "   NUMBER                   MAGNITUDE" << endl;
+		OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+		OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << LoadData->nloads << endl << endl;
+		OutputFile << "    NODE       DIRECTION      LOAD" << endl
+				   << "   NUMBER                   MAGNITUDE" << endl;
+
+		for (int i = 0; i < LoadData->nloads; i++)
 		{
-			cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-			cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
-			cout << "    NODE       DIRECTION      LOAD" << endl
-				 << "   NUMBER                   MAGNITUDE" << endl;
-			OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-			OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << NLOAD[lcase] << endl << endl;
-			OutputFile << "    NODE       DIRECTION      LOAD" << endl
-					   << "   NUMBER                   MAGNITUDE" << endl;
-
-			for (int i = 0; i < NLOAD[lcase]; i++)
-			{
-				cout << setw(7) << Load[i].node << setw(13) << Load[i].dof  << setw(19) << Load[i].load << endl;
-				OutputFile << setw(7) << Load[i].node << setw(13) << Load[i].dof << setw(19) << Load[i].load << endl;
-			}
-
-			cout << endl;
-			OutputFile << endl;
+			cout << setw(7) << LoadData->node[i] << setw(13) << LoadData->dof[i]  << setw(19) << LoadData->load[i] << endl;
+			OutputFile << setw(7) << LoadData->node[i] << setw(13) << LoadData->dof[i]  << setw(19) << LoadData->load[i] << endl;
 		}
+
+		cout << endl;
+		OutputFile << endl;
 	}
 }
 

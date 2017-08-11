@@ -25,11 +25,22 @@ template <class type> void clear( type* a, int N );
 class Domain;
 
 // Structure LoadData is used to store load data
-struct LoadData
+class LoadCaseData
 {
-	unsigned node;	// Node number to which this load is applied
-	unsigned dof;	// Degree of freedom number for this load component
-	double load;	// Magnitude of load
+public:
+
+	unsigned int nloads;	// Number of concentrated loads in this load case
+	unsigned int* node;		// Node number to which this load is applied
+	unsigned int* dof;		// Degree of freedom number for this load component
+	double* load;			// Magnitude of load
+
+public:
+
+	LoadCaseData() : nloads(0), node(NULL), dof(NULL), load(NULL) {}; 
+	~LoadCaseData();
+
+	void Allocate(int num);
+	bool Read(ifstream& Input, int lcase);
 };
 
 //	Domain class : Define the problem domain
@@ -87,8 +98,8 @@ private:
 //	Number of load cases
 	unsigned int NLCASE;
 
-//	List of loads in each load case
-	LoadData** LoadList;
+//	List of all load cases
+	LoadCaseData* LoadCases;
 
 //	Number of concentrated loads applied in each load case
 	unsigned int* NLOAD;
@@ -214,8 +225,8 @@ public:
 //	Return the number of concentrated loads applied in each load case
 	inline unsigned int* GetNLOAD() { return NLOAD; }
 
-//	Return the list of loads in each load case
-	inline LoadData** GetLoadList() { return LoadList; }
+//	Return the list of load cases
+	inline LoadCaseData* GetLoadCases() { return LoadCases; }
 
 //	Return column heights
 	inline unsigned int* GetColumnHeights() { return ColumnHeights; }
