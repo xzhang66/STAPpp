@@ -260,7 +260,8 @@ void Domain::CalculateColumnHeights()
 			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
 
 #ifdef _DEBUG_
-	PrintColumnHeights();
+	Outputter* Output = Outputter::Instance();
+	Output->PrintColumnHeights();
 #endif
 
 }
@@ -278,7 +279,8 @@ void Domain::CalculateDiagnoalAddress()
 		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
 
 #ifdef _DEBUG_
-	PrintDiagonalAddress();
+	Outputter* Output = Outputter::Instance();
+	Output->PrintDiagonalAddress();
 #endif
 
 }
@@ -300,7 +302,8 @@ void Domain::AssembleStiffnessMatrix()
 	}
 
 #ifdef _DEBUG_
-	PrintStiffnessMatrix();
+	Outputter* Output = Outputter::Instance();
+	Output->PrintStiffnessMatrix();
 #endif
 
 }
@@ -348,135 +351,3 @@ void Domain::AllocateMatrices()
 	StiffnessMatrix = new double[DiagonalAddress[NEQ] - 1];
 	clear(StiffnessMatrix, DiagonalAddress[NEQ] - 1);
 }
-
-#ifdef _DEBUG_
-
-//	Print column heights for debuging
-void Domain::PrintColumnHeights()
-{
-	cout << "************************** Column Heights ****************************" << endl;
-	*OutputFile << "************************** Column Heights ****************************" << endl;
-
-	for (int col = 0; col < NEQ; col++)
-	{
-		if (col+1 % 10 == 0)
-		{
-			cout << endl;
-			*OutputFile << endl;
-		}
-
-		cout << setw(8) << ColumnHeights[col];
-		*OutputFile << setw(8) << ColumnHeights[col];
-	}
-	cout << endl << endl;
-	*OutputFile << endl << endl;
-}
-
-//	Print address of diagonal elements for debuging
-void Domain::PrintDiagonalAddress()
-{
-	cout << "******************** Address of Diagonal Element *********************" << endl;
-	*OutputFile << "******************** Address of Diagonal Element *********************" << endl;
-
-	for (int col = 0; col <= NEQ; col++)
-	{
-		if (col+1 % 10 == 0)
-		{
-			cout << endl;
-			*OutputFile << endl;
-		}
-
-		cout << setw(8) << DiagonalAddress[col];
-		*OutputFile << setw(8) << DiagonalAddress[col];
-	}
-
-	cout << endl << endl;
-	*OutputFile << endl << endl;
-}
-
-//	Print banded and full stiffness matrix for debuging
-void Domain::PrintStiffnessMatrix()
-{
-	cout << "********************** Banded stiffness matrix ***********************" << endl;
-	*OutputFile << "********************** Banded stiffness matrix ***********************" << endl;
-
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	*OutputFile << setiosflags(ios::scientific) <<setprecision(5);
-
-	for (int i = 0; i < DiagonalAddress[NEQ]-1; i++)
-	{
-		if ((i+1) % 6 == 0)
-		{
-			cout << endl;
-			*OutputFile << endl;
-		}
-
-		cout << setw(14) << StiffnessMatrix[i];
-		*OutputFile << setw(14) << StiffnessMatrix[i];
-	}
-
-	cout << endl << endl;
-	*OutputFile << endl << endl;
-
-	cout << "*********************** Full stiffness matrix ************************" << endl;
-	*OutputFile << "*********************** Full stiffness matrix ************************" << endl;
-
-	for (int I = 0; I < NEQ; I++)
-	{
-		for (int J = 0; J < NEQ; J++)
-		{
-			int i = I;
-			int j = J;
-			if (i > j)
-				swap(i,j);
-
-			int H = DiagonalAddress[j + 1] - DiagonalAddress[j];
-			if (j - i - H >= 0) 
-			{
-				cout << setw(14) << 0.0;
-				*OutputFile << setw(14) << 0.0;
-			}
-			else
-			{
-				cout << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
-				*OutputFile << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
-			}
-		}
-
-		cout << endl;
-		*OutputFile << endl;
-	}
-
-	cout << endl;
-	*OutputFile << endl;
-}
-
-//	Print displacement vector for debuging
-void Domain::PrintDisplacement(int loadcase)
-{
-	cout << "********************** Displacement vector ***********************" << endl;
-	*OutputFile << "********************** Displacement vector ***********************" << endl;
-
-	cout << "  Load case = " << loadcase << endl;
-	*OutputFile << "  Load case = " << loadcase << endl;
-
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	*OutputFile << setiosflags(ios::scientific) <<setprecision(5);
-
-	for (int i = 0; i < NEQ; i++)
-	{
-		if ((i+1) % 6 == 0)
-		{
-			cout << endl;
-			*OutputFile << endl;
-		}
-
-		cout << setw(14) << Force[i];
-		*OutputFile << setw(14) << Force[i];
-	}
-
-	cout << endl << endl;
-	*OutputFile << endl << endl;
-}
-
-#endif

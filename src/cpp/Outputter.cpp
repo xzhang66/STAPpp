@@ -74,8 +74,8 @@ void Outputter::OutputHeading()
 
 	Domain* FEMData = Domain::Instance();
 
-	cout << "TITLE : " << FEMData->Title << endl;
-	OutputFile << "TITLE : " << FEMData->Title << endl;
+	cout << "TITLE : " << FEMData->GetTitle() << endl;
+	OutputFile << "TITLE : " << FEMData->GetTitle() << endl;
 
 	time_t now;
 	struct tm *local = new struct tm;
@@ -96,7 +96,7 @@ void Outputter::OutputNodeInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
-	Node* NodeList = FEMData->NodeList;
+	Node* NodeList = FEMData->GetNodeList();
 
 //	Number of lines printed in each page
 	int Page = 30;
@@ -107,7 +107,7 @@ void Outputter::OutputNodeInfo()
 	cout << "*********************  N O D E ****************************" << endl;
 	OutputFile << "*********************  N O D E ****************************" << endl;
 
-	for (int i = 0; i < FEMData->NUMNP; i++)
+	for (int i = 0; i < FEMData->GetNUMNP(); i++)
 	{
 		if (i % Page == 0)
 		{
@@ -129,12 +129,12 @@ void Outputter::OutputLoadInfo(int LoadCase)
 {
 	Domain* FEMData = Domain::Instance();
 
-	unsigned int* NLOAD = FEMData->NLOAD;
+	unsigned int* NLOAD = FEMData->GetNLOAD();
 
-	if (LoadCase > FEMData->NLCASE) 
+	if (LoadCase > FEMData->GetNLCASE()) 
 		return;
 
-	LoadData* Load = FEMData->LoadList[LoadCase - 1];
+	LoadData* Load = FEMData->GetLoadList()[LoadCase - 1];
 
 	cout << setiosflags(ios::scientific);
 	OutputFile << setiosflags(ios::scientific);
@@ -157,13 +157,13 @@ void Outputter::OutputLoadInfo(int LoadCase)
 }
 
 //	Print nodal displacement
-void Outputter::OutputDisplacement()
+void Outputter::OutputNodalDisplacement()
 {
 	Domain* FEMData = Domain::Instance();
 
 	int Page = 30;
 
-	Node* NodeList = FEMData->NodeList;
+	Node* NodeList = FEMData->GetNodeList();
 
 	double* Displacement = FEMData->GetDisplacement();
 
@@ -173,7 +173,7 @@ void Outputter::OutputDisplacement()
 	cout << "************* D I S P L A C E l M E N T *****************" << endl;
 	OutputFile << "************* D I S P L A C E l M E N T *****************" << endl;
 
-	for (int i = 0; i < FEMData->NUMNP; i++)
+	for (int i = 0; i < FEMData->GetNUMNP(); i++)
 	{
 		if (i % Page == 0)
 		{
@@ -202,3 +202,157 @@ void Outputter::OutputDisplacement()
 		OutputFile << endl;
 	}
 }
+
+
+#ifdef _DEBUG_
+
+//	Print column heights for debuging
+void Outputter::PrintColumnHeights()
+{
+	cout << "************************** Column Heights ****************************" << endl;
+	OutputFile << "************************** Column Heights ****************************" << endl;
+
+	Domain* FEMData = Domain::Instance();
+
+	int NEQ = FEMData->GetNEQ();
+	unsigned int* ColumnHeights = FEMData->GetColumnHeights();
+
+	for (int col = 0; col < NEQ; col++)
+	{
+		if (col+1 % 10 == 0)
+		{
+			cout << endl;
+			OutputFile << endl;
+		}
+
+		cout << setw(8) << ColumnHeights[col];
+		OutputFile << setw(8) << ColumnHeights[col];
+	}
+	cout << endl << endl;
+	OutputFile << endl << endl;
+}
+
+//	Print address of diagonal elements for debuging
+void Outputter::PrintDiagonalAddress()
+{
+	cout << "******************** Address of Diagonal Element *********************" << endl;
+	OutputFile << "******************** Address of Diagonal Element *********************" << endl;
+
+	Domain* FEMData = Domain::Instance();
+
+	int NEQ = FEMData->GetNEQ();
+	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
+
+	for (int col = 0; col <= NEQ; col++)
+	{
+		if (col+1 % 10 == 0)
+		{
+			cout << endl;
+			OutputFile << endl;
+		}
+
+		cout << setw(8) << DiagonalAddress[col];
+		OutputFile << setw(8) << DiagonalAddress[col];
+	}
+
+	cout << endl << endl;
+	OutputFile << endl << endl;
+}
+
+//	Print banded and full stiffness matrix for debuging
+void Outputter::PrintStiffnessMatrix()
+{
+	cout << "********************** Banded stiffness matrix ***********************" << endl;
+	OutputFile << "********************** Banded stiffness matrix ***********************" << endl;
+
+	Domain* FEMData = Domain::Instance();
+
+	int NEQ = FEMData->GetNEQ();
+	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
+	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+
+	cout << setiosflags(ios::scientific) <<setprecision(5);
+	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+
+	for (int i = 0; i < DiagonalAddress[NEQ]-1; i++)
+	{
+		if ((i+1) % 6 == 0)
+		{
+			cout << endl;
+			OutputFile << endl;
+		}
+
+		cout << setw(14) << StiffnessMatrix[i];
+		OutputFile << setw(14) << StiffnessMatrix[i];
+	}
+
+	cout << endl << endl;
+	OutputFile << endl << endl;
+
+	cout << "*********************** Full stiffness matrix ************************" << endl;
+	OutputFile << "*********************** Full stiffness matrix ************************" << endl;
+
+	for (int I = 0; I < NEQ; I++)
+	{
+		for (int J = 0; J < NEQ; J++)
+		{
+			int i = I;
+			int j = J;
+			if (i > j)
+				swap(i,j);
+
+			int H = DiagonalAddress[j + 1] - DiagonalAddress[j];
+			if (j - i - H >= 0) 
+			{
+				cout << setw(14) << 0.0;
+				OutputFile << setw(14) << 0.0;
+			}
+			else
+			{
+				cout << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
+				OutputFile << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
+			}
+		}
+
+		cout << endl;
+		OutputFile << endl;
+	}
+
+	cout << endl;
+	OutputFile << endl;
+}
+
+//	Print displacement vector for debuging
+void Outputter::PrintDisplacement(int loadcase)
+{
+	cout << "********************** Displacement vector ***********************" << endl;
+	OutputFile << "********************** Displacement vector ***********************" << endl;
+
+	Domain* FEMData = Domain::Instance();
+
+	int NEQ = FEMData->GetNEQ();
+	double* Force = FEMData->GetForce();
+
+	cout << "  Load case = " << loadcase << endl;
+	OutputFile << "  Load case = " << loadcase << endl;
+
+	cout << setiosflags(ios::scientific) <<setprecision(5);
+	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+
+	for (int i = 0; i < NEQ; i++)
+	{
+		if ((i+1) % 6 == 0)
+		{
+			cout << endl;
+			OutputFile << endl;
+		}
+
+		cout << setw(14) << Force[i];
+		OutputFile << setw(14) << Force[i];
+	}
+
+	cout << endl << endl;
+	OutputFile << endl << endl;
+}
+
+#endif

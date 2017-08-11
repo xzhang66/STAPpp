@@ -126,14 +126,26 @@ public:
 //	Read element data
 	bool ReadElements();
 
+//	Return column heights
+	inline unsigned int* GetColumnHeights() { return ColumnHeights; }
+
 //	Return pointer to the banded stiffness matrix
 	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
 
 //	Return pointer to the array storing the address of diagonal elements
 	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
 
+//	Return the title of problem
+	inline string GetTitle() { return Title; }
+
 //	Return the total number of equations
 	inline unsigned int GetNEQ() { return NEQ; }
+
+//	Return the total number of nodal points
+	inline unsigned int GetNUMNP() { return NUMNP; }
+
+//	Return the node list
+	inline Node* GetNodeList() { return NodeList; }
 
 //	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }
@@ -143,6 +155,12 @@ public:
 
 //	Return the total number of load cases
 	inline unsigned int GetNLCASE() { return NLCASE; }
+
+//	Return the number of concentrated loads applied in each load case
+	unsigned int* GetNLOAD() { return NLOAD; }
+
+//	Return the list of loads in each load case
+	inline LoadData** GetLoadList() { return LoadList; }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
 	void CalculateEquationNumber();
@@ -168,23 +186,5 @@ public:
 
 //	Read bar element data from the input data file
 	bool ReadBarElementData(int EleGrp);
-
-	friend Outputter;
-
-#ifdef _DEBUG_
-
-//	Print banded and full stiffness matrix for debuging
-	void PrintStiffnessMatrix();
-
-//	Print address of diagonal elements for debuging
-	void PrintDiagonalAddress();
-
-//	Print column heights for debuging
-	void PrintColumnHeights();
-
-//	Print displacement vector
-	void PrintDisplacement(int loadcase);
-
-#endif
 
 };
