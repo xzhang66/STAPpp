@@ -283,9 +283,9 @@ void Outputter::PrintBarElementData(int EleGrp)
 		Material* ElementMaterial = ElementGroup[Ele].GetElementMaterial();
 
 		cout << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
-			 << setw(12) << ElementMaterial->SetNumber << endl;
+			 << setw(12) << ElementMaterial->num << endl;
 		OutputFile << setw(5) << Ele+1 << setw(11) << nodes[0]->num << setw(9) << nodes[1]->num 
-				   << setw(12) << ElementMaterial->SetNumber << endl;
+				   << setw(12) << ElementMaterial->num << endl;
 	}
 
 	cout << endl;
@@ -382,16 +382,16 @@ void Outputter::OutputTotalSystemData()
 	cout << "	TOTAL SYSTEM DATA" << endl << endl;
 	OutputFile << "	TOTAL SYSTEM DATA" << endl << endl;
 
-	cout << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) =" << FEMData->GetNEQ() << endl
-		 << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) =" << FEMData->GetNWK() << endl
-		 << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) =" << FEMData->GetMK() << endl
-		 << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) =" << FEMData->GetNWK()/FEMData->GetNEQ() 
+	cout << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = " << FEMData->GetNEQ() << endl
+		 << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = " << FEMData->GetNWK() << endl
+		 << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = " << FEMData->GetMK() << endl
+		 << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = " << FEMData->GetNWK()/FEMData->GetNEQ() 
 		 << endl << endl << endl;
 
-	OutputFile << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) =" << FEMData->GetNEQ() << endl
-			   << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) =" << FEMData->GetNWK() << endl
-			   << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) =" << FEMData->GetMK() << endl
-			   << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) =" << FEMData->GetNWK()/FEMData->GetNEQ() 
+	OutputFile << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = " << FEMData->GetNEQ() << endl
+			   << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = " << FEMData->GetNWK() << endl
+			   << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = " << FEMData->GetMK() << endl
+			   << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = " << FEMData->GetNWK()/FEMData->GetNEQ() 
 			   << endl << endl << endl;
 }
 

@@ -14,6 +14,7 @@ using namespace std;
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 #include "Node.h"
 
@@ -26,8 +27,18 @@ template <class type> void clear( type* a, int N );	// Clear an array
 class Material
 {
 public:
-	unsigned int SetNumber;	// Set number
+
+	unsigned int num;	// Set number
+	
 	double E;  // Young's modulus
+
+public:
+
+//	Read material data from stream Input
+	virtual bool Read(ifstream& Input, int mset) = 0;
+
+//	Write material data to Stream OutputFile
+//	virtual void Output(ofstream* OutputFile);
 };
 
 //	Element base class
@@ -49,6 +60,9 @@ public:
 
 //	Constructor
 	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+
+//	Read element data from stream Input
+	virtual bool Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList) = 0;
 
 //  Calculate the column height, used with the skyline storage scheme
 	void CalculateColumnHeight(unsigned int* ColumnHeight); 

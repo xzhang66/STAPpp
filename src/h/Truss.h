@@ -19,6 +19,9 @@ public:
 
 	Bar();
 
+//	Read element data from stream Input
+	virtual bool Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList);
+
 //	Calculate element stiffness matrix
 	virtual void ElementStiffness(double* Matrix);
 
@@ -30,5 +33,15 @@ public:
 class BarMaterial : public Material
 {
 public:
+
 	double Area;	// Sectional area of a bar element
+
+public:
+	
+//	Read material data from stream Input
+	virtual bool Read(ifstream& Input, int mset);
+
+//	Write material data to Stream OutputFile
+//	virtual void Output(ofstream* OutputFile);
+
 };

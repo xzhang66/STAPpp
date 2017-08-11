@@ -13,6 +13,25 @@
 
 using namespace std;
 
+//	Read material data from stream Input
+bool BarMaterial::Read(ifstream& Input, int mset)
+{
+	Input >> num;	// Number of property set
+
+	if (num != mset + 1)
+	{
+		cout << "*** Error *** Material sets must be inputted in order !" << endl 
+			 << "   Expected set : " << mset + 1 << endl
+			 << "   Provided set : " << num << endl;
+
+		return false;
+	}
+
+	Input >> E >> Area;	// Young's modulus and section area
+
+	return true;
+}
+
 //	Constructor
 Bar::Bar()
 {
@@ -20,6 +39,33 @@ Bar::Bar()
 	nodes = new Node*[NEN];
 
 	ElementMaterial = NULL;
+}
+
+//	Read element data from stream Input
+bool Bar::Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList)
+{
+	int N;
+
+	Input >> N;	// element number
+
+	if (N != Ele + 1)
+	{
+		cout << "*** Error *** Elements must be inputted in order !" << endl 
+			 << "   Expected element : " << Ele + 1 << endl
+			 << "   Provided element : " << N << endl;
+
+		return false;
+	}
+
+	int MSet;	// Material property set number
+	int N1, N2;	// Left node number and right node number
+
+	Input >> N1 >> N2 >> MSet;
+	ElementMaterial = &MaterialSets[MSet - 1];
+	nodes[0] = &NodeList[N1 - 1];
+	nodes[1] = &NodeList[N2 - 1];
+
+	return true;
 }
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)
@@ -34,11 +80,11 @@ void Bar::ElementStiffness(double* Matrix)
 	clear(Matrix, SizeOfStiffnessMatrix());
 
 //	Calculate bar length
-	int DX[3];		//	dx = x2-x1, dy = y2-y1, dz = z2-z1
+	double DX[3];		//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	for (int i = 0; i < 3; i++)
 		DX[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
 
-	int DX2[6];	//  Quadratic polynomial (dx^2, dy^2, dz^2, dx*dy, dy*dz, dx*dz)
+	double DX2[6];	//  Quadratic polynomial (dx^2, dy^2, dz^2, dx*dy, dy*dz, dx*dz)
 	DX2[0] = DX[0] * DX[0];
 	DX2[1] = DX[1] * DX[1];
 	DX2[2] = DX[2] * DX[2];

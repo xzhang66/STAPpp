@@ -93,6 +93,8 @@ bool Domain::ReadData(string FileName)
 //	Read element data
 	ReadElements();
 	Output->OutputElementInfo();
+
+	return true;
 }
 
 //	Read nodal point data
@@ -122,6 +124,8 @@ bool Domain::ReadNodalPoints()
 		Input >> NodeList[np].bcode[0] >> NodeList[np].bcode[1] >> NodeList[np].bcode[2]
 			  >> NodeList[np].XYZ[0] >> NodeList[np].XYZ[1] >> NodeList[np].XYZ[2];
 	}
+
+	return true;
 }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
@@ -174,6 +178,8 @@ bool Domain::ReadLoadCases()
 		for (int load = 0; load < NLOAD[lcase]; load++)
 			Input >>LoadList[lcase][load].node >> LoadList[lcase][load].dof >> LoadList[lcase][load].load;
 	}
+
+	return true;
 }
 
 // Read element data
@@ -209,28 +215,14 @@ bool Domain::ReadElements()
 //	Read bar element data from the input data file
 bool Domain::ReadBarElementData(int EleGrp)
 {
-	int N;
-
 //	Read material/section property lines
-	BarMaterial* MaterialGroup = new BarMaterial[NUMMAT[EleGrp]];
-	MaterialSetList[EleGrp] = MaterialGroup;
+	BarMaterial* MaterialSets = new BarMaterial[NUMMAT[EleGrp]];
+	MaterialSetList[EleGrp] = MaterialSets;
 
-//	Loop over for all property sets
+//	Loop over for all material property sets
 	for (int mset = 0; mset < NUMMAT[EleGrp]; mset++)
-	{
-		Input >> N;	// Number of property set
-
-		if (N != mset + 1)
-		{
-			cout << "*** Error *** Material sets must be inputted in order !" << endl 
-				 << "   Expected set : " << mset + 1 << endl
-				 << "   Provided set : " << N << endl;
-
+		if (!MaterialSetList[EleGrp][mset].Read(Input, mset))
 			return false;
-		}
-				
-		Input >> MaterialGroup[mset].E >> MaterialGroup[mset].Area;	// Young's modulus and section area
-	}
 
 //	Read element data lines
 	Bar* ElementGroup = new Bar[NUME[EleGrp]];
@@ -238,27 +230,10 @@ bool Domain::ReadBarElementData(int EleGrp)
 
 //	Loop over for all elements in group EleGrp
 	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-	{
-		Input >> N;	// element number
-
-		if (N != Ele + 1)
-		{
-			cout << "*** Error *** Elements must be inputted in order !" << endl 
-				 << "   Expected element : " << Ele + 1 << endl
-				 << "   Provided element : " << N << endl;
-
+		if (!ElementGroup[Ele].Read(Input, Ele, MaterialSets, NodeList))
 			return false;
-		}
 
-		int MSet;	// Material property set number
-		int N1, N2;	// Left node number and right node number
-
-		Input >> N1 >> N2 >> MSet;
-		ElementGroup[Ele].ElementMaterial = &MaterialGroup[MSet - 1];
-		ElementGroup[Ele].ElementMaterial->SetNumber = MSet;
-		ElementGroup[Ele].nodes[0] = &NodeList[N1 - 1];
-		ElementGroup[Ele].nodes[1] = &NodeList[N2 - 1];
-	}
+	return true;
 }
 
 //	Calculate column heights
