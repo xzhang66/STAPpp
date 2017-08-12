@@ -39,7 +39,7 @@ bool Node::Read(ifstream& Input, int np)
 		return false;
 	}
 
-	num = N;
+	NodeNumber = N;
 
 	Input >> bcode[0] >> bcode[1] >> bcode[2]
 		  >> XYZ[0] >> XYZ[1] >> XYZ[2];

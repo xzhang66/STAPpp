@@ -36,7 +36,7 @@ protected:
 	Node** nodes;
 
 //	Material of the element
-	Material* ElementMaterial;
+	Material* ElementMaterial;	// Pointer to an element of MaterialSetList[][]
 
 public:
 

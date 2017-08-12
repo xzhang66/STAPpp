@@ -28,7 +28,7 @@ public:
 	virtual void Solve() = 0;
 };
 
-//	LDLT solver for skyline storage scheme
+//	LDLT solver: A in core solver using skyline storage  and column reduction scheme
 class LDLTSolver : public Solver
 {
 public:
@@ -39,9 +39,9 @@ public:
 //	Perform LDLT factorization of the global stiffness matrix
 	void LDLT();
 
-//	Calculate global nodal displacement vector
-	void ComputeDisplacement(); 
+//	Reduce right-hand-side load vector and back substitution
+	void BackSubstitution(); 
 
-//	Solve
-	virtual void Solve();       // Ω‚FEMŒ Ã‚
+//	Solve the equilibrium equations 
+	virtual void Solve();
 };

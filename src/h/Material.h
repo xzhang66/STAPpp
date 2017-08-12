@@ -20,7 +20,7 @@ class Material
 {
 public:
 
-	unsigned int num;	// Set number
+	unsigned int nset;	// Number of set
 	
 	double E;  // Young's modulus
 

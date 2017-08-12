@@ -14,23 +14,30 @@
 
 using namespace std;
 
-int MIN(int I, int J)
-{
-	if (I < J) 
-		return I;
-	else 
-		return J;
-};
-
-int MAX(int I, int J)
-{
-	if (I > J) 
-		return I;
-	else 
-		return J;
-};
-
 Solver::Solver(Domain* FEMData) : FEMData(FEMData) {};
+
+void LDLTSolver::Solve()
+{ 
+	Outputter* Output = Outputter::Instance();
+
+	LDLT();
+
+	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
+	{
+		FEMData->AssembleForce(lcase + 1);
+
+		BackSubstitution();
+	
+#ifdef _DEBUG_
+		Outputter* Output = Outputter::Instance();
+		Output->PrintDisplacement(lcase);
+#endif
+
+		Output->OutputNodalDisplacement(lcase);
+	}
+
+	return; 
+};
 
 // LDLT facterization
 void LDLTSolver::LDLT()
@@ -63,7 +70,7 @@ void LDLTSolver::LDLT()
             // Row number of the first nonzero element in column i
 			int Heighti = i - ColumnNumberi + 1;
             
-			int Height = MAX(Heighti, Heightj);
+			int Height = max(Heighti, Heightj);
 			for (int M = Height; M < i; M++)
 			{
 				int AddressI = Address[i] + i - M - 1;
@@ -89,7 +96,7 @@ void LDLTSolver::LDLT()
 };
 
 // Solve displacement by back substitution
-void LDLTSolver::ComputeDisplacement()
+void LDLTSolver::BackSubstitution()
 {
 	double* Force = FEMData->GetForce();        //  Force vector
 	double* K = FEMData->GetStiffnessMatrix();  //  Factorized stiffness matrix
@@ -131,27 +138,4 @@ void LDLTSolver::ComputeDisplacement()
 
 	for (int i = 0; i < NEQ; i++) 
 		U[i] = Force[i];
-};
-
-void LDLTSolver::Solve()
-{ 
-	Outputter* Output = Outputter::Instance();
-
-	LDLT();
-
-	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
-	{
-		FEMData->AssembleForce(lcase + 1);
-
-		ComputeDisplacement();
-	
-#ifdef _DEBUG_
-		Outputter* Output = Outputter::Instance();
-		Output->PrintDisplacement(lcase);
-#endif
-
-		Output->OutputNodalDisplacement(lcase);
-	}
-
-	return; 
 };

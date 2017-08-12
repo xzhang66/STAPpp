@@ -25,7 +25,7 @@ public:
 	const static unsigned int NDF = 3; 
 
 //	Node numer
-	unsigned int num;
+	unsigned int NodeNumber;
 
 //	x, y and z coordinates of the node
 	double XYZ[NDF];

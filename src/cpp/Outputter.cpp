@@ -322,8 +322,8 @@ void Outputter::OutputTotalSystemData()
 //	Print column heights for debuging
 void Outputter::PrintColumnHeights()
 {
-	cout << "************************** Column Heights ****************************" << endl;
-	OutputFile << "************************** Column Heights ****************************" << endl;
+	cout << "*** _Debug_ *** Column Heights" << endl;
+	OutputFile << "*** _Debug_ *** Column Heights" << endl;
 
 	Domain* FEMData = Domain::Instance();
 
@@ -348,8 +348,8 @@ void Outputter::PrintColumnHeights()
 //	Print address of diagonal elements for debuging
 void Outputter::PrintDiagonalAddress()
 {
-	cout << "******************** Address of Diagonal Element *********************" << endl;
-	OutputFile << "******************** Address of Diagonal Element *********************" << endl;
+	cout << "*** _Debug_ *** Address of Diagonal Element" << endl;
+	OutputFile << "*** _Debug_ *** Address of Diagonal Element" << endl;
 
 	Domain* FEMData = Domain::Instance();
 
@@ -375,8 +375,8 @@ void Outputter::PrintDiagonalAddress()
 //	Print banded and full stiffness matrix for debuging
 void Outputter::PrintStiffnessMatrix()
 {
-	cout << "********************** Banded stiffness matrix ***********************" << endl;
-	OutputFile << "********************** Banded stiffness matrix ***********************" << endl;
+	cout << "*** _Debug_ *** Banded stiffness matrix" << endl;
+	OutputFile << "*** _Debug_ *** Banded stiffness matrix" << endl;
 
 	Domain* FEMData = Domain::Instance();
 
@@ -402,8 +402,8 @@ void Outputter::PrintStiffnessMatrix()
 	cout << endl << endl;
 	OutputFile << endl << endl;
 
-	cout << "*********************** Full stiffness matrix ************************" << endl;
-	OutputFile << "*********************** Full stiffness matrix ************************" << endl;
+	cout << "*** _Debug_ *** Full stiffness matrix" << endl;
+	OutputFile << "*** _Debug_ *** Full stiffness matrix" << endl;
 
 	for (int I = 0; I < NEQ; I++)
 	{
@@ -438,8 +438,8 @@ void Outputter::PrintStiffnessMatrix()
 //	Print displacement vector for debuging
 void Outputter::PrintDisplacement(int loadcase)
 {
-	cout << "********************** Displacement vector ***********************" << endl;
-	OutputFile << "********************** Displacement vector ***********************" << endl;
+	cout << "*** _Debug_ *** Displacement vector" << endl;
+	OutputFile << "*** _Debug_ *** Displacement vector" << endl;
 
 	Domain* FEMData = Domain::Instance();
 

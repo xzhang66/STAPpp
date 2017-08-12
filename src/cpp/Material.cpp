@@ -17,13 +17,13 @@ using namespace std;
 //	Read material data from stream Input
 bool BarMaterial::Read(ifstream& Input, int mset)
 {
-	Input >> num;	// Number of property set
+	Input >> nset;	// Number of property set
 
-	if (num != mset + 1)
+	if (nset != mset + 1)
 	{
 		cout << "*** Error *** Material sets must be inputted in order !" << endl 
 			 << "   Expected set : " << mset + 1 << endl
-			 << "   Provided set : " << num << endl;
+			 << "   Provided set : " << nset << endl;
 
 		return false;
 	}
