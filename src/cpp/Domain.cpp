@@ -7,7 +7,7 @@
 /*****************************************************************************/
 
 #include "Domain.h"
-#include "Truss.h"
+#include "Bar.h"
 #include "Material.h"
 
 #include <iomanip>

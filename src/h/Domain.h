@@ -13,7 +13,7 @@
 #include <vector>
 
 #include "Node.h"
-#include "Truss.h"
+#include "Bar.h"
 #include "Outputter.h"
 #include "Solver.h"
 #include "LoadCaseData.h"
