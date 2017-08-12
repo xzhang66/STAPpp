@@ -41,7 +41,7 @@ private:
 	ofstream* OutputFile;
 
 //	Heading information for use in labeling the outpu
-	string Title; 
+	char Title[256]; 
 
 //	Solution MODEX
 //		0 : Data check only

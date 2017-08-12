@@ -27,7 +27,7 @@ Domain* Domain::_instance = NULL;
 //	Constructor
 Domain::Domain()
 {
-	Title = "";
+	Title[0] = '0';
 	MODEX = 0;
 
 	NUMNP = 0;
@@ -101,7 +101,7 @@ bool Domain::ReadData(string FileName)
 	}
 
 //	Read the heading line
-	Input >> Title;
+	Input.getline(Title, 256);
 	Output->OutputHeading();
 
 //	Read the control line
