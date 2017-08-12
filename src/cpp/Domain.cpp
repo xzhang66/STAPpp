@@ -1,10 +1,10 @@
-/***************************************************************/
-/*  FEM++ : A C++ finite element method code for teaching      */
-/*     Computational Dynamics Laboratory                       */
-/*     School of Aerospace Engineering, Tsinghua University    */
-/*                                                             */
-/*     http://www.comdyn.cn/                                   */
-/***************************************************************/
+/*****************************************************************************/
+/*  FEM++ : A C++ FEM code sharing the same input data file with STAP90      */
+/*     Computational Dynamics Laboratory                                     */
+/*     School of Aerospace Engineering, Tsinghua University                  */
+/*                                                                           */
+/*     http://www.comdyn.cn/                                                 */
+/*****************************************************************************/
 
 #include "Domain.h"
 #include "Truss.h"
@@ -34,9 +34,10 @@ Domain::Domain()
 	NodeList = NULL;
 	
 	NUMEG = 0;
+	ElementTypes = NULL;
+	NUME = NULL;
 	ElementSetList = NULL;
 	
-	NUME = NULL;
 	NUMMAT = NULL;
 	MaterialSetList = NULL;
 	
@@ -47,8 +48,34 @@ Domain::Domain()
 	NEQ = 0;
 	NWK = 0;
 	MK = 0;
+
 	StiffnessMatrix = NULL;
+	ColumnHeights = NULL;
+	DiagonalAddress = NULL;
+
 	Force = NULL; 
+}
+
+//	Desconstructor
+Domain::~Domain()
+{
+	delete [] NodeList;
+
+	delete [] ElementTypes;
+	delete [] NUME;
+	delete [] ElementSetList;
+
+	delete [] NUMMAT;
+	delete [] MaterialSetList;
+
+	delete [] NLOAD;
+	delete [] LoadCases;
+
+	delete [] StiffnessMatrix;
+	delete [] ColumnHeights;
+	delete [] DiagonalAddress;
+
+	delete [] Force; 
 }
 
 //	Return pointer to the instance of the Domain class
@@ -137,7 +164,7 @@ void Domain::CalculateEquationNumber()
 bool Domain::ReadLoadCases()
 {
 //	Read load data lines
-	LoadCases = new LoadCaseData[NLCASE];
+	LoadCases = new LoadCaseData[NLCASE];	// List all load cases
 
 //	Loop over for all load cases
 	for (int lcase = 0; lcase < NLCASE; lcase++)
@@ -152,13 +179,14 @@ bool Domain::ReadElements()
 {
 
 //	Read element group control line
-	ElementTypes = new unsigned int[NUMEG];
-	NUME = new unsigned int[NUMEG];
-	ElementSetList = new Element*[NUMEG];
+	ElementTypes = new unsigned int[NUMEG];	// Element type of each group
+	NUME = new unsigned int[NUMEG];			// Number of elements in each group
+	ElementSetList = new Element*[NUMEG];	// Element list in each group
 
-	NUMMAT = new unsigned int[NUMEG];
-	MaterialSetList = new Material*[NUMEG];
+	NUMMAT = new unsigned int[NUMEG];		// Material set number of each group
+	MaterialSetList = new Material*[NUMEG];	// Material list in each group
 
+//	Loop over for all element group
 	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
 		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
@@ -169,7 +197,7 @@ bool Domain::ReadElements()
 			ReadBarElementData(EleGrp);
 			break;
 
-		default:
+		default:	// Invalid element type
 			return false;
 		}
 	}
@@ -180,20 +208,19 @@ bool Domain::ReadElements()
 bool Domain::ReadBarElementData(int EleGrp)
 {
 //	Read material/section property lines
-	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];
+	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
 
-//	Loop over for all material property sets
+//	Loop over for all material property sets in group EleGrp
 	for (int mset = 0; mset < NUMMAT[EleGrp]; mset++)
 		if (!MaterialSetList[EleGrp][mset].Read(Input, mset))
 			return false;
 
 //	Read element data lines
-	Bar* ElementGroup = new Bar[NUME[EleGrp]];
-	ElementSetList[EleGrp] = ElementGroup;
+	ElementSetList[EleGrp] = new Bar[NUME[EleGrp]];	// Elements of gorup EleGrp
 
 //	Loop over for all elements in group EleGrp
 	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		if (!ElementGroup[Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
+		if (!ElementSetList[EleGrp][Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
 			return false;
 
 	return true;
@@ -210,9 +237,11 @@ void Domain::CalculateColumnHeights()
 
 //	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
 	MK = ColumnHeights[0];
+
 	for (int i=1; i<NEQ; i++)
 		if (MK < ColumnHeights[i])
 			MK = ColumnHeights[i];
+
 	MK = MK + 1;
 
 #ifdef _DEBUG_

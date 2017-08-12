@@ -1,10 +1,10 @@
-/***************************************************************/
-/*  FEM++ : A C++ finite element method code for teaching      */
-/*     Computational Dynamics Laboratory                       */
-/*     School of Aerospace Engineering, Tsinghua University    */
-/*                                                             */
-/*     http://www.comdyn.cn/                                   */
-/***************************************************************/
+/*****************************************************************************/
+/*  FEM++ : A C++ FEM code sharing the same input data file with STAP90      */
+/*     Computational Dynamics Laboratory                                     */
+/*     School of Aerospace Engineering, Tsinghua University                  */
+/*                                                                           */
+/*     http://www.comdyn.cn/                                                 */
+/*****************************************************************************/
 
 #pragma once
 
@@ -112,6 +112,9 @@ public:
 
 //	Constructor
 	Domain();
+
+//	Desconstructor
+	~Domain();
 
 //	Return pointer to the instance of the Domain class
 	static Domain* Instance();
