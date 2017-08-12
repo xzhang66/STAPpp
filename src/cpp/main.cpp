@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
 	
 	LDLTSolver* S = new LDLTSolver(FEMData);
 	S->Solve();
+	
+	Output->OutputElementStress();
 
 	return 0;
 }

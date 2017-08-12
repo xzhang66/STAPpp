@@ -316,17 +316,6 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 	return true;
 }
 
-//	Calculate stresses 
-void Domain::CalculateStress()
-{
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
-	{
-		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		{
-		}
-	}
-}
-
 //	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
 //	and calculate the column heights and address of diagonal elements
 void Domain::AllocateMatrices()

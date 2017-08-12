@@ -18,7 +18,7 @@ void Element::CalculateColumnHeight(unsigned int* ColumnHeight)
 	vector<int> LocationMatrix;
 
 	for (int N = 0; N < NEN; N++)
-		for (int D = 0; D < Node::NDF; D++)
+		for (int D = 0; D < 3; D++)
 			if (nodes[N]->bcode[D])
 				LocationMatrix.push_back(nodes[N]->bcode[D]);
 
@@ -49,7 +49,7 @@ void Element::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* Di
 //	Calculate element stiffness matrix
 	ElementStiffness(Matrix);
 
-//	Obtain the location matrix
+//	Obtain the location matrix (DOF is numbered from 1)
 	vector<int> LocationMatrix;
 	for (int i=0; i<NEN; i++)
 		for (int j=0; j<Node::NDF; j++)

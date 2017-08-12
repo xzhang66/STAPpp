@@ -234,9 +234,10 @@ void Outputter::PrintBarElementData(int EleGrp)
 
 	Element** ElementSetList = FEMData->GetElementSetList();
 	Bar* ElementGroup = (Bar* ) ElementSetList[EleGrp];
+	unsigned int* NUME = FEMData->GetNUME();
 
 //	Loop over for all elements in group EleGrp
-	for (int Ele = 0; Ele < FEMData->GetNUME()[EleGrp]; Ele++)
+	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
 		ElementGroup[Ele].Write(OutputFile, Ele);
 
 	cout << endl;
@@ -294,6 +295,38 @@ void Outputter::OutputNodalDisplacement(int lcase)
 
 	for (int np = 0; np < FEMData->GetNUMNP(); np++)
 		NodeList[np].WriteNodalDisplacement(OutputFile, np, Displacement);
+}
+
+//	Calculate stresses 
+void Outputter::OutputElementStress()
+{
+	Domain* FEMData = Domain::Instance();
+
+	double* Displacement = FEMData->GetDisplacement();
+
+	unsigned int NUMEG = FEMData->GetNUMEG();
+	unsigned int* NUME = FEMData->GetNUME();
+	Element** ElementSetList = FEMData->GetElementSetList();
+
+	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	{
+		cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp << endl << endl
+			 << "  ELEMENT             FORCE            STRESS" << endl 
+			 << "  NUMBER" << endl;
+		OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp << endl << endl
+				   << "  ELEMENT             FORCE            STRESS" << endl 
+				   << "  NUMBER" << endl;
+
+		double stress;
+		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+		{
+			ElementSetList[EleGrp][Ele].ElementStress(&stress, Displacement);
+
+			BarMaterial* material = (BarMaterial *) ElementSetList[EleGrp][Ele].GetElementMaterial();
+			cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
+			OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
+		}
+	}
 }
 
 //	Print total system data

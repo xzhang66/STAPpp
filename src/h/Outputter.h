@@ -62,6 +62,9 @@ public:
 //	Output displacement data
 	void OutputNodalDisplacement(int lcase);
 
+//	Output element stresses 
+	void OutputElementStress();
+
 //	Print total system data
 	void OutputTotalSystemData();
 

@@ -156,9 +156,6 @@ public:
 //	Assemble the global nodal force vector for load case LoadCase
 	bool AssembleForce(unsigned int LoadCase); 
 
-//	Calculate stresses 
-	void CalculateStress();
-
 //	Return solution mode
 	inline int GetMODEX() { return MODEX; }
 

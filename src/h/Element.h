@@ -56,7 +56,10 @@ public:
 	void assembly(double* Matrix, double* StiffnessMatrix, unsigned int* DiagonalAddress);
 
 //	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
-	virtual void ElementStiffness(double* stiffness) = 0;  
+	virtual void ElementStiffness(double* stiffness) = 0; 
+
+//	Calculate element stress 
+	virtual void ElementStress(double* stress, double* Displacement) = 0;
 
 //	Return nodes of the element
 	inline Node** GetNodes() { return nodes; }
