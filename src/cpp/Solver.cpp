@@ -20,12 +20,16 @@ void LDLTSolver::Solve()
 { 
 	Outputter* Output = Outputter::Instance();
 
+//	Perform L*D*L(T) factorization of stiffness matrix
 	LDLT();
 
+//	Loop over for all load cases
 	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
 	{
+//		Assemble righ-hand-side vector (force vector)
 		FEMData->AssembleForce(lcase + 1);
 
+//		Reduce right-hand-side force vector and back substitute 
 		BackSubstitution();
 	
 #ifdef _DEBUG_
@@ -52,36 +56,38 @@ void LDLTSolver::LDLT()
 	{
 		double* Columnj = &K[Address[j] - 1];
 
-        // Total number of non-zero elements in column j
-		int ColumnNumberj = Address[j + 1] - Address[j];
+        // Total number of non-zero elements in column j (column height + 1)
+		int nEleColumnj = Address[j + 1] - Address[j];
 
         // Row number of the first non-zero element in column j
-		int Heightj = j - ColumnNumberj + 1;
+		int mj = j - nEleColumnj + 1;
         
-		for (int i = Heightj; i <= j; i++)  // Loop for all nonzero elements in column j
+//		Loop for all nonzero elements in column j (upper triangular)
+		for (int i = mj; i <= j; i++) 
 		{
             // Total number of nonzero elements in column i
-			int ColumnNumberi = Address[i + 1] - Address[i];
+			int nEleColumni = Address[i + 1] - Address[i];
 			double* Columni = &K[Address[i] - 1];
-			int CurPostion = Address[j] + j - i - 1;
+			int Address_ij = Address[j] + j - i - 1;
 
 			double C = 0;
             
             // Row number of the first nonzero element in column i
-			int Heighti = i - ColumnNumberi + 1;
+			int mi = i - nEleColumni + 1;
             
-			int Height = max(Heighti, Heightj);
-			for (int M = Height; M < i; M++)
+			int mij = max(mi, mj);
+			for (int r = mij; r < i; r++)
 			{
-				int AddressI = Address[i] + i - M - 1;
-				int AddressJ = Address[j] + j - M - 1;
-				C += K[AddressI] * K[AddressJ] * K[Address[M] - 1];
+				int AddressI = Address[i] + i - r - 1;
+				int AddressJ = Address[j] + j - r - 1;
+
+				C += K[AddressI] * K[AddressJ] * K[Address[r] - 1];
 			}
 
 			if (i == j)
 			{
-				K[CurPostion] = K[CurPostion] - C;
-				if (fabs(K[CurPostion]) < FLT_MIN)
+				K[Address_ij] = K[Address_ij] - C;
+				if (fabs(K[Address_ij]) < FLT_MIN)
 				{
 					cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
                          << "    Euqation no = " << i + 1 << endl;
@@ -90,7 +96,7 @@ void LDLTSolver::LDLT()
 				}
 			}
 			else 
-				K[CurPostion] = (K[CurPostion] - C) / K[Address[i] - 1];
+				K[Address_ij] = (K[Address_ij] - C) / K[Address[i] - 1];
 		}
 	}
 };

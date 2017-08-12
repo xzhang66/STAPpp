@@ -295,6 +295,9 @@ void Outputter::OutputNodalDisplacement(int lcase)
 
 	for (int np = 0; np < FEMData->GetNUMNP(); np++)
 		NodeList[np].WriteNodalDisplacement(OutputFile, np, Displacement);
+
+	cout << endl;
+	OutputFile << endl;
 }
 
 //	Calculate stresses 

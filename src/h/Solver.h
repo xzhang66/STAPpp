@@ -36,10 +36,10 @@ public:
 //	Constructor
 	LDLTSolver(Domain* FEMData) :Solver(FEMData) {};
 
-//	Perform LDLT factorization of the global stiffness matrix
+//	Perform L*D*L(T) factorization of the stiffness matrix
 	void LDLT();
 
-//	Reduce right-hand-side load vector and back substitution
+//	Reduce right-hand-side load vector and back substitute
 	void BackSubstitution(); 
 
 //	Solve the equilibrium equations 
