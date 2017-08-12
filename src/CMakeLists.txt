@@ -1,8 +1,12 @@
-cmake_minimum_required(VERSION 3.9)
-PROJECT(FEMCPP)
+cmake_minimum_required(VERSION 3.0)
+PROJECT(stap++)
+
 INCLUDE_DIRECTORIES(h)
+
 AUX_SOURCE_DIRECTORY(cpp SRC)
 FILE(GLOB_RECURSE HEAD h/*.h)
+
 source_group(SOURCE\ FILES FILES ${SRC})
 source_group(HEADER\ FILES FILES ${HEAD})
-ADD_EXECUTABLE(FEMCPP ${SRC} ${HEAD})
+
+ADD_EXECUTABLE(stap++ ${SRC} ${HEAD})
