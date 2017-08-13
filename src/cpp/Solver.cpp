@@ -22,6 +22,10 @@ void LDLTSolver::Solve()
 
 //	Perform L*D*L(T) factorization of stiffness matrix
 	LDLT();
+	
+#ifdef _DEBUG_
+	Output->PrintStiffnessMatrix();
+#endif
 
 //	Loop over for all load cases
 	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
@@ -33,7 +37,6 @@ void LDLTSolver::Solve()
 		BackSubstitution();
 	
 #ifdef _DEBUG_
-		Outputter* Output = Outputter::Instance();
 		Output->PrintDisplacement(lcase);
 #endif
 
@@ -47,56 +50,64 @@ void LDLTSolver::Solve()
 void LDLTSolver::LDLT()
 {
 	double* K = FEMData->GetStiffnessMatrix();
-
-	unsigned int* Address = FEMData->GetDiagonalAddress();
-
+	unsigned int* Address = FEMData->GetDiagonalAddress();	// Numbering starting from 1
 	unsigned int N = FEMData->GetNEQ();
 
-	for (int j = 0; j < N; j++)      // Loop for column
+	for (int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
 	{
-		double* Columnj = &K[Address[j] - 1];
+		// Array containing elements in column j
+		double* Columnj = &K[Address[j-1] - 1];
 
-        // Total number of non-zero elements in column j (column height + 1)
-		int nEleColumnj = Address[j + 1] - Address[j];
+		// Address of K_jj in banded matrix (Numbering starting from 0);
+		int Address_jj = Address[j-1] - 1;
 
-        // Row number of the first non-zero element in column j
-		int mj = j - nEleColumnj + 1;
+        // Row number of the first non-zero element in column j (Numbering starting from 1)
+		int mj = j - (Address[j] - Address[j-1]) + 1;
         
-//		Loop for all nonzero elements in column j (upper triangular)
-		for (int i = mj; i <= j; i++) 
+		for (int i = mj+1; i <= j-1; i++)	// Loop for mj+1:j-1 (Numbering starting from 1)
 		{
-            // Total number of nonzero elements in column i
-			int nEleColumni = Address[i + 1] - Address[i];
-			double* Columni = &K[Address[i] - 1];
-			int Address_ij = Address[j] + j - i - 1;
-
-			double C = 0;
-            
-            // Row number of the first nonzero element in column i
-			int mi = i - nEleColumni + 1;
+            // Row number of the first nonzero element in column i (Numbering starting from 1)
+			int mi = i - (Address[i] - Address[i-1]) + 1;
             
 			int mij = max(mi, mj);
-			for (int r = mij; r < i; r++)
-			{
-				int AddressI = Address[i] + i - r - 1;
-				int AddressJ = Address[j] + j - r - 1;
 
-				C += K[AddressI] * K[AddressJ] * K[Address[r] - 1];
+			// Array containing elements in column i
+			double* Columni = &K[Address[i-1] - 1];
+            
+			double C = 0.0;
+			for (int r = mij; r <= i-1; r++)	// Loop for max(mi,mj):i-1 (Numbering starting from 1)
+			{
+				// Address of L_ri and U_rj in banded matrix (Numbering starting from 0)
+				int Address_ri = Address[i-1] + i - r - 1;
+				int Address_rj = Address[j-1] + j - r - 1;
+
+				C += K[Address_ri] * K[Address_rj];		// C += L_ri * U_rj
 			}
 
-			if (i == j)
+			// Address of K[i,j] in banded matrix (Numbering starting from 0)
+			int Address_ij = Address[j-1] + j - i - 1;
+
+			K[Address_ij] = K[Address_ij] - C;
+		}
+
+		for (int r = mj; r <= j-1; r++)	// Loop for mj:j-1 (column j)
+		{
+			// Address of U_rj and D_rr in banded matrix (Numbering starting from 0)
+			int Address_rj = Address[j-1] + j - r - 1;	
+			int Address_rr = Address[r-1] - 1;
+
+			double Lrj = K[Address_rj] / K[Address_rr];	// L_rj = U_rj / D_rr
+			K[Address_jj] = K[Address_jj]  - Lrj * K[Address_rj];	// D_jj = K_jj - sum(L_rj*U_rj, r=mj:j-1)
+			K[Address_rj] = Lrj;
+
+			if (fabs(K[Address_jj]) <= FLT_MIN)
 			{
-				K[Address_ij] = K[Address_ij] - C;
-				if (fabs(K[Address_ij]) < FLT_MIN)
-				{
-					cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
-                         << "    Euqation no = " << i + 1 << endl;
+				cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
+                     << "    Euqation no = " << r + 1 << endl
+					 << "    Pivot = " << K[Address_jj] << endl;
 
                     exit(4);
 				}
-			}
-			else 
-				K[Address_ij] = (K[Address_ij] - C) / K[Address[i] - 1];
 		}
 	}
 };
@@ -104,44 +115,36 @@ void LDLTSolver::LDLT()
 // Solve displacement by back substitution
 void LDLTSolver::BackSubstitution()
 {
-	double* Force = FEMData->GetForce();        //  Force vector
+	double* Force = FEMData->GetForce();        //  Force vector (Numering starting from 1)
 	double* K = FEMData->GetStiffnessMatrix();  //  Factorized stiffness matrix
-	double* U = FEMData->GetDisplacement();     //  Displacement vector
 
-	unsigned int* Address = FEMData->GetDiagonalAddress();
-	unsigned int NEQ = FEMData->GetNEQ();
+	unsigned int* Address = FEMData->GetDiagonalAddress(); // Numering starting from 1
+	unsigned int N = FEMData->GetNEQ();
 
-	// L * V = F , V and F share same storage
-	for (int i = 0; i < NEQ; i++)
+//	Reduce right-hand-side load vector
+	for (int i = 2; i <= N; i++)	// Loop for i=2:N (Numering starting from 1)
 	{
-		int Height = Address[i + 1] - Address[i];
-		int CurPos = Address[i + 1] - 2;
-		for (int M = i - Height + 1; M < i; M++)
+		int mi = i - (Address[i] - Address[i-1]) + 1;
+
+		for (int j = mi; j <= i-1; j++)	// Loop for j=mi:i-1
 		{
-			Force[i] -= K[CurPos] * Force[M];
-			CurPos--;
+			int Address_ji = Address[i-1] + i - j - 1;
+			Force[i-1] = Force[i-1] - K[Address_ji] * Force[j-1];
 		}
 	}
 
-	// D * S = V,  S, V and F share same storage
-	for (int i = 0; i < NEQ; i++)
-	{
-		Force[i] = Force[i] / K[Address[i] - 1];
-	}
+//	Back substitute
+	for (int i = 1; i <= N; i++)	// Loop for i=1:N
+		Force[i-1] = Force[i-1] / K[Address[i-1] - 1];
 
-	// LT * U = V
-	for (int i = NEQ - 1; i >= 0; i--)
+	for (int j = N; j >= 2; j--)	// Loop for j=N:2
 	{
-		double C = 0;
-		for (int M = NEQ - 1; M > i; M--)
+		int mj = j - (Address[j] - Address[j-1]) + 1;
+
+		for (int i = mj; i <= j-1; i++)	// Loop for i=mj:j-1
 		{
-			int Height = Address[M + 1] - Address[M];
-			if (M - Height + 1 <= i) 
-				C += K[Address[M] - 1 + M - i] * Force[M];
+			int Address_ij = Address[j-1] + j - i - 1;
+			Force[i-1] -= K[Address_ij] * Force[j-1];
 		}
-		Force[i] = Force[i] - C;
 	}
-
-	for (int i = 0; i < NEQ; i++) 
-		U[i] = Force[i];
 };

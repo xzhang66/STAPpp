@@ -313,10 +313,10 @@ void Outputter::OutputElementStress()
 
 	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp << endl << endl
+		cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl
 			 << "  ELEMENT             FORCE            STRESS" << endl 
 			 << "  NUMBER" << endl;
-		OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp << endl << endl
+		OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl
 				   << "  ELEMENT             FORCE            STRESS" << endl 
 				   << "  NUMBER" << endl;
 

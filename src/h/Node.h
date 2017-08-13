@@ -13,8 +13,6 @@
 
 using namespace std;
 
-// #define _DEBUG_    /* Used for print results for debuging purpose */
-
 //	Node class
 class Node
 {
