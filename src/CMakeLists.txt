@@ -1,5 +1,11 @@
-cmake_minimum_required(VERSION 3.0)
 PROJECT(stap++)
+
+cmake_minimum_required(VERSION 3.0)
+
+OPTION(STAP++_DEBUG "Output detailed results for debugging." ON)
+IF(STAP++_DEBUG)
+   ADD_DEFINITIONS(-D_DEBUG_)
+ENDIF()
 
 INCLUDE_DIRECTORIES(h)
 
