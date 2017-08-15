@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
 	if (argc != 2) //  Print help message
 	{
-	    cout << "Usage: FEM++ InputFileName\n";
+	    cout << "Usage: stap++ InputFileName\n";
 		exit(1);
 	}
 
@@ -27,12 +27,9 @@ int main(int argc, char *argv[])
 	string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
-	Outputter* Output = Outputter::Instance(OutFile);
-
 	Domain* FEMData = Domain::Instance();
-	FEMData->SetOutputFile(Output->GetOutputFile());
 
-	if (!FEMData->ReadData(InFile))
+	if (!FEMData->ReadData(InFile, OutFile))
 	{
 		cout << "*** Error *** Data input failed!" << endl;
 		exit(1);
@@ -44,6 +41,7 @@ int main(int argc, char *argv[])
 	LDLTSolver* S = new LDLTSolver(FEMData);
 	S->Solve();
 	
+	Outputter* Output = Outputter::Instance();
 	Output->OutputElementStress();
 
 	return 0;

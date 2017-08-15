@@ -119,11 +119,8 @@ public:
 //	Return pointer to the instance of the Domain class
 	static Domain* Instance();
 
-//	Set Output file stream
-	inline void SetOutputFile(ofstream* ofs) { OutputFile = ofs; }
-
 //	Read domain data from the input data file
-	bool ReadData(string FileName);
+	bool ReadData(string FileName, string OutFile);
 
 //	Read nodal point data
 	bool ReadNodalPoints();

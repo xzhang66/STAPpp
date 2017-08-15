@@ -88,17 +88,17 @@ Domain* Domain::Instance()
 }
 
 //	Read domain data from the input data file
-bool Domain::ReadData(string FileName)
+bool Domain::ReadData(string FileName, string OutFile)
 {
 	Input.open(FileName);
-
-	Outputter* Output = Outputter::Instance();
 
 	if (!Input) 
 	{
 		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
 		exit(3);
 	}
+
+	Outputter* Output = Outputter::Instance(OutFile);
 
 //	Read the heading line
 	Input.getline(Title, 256);
