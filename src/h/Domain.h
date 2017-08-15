@@ -141,10 +141,10 @@ public:
 	void CalculateEquationNumber();
 
 //	Calculate column heights
-	void Domain::CalculateColumnHeights();
+	void CalculateColumnHeights();
 
 //	Calculate address of diagonal elements in banded matrix
-	void Domain::CalculateDiagnoalAddress();
+	void CalculateDiagnoalAddress();
 
 //	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
 //	and calculate the column heights and address of diagonal elements
