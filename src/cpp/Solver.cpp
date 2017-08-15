@@ -77,7 +77,8 @@ void LDLTSolver::LDLT()
 			for (int r = mm; r <= i-1; r++)	// Loop for max(mi,mj):i-1 (Numbering starting from 1)
 				C += K[Address_mmi++] * K[Address_mmj++];		// C += L_ri * U_rj
 
-			K[++Address_mjj] = K[Address_mjj] - C;	// U_ij = K_ij - C
+            Address_mjj++;  // Address of K_ij in banded matrix
+			K[Address_mjj] = K[Address_mjj] - C;	// U_ij = K_ij - C
 		}
 
 		// Address of K_mj,j in banded matrix (Numbering starting from 0);
