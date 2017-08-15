@@ -18,8 +18,8 @@ using namespace std;
 //	Output current time and date
 void Outputter::PrintTime(const struct tm * ptm, ostream& output)
 {
-	char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-	char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August", 
+	const char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	const char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August",
 		               "September", "October", "November", "December"};
 
 	output << "        (";

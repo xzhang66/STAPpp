@@ -8,11 +8,11 @@
 
 #pragma once
 
-using namespace std;
-
 #include <stddef.h>
 #include <iostream>
 #include <fstream>
+
+using namespace std;
 
 //	Material base class which only define one data member
 //	All type of material classes should be derived from this base class

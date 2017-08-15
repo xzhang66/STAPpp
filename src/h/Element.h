@@ -8,8 +8,6 @@
 
 #pragma once
 
-using namespace std;
-
 #include <stddef.h>
 #include <vector>
 #include <string>
@@ -18,6 +16,8 @@ using namespace std;
 
 #include "Node.h"
 #include "Material.h"
+
+using namespace std;
 
 class Domain;
 
