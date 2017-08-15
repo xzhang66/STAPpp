@@ -28,7 +28,7 @@ void LDLTSolver::Solve()
 #endif
 
 //	Loop over for all load cases
-	for (int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
+	for (unsigned int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
 	{
 //		Assemble righ-hand-side vector (force vector)
 		FEMData->AssembleForce(lcase + 1);
@@ -53,7 +53,7 @@ void LDLTSolver::LDLT()
 	unsigned int* Address = FEMData->GetDiagonalAddress();	// Numbering starting from 1
 	unsigned int N = FEMData->GetNEQ();
 
-	for (int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
+	for (unsigned int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
 	{
         // Row number of the first non-zero element in column j (Numbering starting from 1)
 		int mj = j - (Address[j] - Address[j-1]) + 1;
@@ -62,7 +62,7 @@ void LDLTSolver::LDLT()
 		int Address_jj = Address[j-1] - 1;
 		int Address_mjj = Address[j-1] + j - mj - 1;
         
-		for (int i = mj+1; i <= j-1; i++)	// Loop for mj+1:j-1 (Numbering starting from 1)
+		for (unsigned int i = mj+1; i <= j-1; i++)	// Loop for mj+1:j-1 (Numbering starting from 1)
 		{
             // Row number of the first nonzero element in column i (Numbering starting from 1)
 			int mi = i - (Address[i] - Address[i-1]) + 1;
@@ -74,7 +74,7 @@ void LDLTSolver::LDLT()
 			int Address_mmj = Address[j-1] + j - mm - 1;
             
 			double C = 0.0;
-			for (int r = mm; r <= i-1; r++)	// Loop for max(mi,mj):i-1 (Numbering starting from 1)
+			for (unsigned int r = mm; r <= i-1; r++)	// Loop for max(mi,mj):i-1 (Numbering starting from 1)
 				C += K[Address_mmi++] * K[Address_mmj++];		// C += L_ri * U_rj
 
             Address_mjj++;  // Address of K_ij in banded matrix
@@ -84,7 +84,7 @@ void LDLTSolver::LDLT()
 		// Address of K_mj,j in banded matrix (Numbering starting from 0);
 		Address_mjj = Address[j-1] + j - mj - 1;
 
-		for (int r = mj; r <= j-1; r++)	// Loop for mj:j-1 (column j)
+		for (unsigned int r = mj; r <= j-1; r++)	// Loop for mj:j-1 (column j)
 		{
 			double Lrj = K[Address_mjj] / K[Address[r-1] - 1];	// L_rj = U_rj / D_rr
 			K[Address_jj] = K[Address_jj]  - Lrj * K[Address_mjj];	// D_jj = K_jj - sum(L_rj*U_rj, r=mj:j-1)
@@ -112,16 +112,16 @@ void LDLTSolver::BackSubstitution()
 	unsigned int N = FEMData->GetNEQ();
 
 //	Reduce right-hand-side load vector (LV = R)
-	for (int i = 2; i <= N; i++)	// Loop for i=2:N (Numering starting from 1)
+	for (unsigned int i = 2; i <= N; i++)	// Loop for i=2:N (Numering starting from 1)
 	{
 		int mi = i - (Address[i] - Address[i-1]) + 1;
 
-		for (int j = mi; j <= i-1; j++)	// Loop for j=mi:i-1
+		for (unsigned int j = mi; j <= i-1; j++)	// Loop for j=mi:i-1
 			Force[i-1] = Force[i-1] - K[Address[i-1] + i - j - 1] * Force[j-1];	// V_i = R_i - sum_j (L_ji V_j)
 	}
 
 //	Back substitute (Vbar = D^(-1) V, L^T a = Vbar)
-	for (int i = 1; i <= N; i++)	// Loop for i=1:N
+	for (unsigned int i = 1; i <= N; i++)	// Loop for i=1:N
 		Force[i-1] = Force[i-1] / K[Address[i-1] - 1];	// Vbar = D^(-1) V
 
 	for (int j = N; j >= 2; j--)	// Loop for j=N:2

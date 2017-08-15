@@ -152,7 +152,7 @@ void Outputter::OutputElementInfo()
 	cout << " E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
 	OutputFile << "E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
 
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
 		cout << " E L E M E N T   D E F I N I T I O N" << endl << endl;
 		OutputFile << " E L E M E N T   D E F I N I T I O N" << endl << endl;
@@ -229,7 +229,7 @@ void Outputter::PrintBarElementData(int EleGrp)
 	unsigned int* NUME = FEMData->GetNUME();
 
 //	Loop over for all elements in group EleGrp
-	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
 		ElementGroup[Ele].Write(OutputFile, Ele);
 
 	cout << endl;
@@ -241,7 +241,7 @@ void Outputter::OutputLoadInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
-	for (int lcase = 1; lcase <= FEMData->GetNLCASE(); lcase++)
+	for (unsigned int lcase = 1; lcase <= FEMData->GetNLCASE(); lcase++)
 	{
 		LoadCaseData* LoadData = &FEMData->GetLoadCases()[lcase - 1];
 
@@ -285,7 +285,7 @@ void Outputter::OutputNodalDisplacement(int lcase)
 	OutputFile << " D I S P L A C E M E N T S" << endl << endl;
 	OutputFile << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
-	for (int np = 0; np < FEMData->GetNUMNP(); np++)
+	for (unsigned int np = 0; np < FEMData->GetNUMNP(); np++)
 		NodeList[np].WriteNodalDisplacement(OutputFile, np, Displacement);
 
 	cout << endl;
@@ -303,7 +303,7 @@ void Outputter::OutputElementStress()
 	unsigned int* NUME = FEMData->GetNUME();
 	Element** ElementSetList = FEMData->GetElementSetList();
 
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
 		cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl
 			 << "  ELEMENT             FORCE            STRESS" << endl 
@@ -313,7 +313,7 @@ void Outputter::OutputElementStress()
 				   << "  NUMBER" << endl;
 
 		double stress;
-		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
 		{
 			ElementSetList[EleGrp][Ele].ElementStress(&stress, Displacement);
 

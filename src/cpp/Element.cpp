@@ -38,7 +38,7 @@ void Element::CalculateColumnHeight(unsigned int* ColumnHeight)
 		if (!column)
 			continue;
 
-		int Height = column - nfirstrow;
+		unsigned int Height = column - nfirstrow;
 		if (ColumnHeight[column-1] < Height) ColumnHeight[column-1] = Height;
 	}
 }

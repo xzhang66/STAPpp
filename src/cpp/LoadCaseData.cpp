@@ -57,7 +57,7 @@ bool LoadCaseData :: Read(ifstream& Input, int lcase)
 //	Write load case data to stream OutputFile
 void LoadCaseData::Write(ofstream& OutputFile, int lcase)
 {
-	for (int i = 0; i < nloads; i++)
+	for (unsigned int i = 0; i < nloads; i++)
 	{
 		cout << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;
 		OutputFile << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;

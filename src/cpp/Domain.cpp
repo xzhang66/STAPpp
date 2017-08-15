@@ -134,7 +134,7 @@ bool Domain::ReadNodalPoints()
 	NodeList = new Node[NUMNP];
 
 //	Loop over for all nodal points
-	for (int np = 0; np < NUMNP; np++)
+	for (unsigned int np = 0; np < NUMNP; np++)
 		if (!NodeList[np].Read(Input, np))
 			return false;
 
@@ -145,7 +145,7 @@ bool Domain::ReadNodalPoints()
 void Domain::CalculateEquationNumber()
 {
 	NEQ = 0;
-	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
+	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
 	{
 		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
 		{
@@ -167,7 +167,7 @@ bool Domain::ReadLoadCases()
 	LoadCases = new LoadCaseData[NLCASE];	// List all load cases
 
 //	Loop over for all load cases
-	for (int lcase = 0; lcase < NLCASE; lcase++)
+	for (unsigned int lcase = 0; lcase < NLCASE; lcase++)
 		if (!LoadCases[lcase].Read(Input, lcase))
 			return false;
 
@@ -187,7 +187,7 @@ bool Domain::ReadElements()
 	MaterialSetList = new Material*[NUMEG];	// Material list in each group
 
 //	Loop over for all element group
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
 		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
 
@@ -211,7 +211,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
 
 //	Loop over for all material property sets in group EleGrp
-	for (int mset = 0; mset < NUMMAT[EleGrp]; mset++)
+	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
 		if (!MaterialSetList[EleGrp][mset].Read(Input, mset))
 			return false;
 
@@ -219,7 +219,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 	ElementSetList[EleGrp] = new Bar[NUME[EleGrp]];	// Elements of gorup EleGrp
 
 //	Loop over for all elements in group EleGrp
-	for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
 		if (!ElementSetList[EleGrp][Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
 			return false;
 
@@ -231,14 +231,14 @@ void Domain::CalculateColumnHeights()
 {
 	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
-		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
+	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
+		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
 			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
 
 //	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
 	MK = ColumnHeights[0];
 
-	for (int i=1; i<NEQ; i++)
+	for (unsigned int i=1; i<NEQ; i++)
 		if (MK < ColumnHeights[i])
 			MK = ColumnHeights[i];
 
@@ -260,7 +260,7 @@ void Domain::CalculateDiagnoalAddress()
 //	Calculate the address of diagonal elements
 //	M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
 	DiagonalAddress[0] = 1;
-	for (int col = 1; col <= NEQ; col++)
+	for (unsigned int col = 1; col <= NEQ; col++)
 		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
 
 //	Number of elements in banded global stiffness matrix
@@ -277,13 +277,13 @@ void Domain::CalculateDiagnoalAddress()
 void Domain::AssembleStiffnessMatrix()
 {
 //	Loop over for all element groups
-	for (int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
 		unsigned int size = ElementSetList[EleGrp][0].SizeOfStiffnessMatrix();
 		double* Matrix = new double[size];
 
 //		Loop over for all elements in group EleGrp
-		for (int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
 			ElementSetList[EleGrp][Ele].assembly(Matrix, StiffnessMatrix, DiagonalAddress);
 
 		delete [] Matrix;
@@ -307,7 +307,7 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 	clear(Force, NEQ);
 
 //	Loop over for all concentrated loads in load case LoadCase
-	for (int lnum = 0; lnum < LoadData->nloads; lnum++)
+	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
 		int dof = NodeList[LoadData->node[lnum] - 1].bcode[LoadData->dof[lnum] - 1];
 		Force[dof - 1] += LoadData->load[lnum];
