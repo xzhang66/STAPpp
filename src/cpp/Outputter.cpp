@@ -81,9 +81,6 @@ void Outputter::OutputNodeInfo()
 	cout << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
 	OutputFile << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
 
-//	Number of lines printed in each page
-	int Page = 30;
-
 	cout << setiosflags(ios::scientific) <<setprecision(5);
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
@@ -149,13 +146,8 @@ void Outputter::OutputElementInfo()
 //	Print element group control line
 
 	Domain* FEMData = Domain::Instance();
-
+    
 	unsigned int NUMEG = FEMData->GetNUMEG();
-	unsigned int* NUME = FEMData->GetNUME();
-	Element** ElementSetList = FEMData->GetElementSetList();
-
-	unsigned int* NUMMAT = FEMData->GetNUMMAT();
-	Material** MaterialSetList = FEMData->GetMaterialSetList();
 
 	cout << " E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
 	OutputFile << "E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
