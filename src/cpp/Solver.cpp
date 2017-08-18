@@ -1,5 +1,5 @@
 /*****************************************************************************/
-/*  FEM++ : A C++ FEM code sharing the same input data file with STAP90      */
+/*  STAP++ : A C++ FEM code sharing the same input data file with STAP90     */
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */

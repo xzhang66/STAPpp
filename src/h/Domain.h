@@ -1,5 +1,5 @@
 /*****************************************************************************/
-/*  FEM++ : A C++ FEM code sharing the same input data file with STAP90      */
+/*  STAP++ : A C++ FEM code sharing the same input data file with STAP90     */
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
@@ -36,9 +36,6 @@ private:
 
 //	Input file stream for reading data from input data file
 	ifstream Input;
-
-//	File stream for output (obtained from Outputter class)
-	ofstream* OutputFile;
 
 //	Heading information for use in labeling the outpu
 	char Title[256]; 
