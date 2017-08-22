@@ -13,18 +13,18 @@
 using namespace std;
 
 // Bar element class
-class Bar : public Element
+class CBar : public CElement
 {
 public:
 
 //	Constructor
-	Bar();
+	CBar();
 
 //	Desconstructor
-	~Bar();
+	~CBar();
 
 //	Read element data from stream Input
-	virtual bool Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList);
+	virtual bool Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList);
 
 //	Write element data to stream OutputFile
 	virtual void Write(ofstream& OutputFile, int Ele);

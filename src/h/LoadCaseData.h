@@ -14,7 +14,7 @@
 using namespace std;
 
 // Structure LoadData is used to store load data
-class LoadCaseData
+class CLoadCaseData
 {
 public:
 
@@ -25,8 +25,8 @@ public:
 
 public:
 
-	LoadCaseData() : nloads(0), node(NULL), dof(NULL), load(NULL) {}; 
-	~LoadCaseData();
+	CLoadCaseData() : nloads(0), node(NULL), dof(NULL), load(NULL) {};
+	~CLoadCaseData();
 
 //	Set nloads, and new array node, dof and load
 	void Allocate(int num);

@@ -15,22 +15,22 @@
 using namespace std;
 
 //	Constructor
-Bar::Bar()
+CBar::CBar()
 {
 	NEN = 2;	// Each element has 2 nodes
-	nodes = new Node*[NEN];
+	nodes = new CNode*[NEN];
 
 	ElementMaterial = NULL;
 }
 
 //	Desconstructor
-Bar::~Bar()
+CBar::~CBar()
 {
 	delete [] nodes;
 }
 
 //	Read element data from stream Input
-bool Bar::Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList)
+bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList)
 {
 	int N;
 
@@ -57,7 +57,7 @@ bool Bar::Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList)
 }
 
 //	Write element data to stream OutputFile
-void Bar::Write(ofstream& OutputFile, int Ele)
+void CBar::Write(ofstream& OutputFile, int Ele)
 {
 	cout << setw(5) << Ele+1 << setw(11) << nodes[0]->NodeNumber 
 		 << setw(9) << nodes[1]->NodeNumber << setw(12) << ElementMaterial->nset << endl;
@@ -68,11 +68,11 @@ void Bar::Write(ofstream& OutputFile, int Ele)
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 //	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
 //	has 21 elements
-unsigned int Bar::SizeOfStiffnessMatrix() { return 21; }
+unsigned int CBar::SizeOfStiffnessMatrix() { return 21; }
 
 //	Calculate element stiffness matrix 
 //	Upper triangular matrix, stored as an array column by colum starting from the diagonal element
-void Bar::ElementStiffness(double* Matrix)
+void CBar::ElementStiffness(double* Matrix)
 {
 	clear(Matrix, SizeOfStiffnessMatrix());
 
@@ -94,7 +94,7 @@ void Bar::ElementStiffness(double* Matrix)
 
 //	Calculate element stiffness matrix
 
-	BarMaterial* material = (BarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
 
 	double k = material->E * material->Area / L / L2;
 
@@ -122,9 +122,9 @@ void Bar::ElementStiffness(double* Matrix)
 }
 
 //	Calculate element stress 
-void Bar::ElementStress(double* stress, double* Displacement)
+void CBar::ElementStress(double* stress, double* Displacement)
 {
-	BarMaterial* material = (BarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
 
 	double DX[3];	//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	double L2 = 0;	//	Square of bar length (L^2)

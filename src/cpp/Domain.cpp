@@ -22,10 +22,10 @@ template <class type> void clear( type* a, int N )
 		a[i] = 0;
 }
 
-Domain* Domain::_instance = NULL;
+CDomain* CDomain::_instance = NULL;
 
 //	Constructor
-Domain::Domain()
+CDomain::CDomain()
 {
 	Title[0] = '0';
 	MODEX = 0;
@@ -57,7 +57,7 @@ Domain::Domain()
 }
 
 //	Desconstructor
-Domain::~Domain()
+CDomain::~CDomain()
 {
 	delete [] NodeList;
 
@@ -79,16 +79,16 @@ Domain::~Domain()
 }
 
 //	Return pointer to the instance of the Domain class
-Domain* Domain::Instance()
+CDomain* CDomain::Instance()
 {
 	if (!_instance) 
-		_instance = new Domain;
+		_instance = new CDomain;
 	
 	return _instance;
 }
 
 //	Read domain data from the input data file
-bool Domain::ReadData(string FileName, string OutFile)
+bool CDomain::ReadData(string FileName, string OutFile)
 {
 	Input.open(FileName);
 
@@ -98,7 +98,7 @@ bool Domain::ReadData(string FileName, string OutFile)
 		exit(3);
 	}
 
-	Outputter* Output = Outputter::Instance(OutFile);
+	COutputter* Output = COutputter::Instance(OutFile);
 
 //	Read the heading line
 	Input.getline(Title, 256);
@@ -127,11 +127,11 @@ bool Domain::ReadData(string FileName, string OutFile)
 }
 
 //	Read nodal point data
-bool Domain::ReadNodalPoints()
+bool CDomain::ReadNodalPoints()
 {
 
 //	Read nodal point data lines
-	NodeList = new Node[NUMNP];
+	NodeList = new CNode[NUMNP];
 
 //	Loop over for all nodal points
 	for (unsigned int np = 0; np < NUMNP; np++)
@@ -142,12 +142,12 @@ bool Domain::ReadNodalPoints()
 }
 
 //	Calculate global equation numbers corresponding to every degree of freedom of each node
-void Domain::CalculateEquationNumber()
+void CDomain::CalculateEquationNumber()
 {
 	NEQ = 0;
 	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
 	{
-		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
+		for (int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 		{
 			if (NodeList[np].bcode[dof]) 
 				NodeList[np].bcode[dof] = 0;
@@ -161,10 +161,10 @@ void Domain::CalculateEquationNumber()
 }
 
 //	Read load case data
-bool Domain::ReadLoadCases()
+bool CDomain::ReadLoadCases()
 {
 //	Read load data lines
-	LoadCases = new LoadCaseData[NLCASE];	// List all load cases
+	LoadCases = new CLoadCaseData[NLCASE];	// List all load cases
 
 //	Loop over for all load cases
 	for (unsigned int lcase = 0; lcase < NLCASE; lcase++)
@@ -175,16 +175,16 @@ bool Domain::ReadLoadCases()
 }
 
 // Read element data
-bool Domain::ReadElements()
+bool CDomain::ReadElements()
 {
 
 //	Read element group control line
 	ElementTypes = new unsigned int[NUMEG];	// Element type of each group
 	NUME = new unsigned int[NUMEG];			// Number of elements in each group
-	ElementSetList = new Element*[NUMEG];	// Element list in each group
+	ElementSetList = new CElement*[NUMEG];	// Element list in each group
 
 	NUMMAT = new unsigned int[NUMEG];		// Material set number of each group
-	MaterialSetList = new Material*[NUMEG];	// Material list in each group
+	MaterialSetList = new CMaterial*[NUMEG];	// Material list in each group
 
 //	Loop over for all element group
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
@@ -205,10 +205,10 @@ bool Domain::ReadElements()
 }
 
 //	Read bar element data from the input data file
-bool Domain::ReadBarElementData(int EleGrp)
+bool CDomain::ReadBarElementData(int EleGrp)
 {
 //	Read material/section property lines
-	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
+	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
 
 //	Loop over for all material property sets in group EleGrp
 	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
@@ -216,7 +216,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 			return false;
 
 //	Read element data lines
-	ElementSetList[EleGrp] = new Bar[NUME[EleGrp]];	// Elements of gorup EleGrp
+	ElementSetList[EleGrp] = new CBar[NUME[EleGrp]];	// Elements of gorup EleGrp
 
 //	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
@@ -227,7 +227,7 @@ bool Domain::ReadBarElementData(int EleGrp)
 }
 
 //	Calculate column heights
-void Domain::CalculateColumnHeights()
+void CDomain::CalculateColumnHeights()
 {
 	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
@@ -245,7 +245,7 @@ void Domain::CalculateColumnHeights()
 	MK = MK + 1;
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintColumnHeights();
 #endif
 
@@ -253,7 +253,7 @@ void Domain::CalculateColumnHeights()
 
 //	Calculate address of diagonal elements in banded matrix
 //	Caution: Address is numbered from 1 !
-void Domain::CalculateDiagnoalAddress()
+void CDomain::CalculateDiagnoalAddress()
 {
 	clear(DiagonalAddress, NEQ + 1);	// Set all elements to zero
 
@@ -267,14 +267,14 @@ void Domain::CalculateDiagnoalAddress()
 	NWK = DiagonalAddress[NEQ] - DiagonalAddress[0];
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintDiagonalAddress();
 #endif
 
 }
 
 //	Assemble the banded gloabl stiffness matrix
-void Domain::AssembleStiffnessMatrix()
+void CDomain::AssembleStiffnessMatrix()
 {
 //	Loop over for all element groups
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
@@ -290,19 +290,19 @@ void Domain::AssembleStiffnessMatrix()
 	}
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintStiffnessMatrix();
 #endif
 
 }
 
 //	Assemble the global nodal force vector for load case LoadCase
-bool Domain::AssembleForce(unsigned int LoadCase)
+bool CDomain::AssembleForce(unsigned int LoadCase)
 {
 	if (LoadCase > NLCASE) 
 		return false;
 
-	LoadCaseData* LoadData = &LoadCases[LoadCase - 1];
+	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
 	clear(Force, NEQ);
 
@@ -318,7 +318,7 @@ bool Domain::AssembleForce(unsigned int LoadCase)
 
 //	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
 //	and calculate the column heights and address of diagonal elements
-void Domain::AllocateMatrices()
+void CDomain::AllocateMatrices()
 {
 //	Allocate for global force/displacement vector
 	Force = new double[NEQ];
@@ -339,6 +339,6 @@ void Domain::AllocateMatrices()
 	StiffnessMatrix = new double[NWK];
 	clear(StiffnessMatrix, NWK);
 
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->OutputTotalSystemData();
 }

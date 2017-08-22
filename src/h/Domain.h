@@ -23,16 +23,14 @@ using namespace std;
 //	Clear an array
 template <class type> void clear( type* a, int N );
 
-class Domain;
-
 //	Domain class : Define the problem domain
 //	Only a single instance of Domain class can be created
-class Domain
+class CDomain
 {
 private:
 
 //	The instance of the Domain class
-	static Domain* _instance;
+	static CDomain* _instance;
 
 //	Input file stream for reading data from input data file
 	ifstream Input;
@@ -49,7 +47,7 @@ private:
 	unsigned int NUMNP;
 
 //	List of all nodes in the domain
-	Node* NodeList; 
+	CNode* NodeList;
 
 //	Total number of element groups. An element group consists of a convenient
 //	collection of elements with same type
@@ -64,7 +62,7 @@ private:
 //	Element Set List 
 //		ElementSetList[i] - ith element set
 //		ElementSetList[i][j] - jth element in ith set
-	Element** ElementSetList;
+	CElement** ElementSetList;
 
 //	Number of different sets of material/section properties in each element group
 	unsigned int* NUMMAT;
@@ -72,13 +70,13 @@ private:
 //	Material set list
 //		MaterialSetList[i] - ith material set
 //		MaterialSetList[i][j] - jth material in ith set
-	Material** MaterialSetList;
+	CMaterial** MaterialSetList;
 
 //	Number of load cases
 	unsigned int NLCASE;
 
 //	List of all load cases
-	LoadCaseData* LoadCases;
+	CLoadCaseData* LoadCases;
 
 //	Number of concentrated loads applied in each load case
 	unsigned int* NLOAD;
@@ -108,13 +106,13 @@ private:
 public:
 
 //	Constructor
-	Domain();
+	CDomain();
 
 //	Desconstructor
-	~Domain();
+	~CDomain();
 
 //	Return pointer to the instance of the Domain class
-	static Domain* Instance();
+	static CDomain* Instance();
 
 //	Read domain data from the input data file
 	bool ReadData(string FileName, string OutFile);
@@ -169,7 +167,7 @@ public:
 	inline unsigned int GetMK() { return MK; }
 
 //	Return the node list
-	inline Node* GetNodeList() { return NodeList; }
+	inline CNode* GetNodeList() { return NodeList; }
 
 //	Return the number of elements in each element group
 	inline unsigned int* GetNUME() { return NUME; }
@@ -181,13 +179,13 @@ public:
 	inline unsigned int* GetElementTypes() {return ElementTypes; }
 
 //	Return element Set List 
-	inline Element** GetElementSetList() { return ElementSetList; }
+	inline CElement** GetElementSetList() { return ElementSetList; }
 
 //	Return number of different sets of material/section properties in each element group
 	inline unsigned int* GetNUMMAT() { return NUMMAT; }
 
 //	Return material set list
-	inline Material** GetMaterialSetList() { return MaterialSetList; }
+	inline CMaterial** GetMaterialSetList() { return MaterialSetList; }
 
 //	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }
@@ -202,7 +200,7 @@ public:
 	inline unsigned int* GetNLOAD() { return NLOAD; }
 
 //	Return the list of load cases
-	inline LoadCaseData* GetLoadCases() { return LoadCases; }
+	inline CLoadCaseData* GetLoadCases() { return LoadCases; }
 
 //	Return column heights
 	inline unsigned int* GetColumnHeights() { return ColumnHeights; }

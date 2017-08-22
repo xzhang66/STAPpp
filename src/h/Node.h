@@ -14,7 +14,7 @@
 using namespace std;
 
 //	Node class
-class Node
+class CNode
 {
 public:
 
@@ -36,7 +36,7 @@ public:
 	int bcode[NDF];
 
 //	Constructor
-	Node(double X = 0, double Y = 0, double Z = 0);
+	CNode(double X = 0, double Y = 0, double Z = 0);
 
 //	Read nodal point data from stream Input
 	bool Read(ifstream& Input, int np);

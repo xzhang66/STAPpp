@@ -13,14 +13,14 @@
 
 using namespace std;
 
-LoadCaseData :: ~LoadCaseData()
+CLoadCaseData :: ~CLoadCaseData()
 {
 	delete [] node;
 	delete [] dof;
 	delete [] load;
 }
 
-void LoadCaseData :: Allocate(int num)
+void CLoadCaseData :: Allocate(int num)
 {
 	nloads = num;
 	node = new unsigned int[nloads];
@@ -29,7 +29,7 @@ void LoadCaseData :: Allocate(int num)
 }; 
 
 //	Read load case data from stream Input
-bool LoadCaseData :: Read(ifstream& Input, int lcase)
+bool CLoadCaseData :: Read(ifstream& Input, int lcase)
 {
 //	Load case number (LL) and number of concentrated loads in this load case(NL)
 	
@@ -55,7 +55,7 @@ bool LoadCaseData :: Read(ifstream& Input, int lcase)
 }
 
 //	Write load case data to stream OutputFile
-void LoadCaseData::Write(ofstream& OutputFile, int lcase)
+void CLoadCaseData::Write(ofstream& OutputFile, int lcase)
 {
 	for (unsigned int i = 0; i < nloads; i++)
 	{
