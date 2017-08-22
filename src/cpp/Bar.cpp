@@ -18,7 +18,7 @@ using namespace std;
 CBar::CBar()
 {
 	NEN = 2;	// Each element has 2 nodes
-	nodes = new Node*[NEN];
+	nodes = new CNode*[NEN];
 
 	ElementMaterial = NULL;
 }
@@ -30,7 +30,7 @@ CBar::~CBar()
 }
 
 //	Read element data from stream Input
-bool CBar::Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList)
+bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList)
 {
 	int N;
 
@@ -94,7 +94,7 @@ void CBar::ElementStiffness(double* Matrix)
 
 //	Calculate element stiffness matrix
 
-	BarMaterial* material = (BarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
 
 	double k = material->E * material->Area / L / L2;
 
@@ -124,7 +124,7 @@ void CBar::ElementStiffness(double* Matrix)
 //	Calculate element stress 
 void CBar::ElementStress(double* stress, double* Displacement)
 {
-	BarMaterial* material = (BarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
 
 	double DX[3];	//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	double L2 = 0;	//	Square of bar length (L^2)

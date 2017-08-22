@@ -28,7 +28,7 @@ void COutputter::PrintTime(const struct tm * ptm, ostream& output)
 		   << weekday[ptm->tm_wday] << ")" << endl << endl;
 }
 
-Outputter* COutputter::_instance = NULL;
+COutputter* COutputter::_instance = NULL;
 
 //	Constructor
 COutputter::COutputter(string FileName)
@@ -43,16 +43,16 @@ COutputter::COutputter(string FileName)
 }
 
 //	Return the single instance of the class
-Outputter* COutputter::Instance(string FileName)
+COutputter* COutputter::Instance(string FileName)
 {
-	if (!_instance) _instance = new Outputter(FileName);
+	if (!_instance) _instance = new COutputter(FileName);
 	return _instance;
 }
 
 //	Print program logo
 void COutputter::OutputHeading()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	cout << "TITLE : " << FEMData->GetTitle() << endl;
 	OutputFile << "TITLE : " << FEMData->GetTitle() << endl;
@@ -74,9 +74,9 @@ void COutputter::OutputHeading()
 //	Print nodal data
 void COutputter::OutputNodeInfo()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
-	Node* NodeList = FEMData->GetNodeList();
+	CNode* NodeList = FEMData->GetNodeList();
 
 	cout << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
 	OutputFile << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
@@ -120,10 +120,10 @@ void COutputter::OutputNodeInfo()
 //	Output equation numbers
 void COutputter::OutputEquationNumber()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 	int NUMNP = FEMData->GetNUMNP();
 
-	Node* NodeList = FEMData->GetNodeList();
+	CNode* NodeList = FEMData->GetNodeList();
 
 	cout << " EQUATION NUMBERS" << endl << endl;
 	cout << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
@@ -145,7 +145,7 @@ void COutputter::OutputElementInfo()
 {
 //	Print element group control line
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
     
 	unsigned int NUMEG = FEMData->GetNUMEG();
 
@@ -188,10 +188,10 @@ void COutputter::OutputElementInfo()
 void COutputter::PrintBarElementData(int EleGrp)
 {
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
-	BarMaterial* MaterialSet = (BarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
+	CBarMaterial* MaterialSet = (CBarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
 	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
@@ -224,8 +224,8 @@ void COutputter::PrintBarElementData(int EleGrp)
 	OutputFile << " ELEMENT     NODE     NODE       MATERIAL" << endl
 			   << " NUMBER-N      I        J       SET NUMBER" << endl; 
 
-	Element** ElementSetList = FEMData->GetElementSetList();
-	Bar* ElementGroup = (Bar* ) ElementSetList[EleGrp];
+	CElement** ElementSetList = FEMData->GetElementSetList();
+	CBar* ElementGroup = (CBar* ) ElementSetList[EleGrp];
 	unsigned int* NUME = FEMData->GetNUME();
 
 //	Loop over for all elements in group EleGrp
@@ -239,11 +239,11 @@ void COutputter::PrintBarElementData(int EleGrp)
 //	Print load data
 void COutputter::OutputLoadInfo()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	for (unsigned int lcase = 1; lcase <= FEMData->GetNLCASE(); lcase++)
 	{
-		LoadCaseData* LoadData = &FEMData->GetLoadCases()[lcase - 1];
+		CLoadCaseData* LoadData = &FEMData->GetLoadCases()[lcase - 1];
 
 		cout << setiosflags(ios::scientific);
 		OutputFile << setiosflags(ios::scientific);
@@ -270,8 +270,8 @@ void COutputter::OutputLoadInfo()
 //	Print nodal displacement
 void COutputter::OutputNodalDisplacement(int lcase)
 {
-	Domain* FEMData = Domain::Instance();
-	Node* NodeList = FEMData->GetNodeList();
+	CDomain* FEMData = CDomain::Instance();
+	CNode* NodeList = FEMData->GetNodeList();
 	double* Displacement = FEMData->GetDisplacement();
 
 	cout << " LOAD CASE" << setw(5) << lcase+1 << endl << endl << endl;
@@ -295,13 +295,13 @@ void COutputter::OutputNodalDisplacement(int lcase)
 //	Calculate stresses 
 void COutputter::OutputElementStress()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	double* Displacement = FEMData->GetDisplacement();
 
 	unsigned int NUMEG = FEMData->GetNUMEG();
 	unsigned int* NUME = FEMData->GetNUME();
-	Element** ElementSetList = FEMData->GetElementSetList();
+	CElement** ElementSetList = FEMData->GetElementSetList();
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
@@ -317,7 +317,7 @@ void COutputter::OutputElementStress()
 		{
 			ElementSetList[EleGrp][Ele].ElementStress(&stress, Displacement);
 
-			BarMaterial* material = (BarMaterial *) ElementSetList[EleGrp][Ele].GetElementMaterial();
+			CBarMaterial* material = (CBarMaterial *) ElementSetList[EleGrp][Ele].GetElementMaterial();
 			cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 			OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 		}
@@ -327,7 +327,7 @@ void COutputter::OutputElementStress()
 //	Print total system data
 void COutputter::OutputTotalSystemData()
 {
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	cout << "	TOTAL SYSTEM DATA" << endl << endl;
 	OutputFile << "	TOTAL SYSTEM DATA" << endl << endl;
@@ -353,7 +353,7 @@ void COutputter::PrintColumnHeights()
 	cout << "*** _Debug_ *** Column Heights" << endl;
 	OutputFile << "*** _Debug_ *** Column Heights" << endl;
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	int NEQ = FEMData->GetNEQ();
 	unsigned int* ColumnHeights = FEMData->GetColumnHeights();
@@ -379,7 +379,7 @@ void COutputter::PrintDiagonalAddress()
 	cout << "*** _Debug_ *** Address of Diagonal Element" << endl;
 	OutputFile << "*** _Debug_ *** Address of Diagonal Element" << endl;
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	int NEQ = FEMData->GetNEQ();
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
@@ -406,7 +406,7 @@ void COutputter::PrintStiffnessMatrix()
 	cout << "*** _Debug_ *** Banded stiffness matrix" << endl;
 	OutputFile << "*** _Debug_ *** Banded stiffness matrix" << endl;
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	int NEQ = FEMData->GetNEQ();
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
@@ -469,7 +469,7 @@ void COutputter::PrintDisplacement(int loadcase)
 	cout << "*** _Debug_ *** Displacement vector" << endl;
 	OutputFile << "*** _Debug_ *** Displacement vector" << endl;
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	int NEQ = FEMData->GetNEQ();
 	double* Force = FEMData->GetForce();

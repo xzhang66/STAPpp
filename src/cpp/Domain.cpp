@@ -57,7 +57,7 @@ CDomain::CDomain()
 }
 
 //	Desconstructor
-CDomain::~Domain()
+CDomain::~CDomain()
 {
 	delete [] NodeList;
 
@@ -79,10 +79,10 @@ CDomain::~Domain()
 }
 
 //	Return pointer to the instance of the Domain class
-Domain* CDomain::Instance()
+CDomain* CDomain::Instance()
 {
 	if (!_instance) 
-		_instance = new Domain;
+		_instance = new CDomain;
 	
 	return _instance;
 }
@@ -98,7 +98,7 @@ bool CDomain::ReadData(string FileName, string OutFile)
 		exit(3);
 	}
 
-	Outputter* Output = Outputter::Instance(OutFile);
+	COutputter* Output = COutputter::Instance(OutFile);
 
 //	Read the heading line
 	Input.getline(Title, 256);
@@ -131,7 +131,7 @@ bool CDomain::ReadNodalPoints()
 {
 
 //	Read nodal point data lines
-	NodeList = new Node[NUMNP];
+	NodeList = new CNode[NUMNP];
 
 //	Loop over for all nodal points
 	for (unsigned int np = 0; np < NUMNP; np++)
@@ -147,7 +147,7 @@ void CDomain::CalculateEquationNumber()
 	NEQ = 0;
 	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
 	{
-		for (int dof = 0; dof < Node::NDF; dof++)	// Loop over for DOFs of node np
+		for (int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 		{
 			if (NodeList[np].bcode[dof]) 
 				NodeList[np].bcode[dof] = 0;
@@ -164,7 +164,7 @@ void CDomain::CalculateEquationNumber()
 bool CDomain::ReadLoadCases()
 {
 //	Read load data lines
-	LoadCases = new LoadCaseData[NLCASE];	// List all load cases
+	LoadCases = new CLoadCaseData[NLCASE];	// List all load cases
 
 //	Loop over for all load cases
 	for (unsigned int lcase = 0; lcase < NLCASE; lcase++)
@@ -181,10 +181,10 @@ bool CDomain::ReadElements()
 //	Read element group control line
 	ElementTypes = new unsigned int[NUMEG];	// Element type of each group
 	NUME = new unsigned int[NUMEG];			// Number of elements in each group
-	ElementSetList = new Element*[NUMEG];	// Element list in each group
+	ElementSetList = new CElement*[NUMEG];	// Element list in each group
 
 	NUMMAT = new unsigned int[NUMEG];		// Material set number of each group
-	MaterialSetList = new Material*[NUMEG];	// Material list in each group
+	MaterialSetList = new CMaterial*[NUMEG];	// Material list in each group
 
 //	Loop over for all element group
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
@@ -208,7 +208,7 @@ bool CDomain::ReadElements()
 bool CDomain::ReadBarElementData(int EleGrp)
 {
 //	Read material/section property lines
-	MaterialSetList[EleGrp] = new BarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
+	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
 
 //	Loop over for all material property sets in group EleGrp
 	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
@@ -216,7 +216,7 @@ bool CDomain::ReadBarElementData(int EleGrp)
 			return false;
 
 //	Read element data lines
-	ElementSetList[EleGrp] = new Bar[NUME[EleGrp]];	// Elements of gorup EleGrp
+	ElementSetList[EleGrp] = new CBar[NUME[EleGrp]];	// Elements of gorup EleGrp
 
 //	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
@@ -245,7 +245,7 @@ void CDomain::CalculateColumnHeights()
 	MK = MK + 1;
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintColumnHeights();
 #endif
 
@@ -267,7 +267,7 @@ void CDomain::CalculateDiagnoalAddress()
 	NWK = DiagonalAddress[NEQ] - DiagonalAddress[0];
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintDiagonalAddress();
 #endif
 
@@ -290,7 +290,7 @@ void CDomain::AssembleStiffnessMatrix()
 	}
 
 #ifdef _DEBUG_
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->PrintStiffnessMatrix();
 #endif
 
@@ -302,7 +302,7 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 	if (LoadCase > NLCASE) 
 		return false;
 
-	LoadCaseData* LoadData = &LoadCases[LoadCase - 1];
+	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
 	clear(Force, NEQ);
 
@@ -339,6 +339,6 @@ void CDomain::AllocateMatrices()
 	StiffnessMatrix = new double[NWK];
 	clear(StiffnessMatrix, NWK);
 
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->OutputTotalSystemData();
 }

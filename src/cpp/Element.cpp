@@ -52,7 +52,7 @@ void CElement::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* D
 //	Obtain the location matrix (DOF is numbered from 1)
 	vector<int> LocationMatrix;
 	for (int i=0; i<NEN; i++)
-		for (int j=0; j<Node::NDF; j++)
+		for (int j=0; j<CNode::NDF; j++)
 			LocationMatrix.push_back(nodes[i]->bcode[j]);
 	
 //	Assemble global stiffness matrix
