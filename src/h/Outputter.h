@@ -15,7 +15,7 @@
 using namespace std;
 
 // Outputer class for outputing results
-class Outputter
+class COutputter
 {
 private:
 
@@ -25,10 +25,10 @@ private:
 protected:
 
 //	Constructor
-	Outputter(string FileName);
+	COutputter(string FileName);
 
 //	Designed as a single instance class
-	static Outputter* _instance;
+	static COutputter* _instance;
 
 public:
 
@@ -36,7 +36,7 @@ public:
 	inline ofstream* GetOutputFile() { return &OutputFile; }
 
 //	Return the single instance of the class
-	static Outputter* Instance(string FileName = " ");
+	static COutputter* Instance(string FileName = " ");
 
 //	Output current time and date
 	void PrintTime(const struct tm * ptm, ostream& output);

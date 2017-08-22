@@ -19,13 +19,13 @@
 
 using namespace std;
 
-class Domain;
+class CDomain;
 
 template <class type> void clear( type* a, int N );	// Clear an array
 
 //	Element base class
 //	All type of element classes should be derived from this base class
-class Element
+class CElement
 {
 protected:
 
@@ -33,18 +33,18 @@ protected:
 	int NEN;
 
 //	Nodes of the element
-	Node** nodes;
+	CNode** nodes;
 
 //	Material of the element
-	Material* ElementMaterial;	// Pointer to an element of MaterialSetList[][]
+	CMaterial* ElementMaterial;	// Pointer to an element of MaterialSetList[][]
 
 public:
 
 //	Constructor
-	Element() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+	CElement() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
 
 //	Read element data from stream Input
-	virtual bool Read(ifstream& Input, int Ele, Material* MaterialSets, Node* NodeList) = 0;
+	virtual bool Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
 
 //	Write element data to stream OutputFile
 	virtual void Write(ofstream& OutputFile, int Ele) = 0;
@@ -62,13 +62,13 @@ public:
 	virtual void ElementStress(double* stress, double* Displacement) = 0;
 
 //	Return nodes of the element
-	inline Node** GetNodes() { return nodes; }
+	inline CNode** GetNodes() { return nodes; }
 
 //	Return material of the element
-	inline Material* GetElementMaterial() { return ElementMaterial; }
+	inline CMaterial* GetElementMaterial() { return ElementMaterial; }
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
 
-	friend Domain;	// Allow class Domain to access its protected member
+	friend CDomain;	// Allow class Domain to access its protected member
 };
