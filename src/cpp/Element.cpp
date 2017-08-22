@@ -22,13 +22,6 @@ void CElement::CalculateColumnHeight(unsigned int* ColumnHeight)
 			if (nodes[N]->bcode[D])
 				LocationMatrix.push_back(nodes[N]->bcode[D]);
 
-#ifdef _DEBUG_
-//	List location matrix
-	for (int i = 0; i < LocationMatrix.size(); i++)
-		cout <<	LocationMatrix[i] << " ";
-	cout << endl;
-#endif
-
 	int nfirstrow = *std::min_element(LocationMatrix.begin(), LocationMatrix.end());
 
 //	Calculate the column height contributed by this element
