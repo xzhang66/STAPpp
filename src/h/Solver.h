@@ -12,9 +12,9 @@
 
 using namespace std;
 
-//	Base class for a solver
-//	New solver should be derived from this base class, and match the storage scheme 
-//	of the global stiffness matrix employed in Domain class.
+//!	Base class for a solver
+/*	New solver should be derived from this base class, and match the storage scheme
+	of the global stiffness matrix employed in Domain class. */
 class CSolver
 {
 protected:
@@ -28,20 +28,20 @@ public:
 	virtual void Solve() = 0;
 };
 
-//	LDLT solver: A in core solver using skyline storage  and column reduction scheme
+//!	LDLT solver: A in core solver using skyline storage  and column reduction scheme
 class CLDLTSolver : public CSolver
 {
 public:
 
-//	Constructor
+//!	Constructor
 	CLDLTSolver(CDomain* FEMData) : CSolver(FEMData) {};
 
-//	Perform L*D*L(T) factorization of the stiffness matrix
+//!	Perform L*D*L(T) factorization of the stiffness matrix
 	void LDLT();
 
-//	Reduce right-hand-side load vector and back substitute
+//!	Reduce right-hand-side load vector and back substitute
 	void BackSubstitution(); 
 
-//	Solve the equilibrium equations 
+//!	Solve the equilibrium equations 
 	virtual void Solve();
 };

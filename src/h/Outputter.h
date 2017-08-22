@@ -14,72 +14,72 @@
 
 using namespace std;
 
-// Outputer class for outputing results
+//! Outputer class for outputing results
 class COutputter
 {
 private:
 
-//	File stream for output
+//!	File stream for output
 	ofstream OutputFile;
 
 protected:
 
-//	Constructor
+//!	Constructor
 	COutputter(string FileName);
 
-//	Designed as a single instance class
+//!	Designed as a single instance class
 	static COutputter* _instance;
 
 public:
 
-//	Return pointer to the output file stream
+//!	Return pointer to the output file stream
 	inline ofstream* GetOutputFile() { return &OutputFile; }
 
-//	Return the single instance of the class
+//!	Return the single instance of the class
 	static COutputter* Instance(string FileName = " ");
 
-//	Output current time and date
+//!	Output current time and date
 	void PrintTime(const struct tm * ptm, ostream& output);
 
-//	Output logo and heading 
+//!	Output logo and heading 
 	void OutputHeading();
 
-//	Output nodal point data
+//!	Output nodal point data
 	void OutputNodeInfo();
 
-//	Output equation numbers
+//!	Output equation numbers
 	void OutputEquationNumber();
 
-//	Output element data
+//!	Output element data
 	void OutputElementInfo();
 
-//	Output bar element data
+//!	Output bar element data
 	void PrintBarElementData(int EleGrp);
 
-//	Output load data 
+//!	Output load data 
 	void OutputLoadInfo(); 
 
-//	Output displacement data
+//!	Output displacement data
 	void OutputNodalDisplacement(int lcase);
 
-//	Output element stresses 
+//!	Output element stresses 
 	void OutputElementStress();
 
-//	Print total system data
+//!	Print total system data
 	void OutputTotalSystemData();
 
 #ifdef _DEBUG_
 
-//	Print banded and full stiffness matrix for debuging
+//!	Print banded and full stiffness matrix for debuging
 	void PrintStiffnessMatrix();
 
-//	Print address of diagonal elements for debuging
+//!	Print address of diagonal elements for debuging
 	void PrintDiagonalAddress();
 
-//	Print column heights for debuging
+//!	Print column heights for debuging
 	void PrintColumnHeights();
 
-//	Print displacement vector
+//!	Print displacement vector for debuging
 	void PrintDisplacement(int loadcase);
 
 #endif

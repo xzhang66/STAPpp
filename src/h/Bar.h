@@ -12,29 +12,29 @@
 
 using namespace std;
 
-// Bar element class
+//! Bar element class
 class CBar : public CElement
 {
 public:
 
-//	Constructor
+//!	Constructor
 	CBar();
 
-//	Desconstructor
+//!	Desconstructor
 	~CBar();
 
-//	Read element data from stream Input
+//!	Read element data from stream Input
 	virtual bool Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList);
 
-//	Write element data to stream OutputFile
+//!	Write element data to stream OutputFile
 	virtual void Write(ofstream& OutputFile, int Ele);
 
-//	Calculate element stiffness matrix
+//!	Calculate element stiffness matrix
 	virtual void ElementStiffness(double* Matrix);
 
-//	Calculate element stress 
+//!	Calculate element stress
 	virtual void ElementStress(double* stress, double* Displacement);
 
-//	Return the size of the element stiffness matrix (stored as an array column by column)
+//!	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix();
 };
