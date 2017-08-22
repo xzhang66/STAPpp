@@ -14,9 +14,9 @@
 
 using namespace std;
 
-Solver::Solver(Domain* FEMData) : FEMData(FEMData) {};
+CSolver::CSolver(Domain* FEMData) : FEMData(FEMData) {};
 
-void LDLTSolver::Solve()
+void LDLTCSolver::Solve()
 { 
 	Outputter* Output = Outputter::Instance();
 
@@ -47,7 +47,7 @@ void LDLTSolver::Solve()
 };
 
 // LDLT facterization
-void LDLTSolver::LDLT()
+void LDLTCSolver::LDLT()
 {
 	double* K = FEMData->GetStiffnessMatrix();
 	unsigned int* Address = FEMData->GetDiagonalAddress();	// Numbering starting from 1
@@ -103,7 +103,7 @@ void LDLTSolver::LDLT()
 };
 
 // Solve displacement by back substitution
-void LDLTSolver::BackSubstitution()
+void LDLTCSolver::BackSubstitution()
 {
 	double* Force = FEMData->GetForce();        //  Force vector (Numering starting from 1)
 	double* K = FEMData->GetStiffnessMatrix();  //  Factorized stiffness matrix

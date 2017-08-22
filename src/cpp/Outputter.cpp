@@ -16,7 +16,7 @@
 using namespace std;
 
 //	Output current time and date
-void Outputter::PrintTime(const struct tm * ptm, ostream& output)
+void COutputter::PrintTime(const struct tm * ptm, ostream& output)
 {
 	const char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	const char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August",
@@ -28,10 +28,10 @@ void Outputter::PrintTime(const struct tm * ptm, ostream& output)
 		   << weekday[ptm->tm_wday] << ")" << endl << endl;
 }
 
-Outputter* Outputter::_instance = NULL;
+Outputter* COutputter::_instance = NULL;
 
 //	Constructor
-Outputter::Outputter(string FileName)
+COutputter::COutputter(string FileName)
 {
 	OutputFile.open(FileName);
 
@@ -43,14 +43,14 @@ Outputter::Outputter(string FileName)
 }
 
 //	Return the single instance of the class
-Outputter* Outputter::Instance(string FileName)
+Outputter* COutputter::Instance(string FileName)
 {
 	if (!_instance) _instance = new Outputter(FileName);
 	return _instance;
 }
 
 //	Print program logo
-void Outputter::OutputHeading()
+void COutputter::OutputHeading()
 {
 	Domain* FEMData = Domain::Instance();
 
@@ -72,7 +72,7 @@ void Outputter::OutputHeading()
 }
 
 //	Print nodal data
-void Outputter::OutputNodeInfo()
+void COutputter::OutputNodeInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
@@ -118,7 +118,7 @@ void Outputter::OutputNodeInfo()
 }
 
 //	Output equation numbers
-void Outputter::OutputEquationNumber()
+void COutputter::OutputEquationNumber()
 {
 	Domain* FEMData = Domain::Instance();
 	int NUMNP = FEMData->GetNUMNP();
@@ -141,7 +141,7 @@ void Outputter::OutputEquationNumber()
 }
 
 //	Output element data
-void Outputter::OutputElementInfo()
+void COutputter::OutputElementInfo()
 {
 //	Print element group control line
 
@@ -185,7 +185,7 @@ void Outputter::OutputElementInfo()
 }
 
 //	Output bar element data
-void Outputter::PrintBarElementData(int EleGrp)
+void COutputter::PrintBarElementData(int EleGrp)
 {
 
 	Domain* FEMData = Domain::Instance();
@@ -237,7 +237,7 @@ void Outputter::PrintBarElementData(int EleGrp)
 }
 
 //	Print load data
-void Outputter::OutputLoadInfo()
+void COutputter::OutputLoadInfo()
 {
 	Domain* FEMData = Domain::Instance();
 
@@ -268,7 +268,7 @@ void Outputter::OutputLoadInfo()
 }
 
 //	Print nodal displacement
-void Outputter::OutputNodalDisplacement(int lcase)
+void COutputter::OutputNodalDisplacement(int lcase)
 {
 	Domain* FEMData = Domain::Instance();
 	Node* NodeList = FEMData->GetNodeList();
@@ -293,7 +293,7 @@ void Outputter::OutputNodalDisplacement(int lcase)
 }
 
 //	Calculate stresses 
-void Outputter::OutputElementStress()
+void COutputter::OutputElementStress()
 {
 	Domain* FEMData = Domain::Instance();
 
@@ -325,7 +325,7 @@ void Outputter::OutputElementStress()
 }
 
 //	Print total system data
-void Outputter::OutputTotalSystemData()
+void COutputter::OutputTotalSystemData()
 {
 	Domain* FEMData = Domain::Instance();
 
@@ -348,7 +348,7 @@ void Outputter::OutputTotalSystemData()
 #ifdef _DEBUG_
 
 //	Print column heights for debuging
-void Outputter::PrintColumnHeights()
+void COutputter::PrintColumnHeights()
 {
 	cout << "*** _Debug_ *** Column Heights" << endl;
 	OutputFile << "*** _Debug_ *** Column Heights" << endl;
@@ -374,7 +374,7 @@ void Outputter::PrintColumnHeights()
 }
 
 //	Print address of diagonal elements for debuging
-void Outputter::PrintDiagonalAddress()
+void COutputter::PrintDiagonalAddress()
 {
 	cout << "*** _Debug_ *** Address of Diagonal Element" << endl;
 	OutputFile << "*** _Debug_ *** Address of Diagonal Element" << endl;
@@ -401,7 +401,7 @@ void Outputter::PrintDiagonalAddress()
 }
 
 //	Print banded and full stiffness matrix for debuging
-void Outputter::PrintStiffnessMatrix()
+void COutputter::PrintStiffnessMatrix()
 {
 	cout << "*** _Debug_ *** Banded stiffness matrix" << endl;
 	OutputFile << "*** _Debug_ *** Banded stiffness matrix" << endl;
@@ -464,7 +464,7 @@ void Outputter::PrintStiffnessMatrix()
 }
 
 //	Print displacement vector for debuging
-void Outputter::PrintDisplacement(int loadcase)
+void COutputter::PrintDisplacement(int loadcase)
 {
 	cout << "*** _Debug_ *** Displacement vector" << endl;
 	OutputFile << "*** _Debug_ *** Displacement vector" << endl;

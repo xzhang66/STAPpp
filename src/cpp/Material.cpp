@@ -15,7 +15,7 @@
 using namespace std;
 
 //	Read material data from stream Input
-bool BarMaterial::Read(ifstream& Input, int mset)
+bool CBarMaterial::Read(ifstream& Input, int mset)
 {
 	Input >> nset;	// Number of property set
 
@@ -34,7 +34,7 @@ bool BarMaterial::Read(ifstream& Input, int mset)
 }
 
 //	Write material data to Stream OutputFile
-void BarMaterial::Write(ofstream& OutputFile, int mset)
+void CBarMaterial::Write(ofstream& OutputFile, int mset)
 {
 	cout << setw(5) << mset+1 << setw(16) << E << setw(16) << Area << endl;
 	OutputFile << setw(5) << mset+1 << setw(16) << E  << setw(16) << Area << endl;

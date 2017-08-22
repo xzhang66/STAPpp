@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
-	Domain* FEMData = Domain::Instance();
+	CDomain* FEMData = CDomain::Instance();
 
 	if (!FEMData->ReadData(InFile, OutFile))
 	{
@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
 	FEMData->AllocateMatrices();
 	FEMData->AssembleStiffnessMatrix();
 	
-	LDLTSolver* S = new LDLTSolver(FEMData);
+	CLDLTSolver* S = new CLDLTSolver(FEMData);
 	S->Solve();
 	
-	Outputter* Output = Outputter::Instance();
+	COutputter* Output = COutputter::Instance();
 	Output->OutputElementStress();
 
 	return 0;
