@@ -14,7 +14,7 @@
 
 using namespace std;
 
-//! Outputer class for outputing results
+//! Outputer class is used to output results
 class COutputter
 {
 private:
