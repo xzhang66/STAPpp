@@ -13,7 +13,7 @@
 
 using namespace std;
 
-//! Structure LoadData is used to store load data
+//! Class LoadData is used to store load data
 class CLoadCaseData
 {
 public:
