@@ -122,6 +122,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_l_d_l_t_solver.html#abb3ef2f7d722995f96df406c5851d83d"><param name="Name" value="LDLT"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_l_d_l_t_solver.html#a09c5f761a7fde6f0b1e5ae2baf332ae0"><param name="Name" value="Solve"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#ab3eeab6b8f32f9fa4422c1f0500c0217"><param name="Name" value="Clear"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_domain_8cpp.html#a3550c4e35bc69a6e13bedbb14121db13"><param name="Name" value="clear"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_domain_8cpp.html#a3550c4e35bc69a6e13bedbb14121db13"><param name="Name" value="Domain.cpp"></OBJECT>
@@ -139,6 +140,20 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_load_case_data.html#a43624b34b8d9652b3afa5db8c17ff789"><param name="Name" value="Read"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_load_case_data.html#adfba8dabf09b47e0c642edba50a4c7ce"><param name="Name" value="Write"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_load_case_data.html#a8bc141fd89c8031fd69db17e2bf75e9d"><param name="Name" value="~CLoadCaseData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html"><param name="Name" value="Clock"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#ab3eeab6b8f32f9fa4422c1f0500c0217"><param name="Name" value="Clear"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#adbc370eb6b5f8d01645cf440188160a8"><param name="Name" value="Clock"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a5adfc7eee29601199b55addedc66fd97"><param name="Name" value="ct_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a916140301f1903c00e6b1662a9fbfe7a"><param name="Name" value="ElapsedTime"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#aef881ddb88e4d9ff9ba29c157d91b3be"><param name="Name" value="Resume"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a482ed3967cba675485c20a0e97e0b774"><param name="Name" value="st0_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a5ccb40bca220f16d092e4b201e8c913c"><param name="Name" value="st1_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#ac034a45c8476b44c262f97c4b62f4772"><param name="Name" value="Start"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a9ee8cacd91323a41359ae592d14141d8"><param name="Name" value="Stop"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a030557049c501258d789e3fd4a07634c"><param name="Name" value="t0_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a211446657ed114cb4f3d985f5f83dd40"><param name="Name" value="t1_"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_material.html"><param name="Name" value="CMaterial"></OBJECT>
   <UL>
@@ -184,11 +199,13 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4"><param name="Name" value="FEMData"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_solver.html#a532d7d8f907f9d591b8bab33831736c4"><param name="Name" value="Solve"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a5adfc7eee29601199b55addedc66fd97"><param name="Name" value="ct_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a8b3c3642c5bf5fb574a2443c018b7b97"><param name="Name" value="DiagonalAddress"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_load_case_data.html#a6a874c897f3584f4075eb90b89501e66"><param name="Name" value="dof"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_domain_8cpp.html#a3550c4e35bc69a6e13bedbb14121db13"><param name="Name" value="Domain.cpp"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_domain_8h.html#a3550c4e35bc69a6e13bedbb14121db13"><param name="Name" value="Domain.h"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_material.html#aa04dc357e33d36aac2f85955d2a72364"><param name="Name" value="E"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a916140301f1903c00e6b1662a9fbfe7a"><param name="Name" value="ElapsedTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_element_8h.html#a3550c4e35bc69a6e13bedbb14121db13"><param name="Name" value="Element.h"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a2a066cabbbfda053188bf43e11794581"><param name="Name" value="ElementMaterial"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a27e7fb3382fe9de8ff25cbfc78fd5daf"><param name="Name" value="ElementSetList"></OBJECT>
@@ -284,6 +301,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a85c5d050e61b83aff9ddd4713a5de88d"><param name="Name" value="ReadElements"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a117dd91b65ae0e4b44a48f2cc081b53b"><param name="Name" value="ReadLoadCases"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a4c753cfb72b7b0f0941a9413ef9af569"><param name="Name" value="ReadNodalPoints"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#aef881ddb88e4d9ff9ba29c157d91b3be"><param name="Name" value="Resume"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a7cd3587269e0194f9b8a0cc689bfc0c8"><param name="Name" value="SizeOfStiffnessMatrix"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a7cd3587269e0194f9b8a0cc689bfc0c8"><param name="Name" value="CBar"></OBJECT>
@@ -294,7 +312,13 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_l_d_l_t_solver.html#a09c5f761a7fde6f0b1e5ae2baf332ae0"><param name="Name" value="CLDLTSolver"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_solver.html#a532d7d8f907f9d591b8bab33831736c4"><param name="Name" value="CSolver"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a482ed3967cba675485c20a0e97e0b774"><param name="Name" value="st0_"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a5ccb40bca220f16d092e4b201e8c913c"><param name="Name" value="st1_"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#ac034a45c8476b44c262f97c4b62f4772"><param name="Name" value="Start"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#ac8c06bda4491a4e2aefc936e32653110"><param name="Name" value="StiffnessMatrix"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a9ee8cacd91323a41359ae592d14141d8"><param name="Name" value="Stop"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a030557049c501258d789e3fd4a07634c"><param name="Name" value="t0_"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_clock.html#a211446657ed114cb4f3d985f5f83dd40"><param name="Name" value="t1_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a9338983686959343f5dd7b28b67ecf10"><param name="Name" value="Title"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a0a1d59d90c8688b207ac832acf5bc9b1"><param name="Name" value="Write"></OBJECT>
   <UL>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_c_node.html" title="Node class. " alt="" coords="6,5,69,33"/>
+<area shape="rect" id="node1" href="$class_c_material.html" title="Material base class which only define one data member. " alt="" coords="6,5,85,33"/>
+<area shape="rect" id="node2" href="$class_c_bar_material.html" title="Material class for bar element. " alt="" coords="133,5,232,33"/>
 </map>
