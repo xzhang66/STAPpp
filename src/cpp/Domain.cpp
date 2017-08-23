@@ -109,19 +109,26 @@ bool CDomain::ReadData(string FileName, string OutFile)
 
 //	Read nodal point data
 	ReadNodalPoints();
-	Output->OutputNodeInfo();
+	if (ReadNodalPoints())
+        Output->OutputNodeInfo();
+    else
+        return false;
 
 //	Update equation number
 	CalculateEquationNumber();
 	Output->OutputEquationNumber();
 
 //	Read load data
-	ReadLoadCases();
-	Output->OutputLoadInfo();
+	if (ReadLoadCases())
+        Output->OutputLoadInfo();
+    else
+        return false;
 
 //	Read element data
-	ReadElements();
-	Output->OutputElementInfo();
+	if (ReadElements())
+        Output->OutputElementInfo();
+    else
+        return false;
 
 	return true;
 }
@@ -198,6 +205,8 @@ bool CDomain::ReadElements()
 			break;
 
 		default:	// Invalid element type
+            cout << "*** Error *** Elment type " << ElementTypes[EleGrp] << " of group "
+                 << EleGrp+1 << " has not been implemented.\n\n";
 			return false;
 		}
 	}

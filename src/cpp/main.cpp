@@ -29,18 +29,26 @@ int main(int argc, char *argv[])
 
 	CDomain* FEMData = CDomain::Instance();
 
+//  Read data and define the problem domain
 	if (!FEMData->ReadData(InFile, OutFile))
 	{
 		cout << "*** Error *** Data input failed!" << endl;
 		exit(1);
 	}
 
+//  Allocate global vectors and matrices, such as the Force, ColumnHeights,
+//  DiagonalAddress and StiffnessMatrix, and calculate the column heights
+//  and address of diagonal elements
 	FEMData->AllocateMatrices();
+    
+//  Assemble the banded gloabl stiffness matrix
 	FEMData->AssembleStiffnessMatrix();
-	
+
+//  Solve the linear equilibrium equations for displacements
 	CLDLTSolver* S = new CLDLTSolver(FEMData);
 	S->Solve();
-	
+
+//  Calculate and output stresses of all elements
 	COutputter* Output = COutputter::Instance();
 	Output->OutputElementStress();
 

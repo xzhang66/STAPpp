@@ -140,7 +140,7 @@ public:
 	void CalculateDiagnoalAddress();
 
 //! Allocate storage for matrices
-/*!	Allicate Force, ColumnHeights, DiagonalAddress and StiffnessMatrix and 
+/*!	Allocate Force, ColumnHeights, DiagonalAddress and StiffnessMatrix and 
     calculate the column heights and address of diagonal elements */
 	void AllocateMatrices();
 
