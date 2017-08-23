@@ -6,12 +6,13 @@
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
+#include <string>
+#include <iostream>
+
 #include "Domain.h"
 #include "Bar.h"
 #include "Outputter.h"
-
-#include <string>
-#include <iostream>
+#include "Clock.h"
 
 using namespace std;
 
@@ -29,12 +30,17 @@ int main(int argc, char *argv[])
 
 	CDomain* FEMData = CDomain::Instance();
 
+    Clock timer;
+    timer.Start();
+
 //  Read data and define the problem domain
 	if (!FEMData->ReadData(InFile, OutFile))
 	{
 		cout << "*** Error *** Data input failed!" << endl;
 		exit(1);
 	}
+    
+    double time_input = timer.ElapsedTime();
 
 //  Allocate global vectors and matrices, such as the Force, ColumnHeights,
 //  DiagonalAddress and StiffnessMatrix, and calculate the column heights
@@ -43,14 +49,36 @@ int main(int argc, char *argv[])
     
 //  Assemble the banded gloabl stiffness matrix
 	FEMData->AssembleStiffnessMatrix();
+    
+    double time_assemble = timer.ElapsedTime();
 
 //  Solve the linear equilibrium equations for displacements
 	CLDLTSolver* S = new CLDLTSolver(FEMData);
 	S->Solve();
+    
+    double time_solution = timer.ElapsedTime();
 
 //  Calculate and output stresses of all elements
 	COutputter* Output = COutputter::Instance();
 	Output->OutputElementStress();
+    
+    double time_stress = timer.ElapsedTime();
+    
+    timer.Stop();
+    
+    cout << "\n S O L U T I O N   T I M E   L O G   I N   S E C \n\n"
+         << "     TIME FOR INPUT PHASE = " << time_input << endl
+         << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
+         << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
+         << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
+
+    
+    ofstream* OutputFile = Output->GetOutputFile();
+    *OutputFile << "\n S O L U T I O N   T I M E   L O G   I N   S E C \n\n"
+                << "     TIME FOR INPUT PHASE = " << time_input << endl
+                << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
+                << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
+                << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
 
 	return 0;
 }
