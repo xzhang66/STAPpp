@@ -108,7 +108,6 @@ bool CDomain::ReadData(string FileName, string OutFile)
 	Input >> NUMNP >> NUMEG >> NLCASE >> MODEX;
 
 //	Read nodal point data
-	ReadNodalPoints();
 	if (ReadNodalPoints())
         Output->OutputNodeInfo();
     else
