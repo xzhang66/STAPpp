@@ -20,7 +20,7 @@
 
 using namespace std;  
 
-
+//! Clock class for timing
 class Clock
 {
 
