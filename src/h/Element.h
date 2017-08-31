@@ -37,6 +37,12 @@ protected:
 
 //!	Material of the element
 	CMaterial* ElementMaterial;	//!< Pointer to an element of MaterialSetList[][]
+    
+//! Location Matrix of the element
+    int* LocationMatrix;
+
+//! Dimension of the location matrix
+    int ND;
 
 public:
 
@@ -49,6 +55,10 @@ public:
 //!	Write element data to stream OutputFile
 	virtual void Write(ofstream& OutputFile, int Ele) = 0;
 
+//! Generate location matrix: the global equation number that corresponding to each DOF of the element
+//	Caution:  Equation number is numbered from 1 !
+    virtual void GenerateLocationMatrix() = 0;
+    
 //! Calculate the column height, used with the skyline storage scheme
 	void CalculateColumnHeight(unsigned int* ColumnHeight); 
 

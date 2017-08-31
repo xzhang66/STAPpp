@@ -13,19 +13,18 @@
 //  Calculate the column height, used with the skyline storage scheme
 void CElement::CalculateColumnHeight(unsigned int* ColumnHeight)
 {
-//	Obtain the location matrix: the global equation number that corresponding to each DOF of the element
-//	Caution:  Equation number is numbered from 1 !
-	vector<int> LocationMatrix;
+    
+//  Generate location matrix
+    GenerateLocationMatrix();
 
-	for (int N = 0; N < NEN; N++)
-		for (int D = 0; D < 3; D++)
-			if (nodes[N]->bcode[D])
-				LocationMatrix.push_back(nodes[N]->bcode[D]);
-
-	int nfirstrow = *std::min_element(LocationMatrix.begin(), LocationMatrix.end());
+//  Look for the row number of the first non-zero element
+    int nfirstrow = INT_MAX;
+    for (int i = 0; i < ND; i++)
+        if (LocationMatrix[i] && LocationMatrix[i] < nfirstrow)
+            nfirstrow = LocationMatrix[i];
 
 //	Calculate the column height contributed by this element
-	for (int i = 0; i < LocationMatrix.size(); i++)
+	for (int i = 0; i < ND; i++)
 	{
 		int column = LocationMatrix[i];
 		if (!column)
@@ -41,15 +40,9 @@ void CElement::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* D
 {
 //	Calculate element stiffness matrix
 	ElementStiffness(Matrix);
-
-//	Obtain the location matrix (DOF is numbered from 1)
-	vector<int> LocationMatrix;
-	for (int i=0; i<NEN; i++)
-		for (int j=0; j<CNode::NDF; j++)
-			LocationMatrix.push_back(nodes[i]->bcode[j]);
 	
 //	Assemble global stiffness matrix
-	for (int j = 0; j < LocationMatrix.size(); j++)
+	for (int j = 0; j < ND; j++)
 	{
 		int Lj = LocationMatrix[j];	// Global equation number corresponding to jth DOF of the element
 		if (!Lj) 

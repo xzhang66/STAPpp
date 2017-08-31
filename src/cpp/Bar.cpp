@@ -19,6 +19,9 @@ CBar::CBar()
 {
 	NEN = 2;	// Each element has 2 nodes
 	nodes = new CNode*[NEN];
+    
+    ND = 6;
+    LocationMatrix = new int[ND];
 
 	ElementMaterial = NULL;
 }
@@ -27,6 +30,7 @@ CBar::CBar()
 CBar::~CBar()
 {
 	delete [] nodes;
+    delete [] LocationMatrix;
 }
 
 //	Read element data from stream Input
@@ -64,6 +68,17 @@ void CBar::Write(ofstream& OutputFile, int Ele)
 	OutputFile << setw(5) << Ele+1 << setw(11) << nodes[0]->NodeNumber 
 			   << setw(9) << nodes[1]->NodeNumber << setw(12) << ElementMaterial->nset << endl;
 }
+
+//  Generate location matrix: the global equation number that corresponding to each DOF of the element
+//	Caution:  Equation number is numbered from 1 !
+void CBar::GenerateLocationMatrix()
+{
+    int i = 0;
+    for (int N = 0; N < NEN; N++)
+        for (int D = 0; D < 3; D++)
+            LocationMatrix[i++] = nodes[N]->bcode[D];
+}
+
 
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 //	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
@@ -141,12 +156,6 @@ void CBar::ElementStress(double* stress, double* Displacement)
 		S[i] = -DX[i] * material->E / L2;
 		S[i+3] = -S[i];
 	}
-
-//	Obtain the location matrix (DOF is numbered from 1
-	vector<int> LocationMatrix;
-	for (int i=0; i<NEN; i++)
-		for (int j=0; j<3; j++)
-			LocationMatrix.push_back(nodes[i]->bcode[j]);
 	
 	*stress = 0.0;
 	for (int i = 0; i < 6; i++)
