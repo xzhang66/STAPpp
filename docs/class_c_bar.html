@@ -84,6 +84,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0a1d59d90c8688b207ac832acf5bc9b1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#a0a1d59d90c8688b207ac832acf5bc9b1">Write</a> (ofstream &amp;OutputFile, int Ele)</td></tr>
 <tr class="memdesc:a0a1d59d90c8688b207ac832acf5bc9b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream OutputFile.  <a href="#a0a1d59d90c8688b207ac832acf5bc9b1">More...</a><br /></td></tr>
 <tr class="separator:a0a1d59d90c8688b207ac832acf5bc9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ccef3010d999490d3a8f5da0e800b19"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19">GenerateLocationMatrix</a> ()</td></tr>
+<tr class="memdesc:a8ccef3010d999490d3a8f5da0e800b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate location matrix: the global equation number that corresponding to each DOF of the element.  <a href="#a8ccef3010d999490d3a8f5da0e800b19">More...</a><br /></td></tr>
+<tr class="separator:a8ccef3010d999490d3a8f5da0e800b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab586c0c08205751b7be49301ece8aafb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#ab586c0c08205751b7be49301ece8aafb">ElementStiffness</a> (double *Matrix)</td></tr>
 <tr class="memdesc:ab586c0c08205751b7be49301ece8aafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate element stiffness matrix.  <a href="#ab586c0c08205751b7be49301ece8aafb">More...</a><br /></td></tr>
 <tr class="separator:ab586c0c08205751b7be49301ece8aafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +128,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">ElementMaterial</a></td></tr>
 <tr class="memdesc:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">More...</a><br /></td></tr>
 <tr class="separator:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d63123c143d8a4b44e5dd55fb683963 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a4d63123c143d8a4b44e5dd55fb683963">LocationMatrix</a></td></tr>
+<tr class="memdesc:a4d63123c143d8a4b44e5dd55fb683963 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="class_c_element.html#a4d63123c143d8a4b44e5dd55fb683963">More...</a><br /></td></tr>
+<tr class="separator:a4d63123c143d8a4b44e5dd55fb683963 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a503188265f678bf3a2095298f93c06e0 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a503188265f678bf3a2095298f93c06e0">ND</a></td></tr>
+<tr class="memdesc:a503188265f678bf3a2095298f93c06e0 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="class_c_element.html#a503188265f678bf3a2095298f93c06e0">More...</a><br /></td></tr>
+<tr class="separator:a503188265f678bf3a2095298f93c06e0 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Bar element class. </p>
@@ -235,6 +244,35 @@ Additional Inherited Members</h2></td></tr>
 <p>Calculate element stress. </p>
 
 <p>Implements <a class="el" href="class_c_element.html#a84cfab06e5f4d3a1e3732170b84e6e0e">CElement</a>.</p>
+
+</div>
+</div>
+<a id="a8ccef3010d999490d3a8f5da0e800b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ccef3010d999490d3a8f5da0e800b19">&#9670;&nbsp;</a></span>GenerateLocationMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CBar::GenerateLocationMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generate location matrix: the global equation number that corresponding to each DOF of the element. </p>
+
+<p>Implements <a class="el" href="class_c_element.html#a1d8c19d556504af95f80061a9ee2e7dd">CElement</a>.</p>
 
 </div>
 </div>

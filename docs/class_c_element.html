@@ -82,6 +82,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1c13d13167f837aee3274e7cfec58f43"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1c13d13167f837aee3274e7cfec58f43">Write</a> (ofstream &amp;OutputFile, int Ele)=0</td></tr>
 <tr class="memdesc:a1c13d13167f837aee3274e7cfec58f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream OutputFile.  <a href="#a1c13d13167f837aee3274e7cfec58f43">More...</a><br /></td></tr>
 <tr class="separator:a1c13d13167f837aee3274e7cfec58f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d8c19d556504af95f80061a9ee2e7dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1d8c19d556504af95f80061a9ee2e7dd">GenerateLocationMatrix</a> ()=0</td></tr>
+<tr class="memdesc:a1d8c19d556504af95f80061a9ee2e7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate location matrix: the global equation number that corresponding to each DOF of the element.  <a href="#a1d8c19d556504af95f80061a9ee2e7dd">More...</a><br /></td></tr>
+<tr class="separator:a1d8c19d556504af95f80061a9ee2e7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a0539a65dd0f7900d5c4b5e9cd1df8abb">CalculateColumnHeight</a> (unsigned int *ColumnHeight)</td></tr>
 <tr class="memdesc:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the column height, used with the skyline storage scheme.  <a href="#a0539a65dd0f7900d5c4b5e9cd1df8abb">More...</a><br /></td></tr>
 <tr class="separator:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,6 +123,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a2a066cabbbfda053188bf43e11794581"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">ElementMaterial</a></td></tr>
 <tr class="memdesc:a2a066cabbbfda053188bf43e11794581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="#a2a066cabbbfda053188bf43e11794581">More...</a><br /></td></tr>
 <tr class="separator:a2a066cabbbfda053188bf43e11794581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d63123c143d8a4b44e5dd55fb683963"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a4d63123c143d8a4b44e5dd55fb683963">LocationMatrix</a></td></tr>
+<tr class="memdesc:a4d63123c143d8a4b44e5dd55fb683963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="#a4d63123c143d8a4b44e5dd55fb683963">More...</a><br /></td></tr>
+<tr class="separator:a4d63123c143d8a4b44e5dd55fb683963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a503188265f678bf3a2095298f93c06e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a503188265f678bf3a2095298f93c06e0">ND</a></td></tr>
+<tr class="memdesc:a503188265f678bf3a2095298f93c06e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="#a503188265f678bf3a2095298f93c06e0">More...</a><br /></td></tr>
+<tr class="separator:a503188265f678bf3a2095298f93c06e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Element base class. </p>
@@ -276,6 +285,35 @@ Protected Attributes</h2></td></tr>
 <p>Calculate element stress. </p>
 
 <p>Implemented in <a class="el" href="class_c_bar.html#a79ba6f2b35bb048398ca1d620c440d19">CBar</a>.</p>
+
+</div>
+</div>
+<a id="a1d8c19d556504af95f80061a9ee2e7dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d8c19d556504af95f80061a9ee2e7dd">&#9670;&nbsp;</a></span>GenerateLocationMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CElement::GenerateLocationMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generate location matrix: the global equation number that corresponding to each DOF of the element. </p>
+
+<p>Implemented in <a class="el" href="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19">CBar</a>.</p>
 
 </div>
 </div>
@@ -491,6 +529,54 @@ Protected Attributes</h2></td></tr>
 
 <p>Material of the element. </p>
 <p>Pointer to an element of MaterialSetList[][] </p>
+
+</div>
+</div>
+<a id="a4d63123c143d8a4b44e5dd55fb683963"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d63123c143d8a4b44e5dd55fb683963">&#9670;&nbsp;</a></span>LocationMatrix</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int* CElement::LocationMatrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Location Matrix of the element. </p>
+
+</div>
+</div>
+<a id="a503188265f678bf3a2095298f93c06e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a503188265f678bf3a2095298f93c06e0">&#9670;&nbsp;</a></span>ND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CElement::ND</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dimension of the location matrix. </p>
 
 </div>
 </div>

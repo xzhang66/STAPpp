@@ -26,6 +26,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a4ff7c5318a3074711f3f3f0ca0fac5ce"><param name="Name" value="CBar"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#ab586c0c08205751b7be49301ece8aafb"><param name="Name" value="ElementStiffness"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a79ba6f2b35bb048398ca1d620c440d19"><param name="Name" value="ElementStress"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19"><param name="Name" value="GenerateLocationMatrix"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a8ccc9aaa52abebd3c7078507655e9ec7"><param name="Name" value="Read"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a7cd3587269e0194f9b8a0cc689bfc0c8"><param name="Name" value="SizeOfStiffnessMatrix"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a0a1d59d90c8688b207ac832acf5bc9b1"><param name="Name" value="Write"></OBJECT>
@@ -107,8 +108,11 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a2a066cabbbfda053188bf43e11794581"><param name="Name" value="ElementMaterial"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a38819c5277adf30f3f3169bec91261f6"><param name="Name" value="ElementStiffness"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a84cfab06e5f4d3a1e3732170b84e6e0e"><param name="Name" value="ElementStress"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a1d8c19d556504af95f80061a9ee2e7dd"><param name="Name" value="GenerateLocationMatrix"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a9c3aa0155a858d271530a462612aad9c"><param name="Name" value="GetElementMaterial"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a9a13dc46d9eba3a1ecf2677da7d45465"><param name="Name" value="GetNodes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a4d63123c143d8a4b44e5dd55fb683963"><param name="Name" value="LocationMatrix"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a503188265f678bf3a2095298f93c06e0"><param name="Name" value="ND"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#ae6a01cf971f1468f31e9d88c8f3ccfe8"><param name="Name" value="NEN"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a049aa63089d5133dbf97b9fe8b45986b"><param name="Name" value="nodes"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a864e3ce5e44dc788d5dcf91eb6ad666a"><param name="Name" value="Read"></OBJECT>
@@ -222,6 +226,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a6e35f2f099af78185d457b858cb5b9e8"><param name="Name" value="ElementTypes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4"><param name="Name" value="FEMData"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#abef36469500e65fb324db7666a3aa871"><param name="Name" value="Force"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19"><param name="Name" value="GenerateLocationMatrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19"><param name="Name" value="CBar"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a1d8c19d556504af95f80061a9ee2e7dd"><param name="Name" value="CElement"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a0645d9b64b018b9eb902d29bc4799efa"><param name="Name" value="GetColumnHeights"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#aa42908d047d7442af2e932c078bb2f0c"><param name="Name" value="GetDiagonalAddress"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a6af0683d436481864d3e042d5e8360a8"><param name="Name" value="GetDisplacement"></OBJECT>
@@ -255,11 +264,13 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_l_d_l_t_solver.html#abb3ef2f7d722995f96df406c5851d83d"><param name="Name" value="LDLT"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_load_case_data.html#a9dcb50e2d916ee71704e6c145175efad"><param name="Name" value="load"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a972c075b3b26dba28809d5c4e63133c9"><param name="Name" value="LoadCases"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a4d63123c143d8a4b44e5dd55fb683963"><param name="Name" value="LocationMatrix"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="main.cpp"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="main"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a2f17349bfbec031b16d8c737dd42737b"><param name="Name" value="MaterialSetList"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a6baa1b214563041bab3b35ec195e1011"><param name="Name" value="MK"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a37157babefdd515cd13953b32a44cafb"><param name="Name" value="MODEX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#a503188265f678bf3a2095298f93c06e0"><param name="Name" value="ND"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_node.html#a53941a4079946fe66edf66e2bd765d2d"><param name="Name" value="NDF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_element.html#ae6a01cf971f1468f31e9d88c8f3ccfe8"><param name="Name" value="NEN"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="class_c_domain.html#a34c75bf1c31199ec1e25dfc92af98d7a"><param name="Name" value="NEQ"></OBJECT>
