@@ -61,7 +61,7 @@ void COutputter::OutputHeading()
 	struct tm *local = new struct tm;
 	now = time(NULL);
 
-#if defined(WIN32) 
+#if defined(_WIN32) 
 	localtime_s(local, &now);	//  localtime_s is used only in windows
 #else
     localtime_r(&now, local);	//  localtime_r is used only in unix
