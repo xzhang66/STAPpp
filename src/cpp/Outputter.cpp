@@ -56,19 +56,15 @@ void COutputter::OutputHeading()
 
 	cout << "TITLE : " << FEMData->GetTitle() << endl;
 	OutputFile << "TITLE : " << FEMData->GetTitle() << endl;
+    
+	time_t rawtime;
+	struct tm *timeinfo;
+    
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
 
-	time_t now;
-	struct tm *local = new struct tm;
-	now = time(NULL);
-
-#if defined(_WIN32) 
-	localtime_s(local, &now);	//  localtime_s is used only in windows
-#else
-    localtime_r(&now, local);	//  localtime_r is used only in unix
-#endif
-
-	PrintTime(local, cout);
-	PrintTime(local, OutputFile);
+	PrintTime(timeinfo, cout);
+	PrintTime(timeinfo, OutputFile);
 }
 
 //	Print nodal data
