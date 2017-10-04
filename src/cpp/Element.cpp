@@ -51,16 +51,16 @@ void CElement::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* D
 //		Address of diagonal element of column j in the one dimensional element stiffness matrix
 		int DiagjElement = (j+1)*j/2 + 1;
 
-//		Address of diagonal element of column j in the banded global stiffness matrix
-		int DiagjGlobal = DiagonalAddress[Lj - 1];
-
 		for (int i = 0; i <= j; i++)
 		{
 			int Li = LocationMatrix[i];	// Global equation number corresponding to ith DOF of the element
 			if (!Li) 
 				continue;
 
-			StiffnessMatrix[DiagjGlobal + Lj - Li - 1] += Matrix[DiagjElement + j - i - 1];
+            if (Lj>=Li)
+                StiffnessMatrix[DiagonalAddress[Lj - 1] + Lj - Li - 1] += Matrix[DiagjElement + j - i - 1];
+            else
+                StiffnessMatrix[DiagonalAddress[Li - 1] + Li - Lj - 1] += Matrix[DiagjElement + j - i - 1];
 		}
 	}
 
