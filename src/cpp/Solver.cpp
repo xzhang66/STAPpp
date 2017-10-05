@@ -52,54 +52,42 @@ void CLDLTSolver::LDLT()
 	double* K = FEMData->GetStiffnessMatrix();
 	unsigned int* Address = FEMData->GetDiagonalAddress();	// Numbering starting from 1
 	unsigned int N = FEMData->GetNEQ();
+    unsigned int* ColumnHeights = FEMData->GetColumnHeights();   // Column Hights
 
 	for (unsigned int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
 	{
         // Row number of the first non-zero element in column j (Numbering starting from 1)
-		int mj = j - (Address[j] - Address[j-1]) + 1;
-
-		// Address of K_jj and K_mj,j in banded matrix (Numbering starting from 0);
-		int Address_jj = Address[j-1] - 1;
-		int Address_mjj = Address[j-1] + j - mj - 1;
+		int mj = j - ColumnHeights[j-1];
         
 		for (unsigned int i = mj+1; i <= j-1; i++)	// Loop for mj+1:j-1 (Numbering starting from 1)
 		{
             // Row number of the first nonzero element in column i (Numbering starting from 1)
-			int mi = i - (Address[i] - Address[i-1]) + 1;
-            
-			int mm = max(mi, mj);
+			int mi = i - ColumnHeights[i-1];
 
-			// Address of L_mm,i and U_mm,j in banded matrix (Numbering starting from 0)
-			int Address_mmi = Address[i-1] + i - mm - 1;
-			int Address_mmj = Address[j-1] + j - mm - 1;
-            
 			double C = 0.0;
-			for (unsigned int r = mm; r <= i-1; r++)	// Loop for max(mi,mj):i-1 (Numbering starting from 1)
-				C += K[Address_mmi++] * K[Address_mmj++];		// C += L_ri * U_rj
+			for (unsigned int r = max(mi, mj); r <= i-1; r++)
+				C += K[Address[i-1] + (i-r) - 1] * K[Address[j-1] + (j-r) - 1];		// C += L_ri * U_rj
 
-            Address_mjj++;  // Address of K_ij in banded matrix
-			K[Address_mjj] = K[Address_mjj] - C;	// U_ij = K_ij - C
+			K[Address[j-1] + (j-i) - 1] -= C;	// U_ij = K_ij - C
 		}
-
-		// Address of K_mj,j in banded matrix (Numbering starting from 0);
-		Address_mjj = Address[j-1] + j - mj - 1;
 
 		for (unsigned int r = mj; r <= j-1; r++)	// Loop for mj:j-1 (column j)
 		{
-			double Lrj = K[Address_mjj] / K[Address[r-1] - 1];	// L_rj = U_rj / D_rr
-			K[Address_jj] = K[Address_jj]  - Lrj * K[Address_mjj];	// D_jj = K_jj - sum(L_rj*U_rj, r=mj:j-1)
-			K[Address_mjj++] = Lrj;
+			double Lrj = K[Address[j-1] + (j-r) - 1] / K[Address[r-1] - 1];	// L_rj = U_rj / D_rr
+			K[Address[j-1] - 1] -= Lrj * K[Address[j-1] + (j-r) - 1];	// D_jj = K_jj - sum(L_rj*U_rj, r=mj:j-1)
+			K[Address[j-1] + (j-r) - 1] = Lrj;
 
-			if (fabs(K[Address_jj]) <= FLT_MIN)
-			{
-				cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
-                     << "    Euqation no = " << r + 1 << endl
-					 << "    Pivot = " << K[Address_jj] << endl;
-
-                    exit(4);
-				}
 		}
-	}
+
+        if (fabs(K[Address[j-1] - 1]) <= FLT_MIN)
+        {
+            cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
+            << "    Euqation no = " << j << endl
+            << "    Pivot = " << K[Address[j-1] - 1] << endl;
+            
+            exit(4);
+        }
+    }
 };
 
 // Solve displacement by back substitution
@@ -110,25 +98,26 @@ void CLDLTSolver::BackSubstitution()
 
 	unsigned int* Address = FEMData->GetDiagonalAddress(); // Numering starting from 1
 	unsigned int N = FEMData->GetNEQ();
+    unsigned int* ColumnHeights = FEMData->GetColumnHeights();   // Column Hights
 
 //	Reduce right-hand-side load vector (LV = R)
 	for (unsigned int i = 2; i <= N; i++)	// Loop for i=2:N (Numering starting from 1)
 	{
-		int mi = i - (Address[i] - Address[i-1]) + 1;
+        int mi = i - ColumnHeights[i-1];
 
 		for (unsigned int j = mi; j <= i-1; j++)	// Loop for j=mi:i-1
-			Force[i-1] = Force[i-1] - K[Address[i-1] + i - j - 1] * Force[j-1];	// V_i = R_i - sum_j (L_ji V_j)
+			Force[i-1] -= K[Address[i-1] + (i - j) - 1] * Force[j-1];	// V_i = R_i - sum_j (L_ji V_j)
 	}
 
 //	Back substitute (Vbar = D^(-1) V, L^T a = Vbar)
 	for (unsigned int i = 1; i <= N; i++)	// Loop for i=1:N
-		Force[i-1] = Force[i-1] / K[Address[i-1] - 1];	// Vbar = D^(-1) V
+		Force[i-1] /= K[Address[i-1] - 1];	// Vbar = D^(-1) V
 
 	for (int j = N; j >= 2; j--)	// Loop for j=N:2
 	{
-		int mj = j - (Address[j] - Address[j-1]) + 1;
+        int mj = j - ColumnHeights[j-1];
 
 		for (int i = mj; i <= j-1; i++)	// Loop for i=mj:j-1
-			Force[i-1] -= K[Address[j-1] + j - i - 1] * Force[j-1];	// a_i = Vbar_i - sum_j(L_ij Vbar_j)
+			Force[i-1] -= K[Address[j-1] + (j - i) - 1] * Force[j-1];	// a_i = Vbar_i - sum_j(L_ij Vbar_j)
 	}
 };
