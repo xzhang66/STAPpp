@@ -217,10 +217,11 @@ bool CDomain::ReadBarElementData(int EleGrp)
 {
 //	Read material/section property lines
 	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
+    CBarMaterial* mlist = (CBarMaterial*) MaterialSetList[EleGrp];
 
 //	Loop over for all material property sets in group EleGrp
 	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
-		if (!MaterialSetList[EleGrp][mset].Read(Input, mset))
+		if (!mlist[mset].Read(Input, mset))
 			return false;
 
 //	Read element data lines
