@@ -413,14 +413,14 @@ void COutputter::PrintStiffnessMatrix()
 
 	for (int i = 0; i < DiagonalAddress[NEQ]-1; i++)
 	{
-		if ((i+1) % 6 == 0)
-		{
-			cout << endl;
-			OutputFile << endl;
-		}
-
 		cout << setw(14) << StiffnessMatrix[i];
 		OutputFile << setw(14) << StiffnessMatrix[i];
+
+        if ((i+1) % 6 == 0)
+        {
+            cout << endl;
+            OutputFile << endl;
+        }
 	}
 
 	cout << endl << endl;
