@@ -200,7 +200,8 @@ bool CDomain::ReadElements()
 		switch (ElementTypes[EleGrp])
 		{
 		case 1:	// Bar element
-			ReadBarElementData(EleGrp);
+			if (!ReadBarElementData(EleGrp))
+                return false;
 			break;
 
 		default:	// Invalid element type
