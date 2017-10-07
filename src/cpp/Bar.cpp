@@ -53,7 +53,7 @@ bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeLi
 	int N1, N2;	// Left node number and right node number
 
 	Input >> N1 >> N2 >> MSet;
-	ElementMaterial = &MaterialSets[MSet - 1];
+	ElementMaterial = &((CBarMaterial*)MaterialSets)[MSet - 1];
 	nodes[0] = &NodeList[N1 - 1];
 	nodes[1] = &NodeList[N2 - 1];
 
