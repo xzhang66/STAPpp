@@ -21,7 +21,7 @@ CBar::CBar()
 	nodes = new CNode*[NEN];
     
     ND = 6;
-    LocationMatrix = new int[ND];
+    LocationMatrix = new unsigned int[ND];
 
 	ElementMaterial = NULL;
 }
@@ -34,9 +34,9 @@ CBar::~CBar()
 }
 
 //	Read element data from stream Input
-bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList)
+bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList)
 {
-	int N;
+	unsigned int N;
 
 	Input >> N;	// element number
 
@@ -49,8 +49,8 @@ bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeLi
 		return false;
 	}
 
-	int MSet;	// Material property set number
-	int N1, N2;	// Left node number and right node number
+	unsigned int MSet;	// Material property set number
+	unsigned int N1, N2;	// Left node number and right node number
 
 	Input >> N1 >> N2 >> MSet;
 	ElementMaterial = &((CBarMaterial*)MaterialSets)[MSet - 1];
@@ -61,7 +61,7 @@ bool CBar::Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeLi
 }
 
 //	Write element data to stream OutputFile
-void CBar::Write(ofstream& OutputFile, int Ele)
+void CBar::Write(ofstream& OutputFile, unsigned int Ele)
 {
 	cout << setw(5) << Ele+1 << setw(11) << nodes[0]->NodeNumber 
 		 << setw(9) << nodes[1]->NodeNumber << setw(12) << ElementMaterial->nset << endl;
@@ -73,9 +73,9 @@ void CBar::Write(ofstream& OutputFile, int Ele)
 //	Caution:  Equation number is numbered from 1 !
 void CBar::GenerateLocationMatrix()
 {
-    int i = 0;
-    for (int N = 0; N < NEN; N++)
-        for (int D = 0; D < 3; D++)
+    unsigned int i = 0;
+    for (unsigned int N = 0; N < NEN; N++)
+        for (unsigned int D = 0; D < 3; D++)
             LocationMatrix[i++] = nodes[N]->bcode[D];
 }
 
@@ -93,7 +93,7 @@ void CBar::ElementStiffness(double* Matrix)
 
 //	Calculate bar length
 	double DX[3];		//	dx = x2-x1, dy = y2-y1, dz = z2-z1
-	for (int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 		DX[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
 
 	double DX2[6];	//  Quadratic polynomial (dx^2, dy^2, dz^2, dx*dy, dy*dz, dx*dz)
@@ -144,21 +144,21 @@ void CBar::ElementStress(double* stress, double* Displacement)
 	double DX[3];	//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	double L2 = 0;	//	Square of bar length (L^2)
 
-	for (int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		DX[i] = nodes[1]->XYZ[i] - nodes[0]->XYZ[i];
 		L2 = L2 + DX[i]*DX[i];
 	}
 
 	double S[6];
-	for (int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		S[i] = -DX[i] * material->E / L2;
 		S[i+3] = -S[i];
 	}
 	
 	*stress = 0.0;
-	for (int i = 0; i < 6; i++)
+	for (unsigned int i = 0; i < 6; i++)
 	{
 		if (LocationMatrix[i])
 			*stress += S[i] * Displacement[LocationMatrix[i]-1];

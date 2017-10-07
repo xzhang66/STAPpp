@@ -54,13 +54,13 @@ public:
 	void OutputElementInfo();
 
 //!	Output bar element data
-	void PrintBarElementData(int EleGrp);
+	void PrintBarElementData(unsigned int EleGrp);
 
 //!	Output load data 
 	void OutputLoadInfo(); 
 
 //!	Output displacement data
-	void OutputNodalDisplacement(int lcase);
+	void OutputNodalDisplacement(unsigned int lcase);
 
 //!	Output element stresses 
 	void OutputElementStress();
@@ -80,7 +80,7 @@ public:
 	void PrintColumnHeights();
 
 //!	Print displacement vector for debuging
-	void PrintDisplacement(int loadcase);
+	void PrintDisplacement(unsigned int loadcase);
 
 #endif
 

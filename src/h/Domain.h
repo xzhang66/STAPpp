@@ -21,7 +21,7 @@
 using namespace std;
 
 //!	Clear an array
-template <class type> void clear( type* a, int N );
+template <class type> void clear( type* a, unsigned int N );
 
 //!	Domain class : Define the problem domain
 /*!	Only a single instance of Domain class can be created */
@@ -41,7 +41,7 @@ private:
 //!	Solution MODEX
 /*!		0 : Data check only;
 		1 : Execution */
-	int MODEX;
+	unsigned int MODEX;
 
 //!	Total number of nodal points
 	unsigned int NUMNP;
@@ -128,7 +128,7 @@ public:
 	bool ReadElements();
 
 //!	Read bar element data from the input data file
-	bool ReadBarElementData(int EleGrp);
+	bool ReadBarElementData(unsigned int EleGrp);
 
 //!	Calculate global equation numbers corresponding to every degree of freedom of each node
 	void CalculateEquationNumber();
@@ -151,7 +151,7 @@ public:
 	bool AssembleForce(unsigned int LoadCase); 
 
 //!	Return solution mode
-	inline int GetMODEX() { return MODEX; }
+	inline unsigned int GetMODEX() { return MODEX; }
 
 //!	Return the title of problem
 	inline string GetTitle() { return Title; }

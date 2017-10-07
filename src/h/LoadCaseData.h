@@ -29,11 +29,11 @@ public:
 	~CLoadCaseData();
 
 //!	Set nloads, and new array node, dof and load
-	void Allocate(int num);
+	void Allocate(unsigned int num);
 
 //!	Read load case data from stream Input
-	bool Read(ifstream& Input, int lcase);
+	bool Read(ifstream& Input, unsigned int lcase);
 
 //!	Write load case data to stream OutputFile
-	void Write(ofstream& OutputFile, int lcase);
+	void Write(ofstream& OutputFile, unsigned int lcase);
 };

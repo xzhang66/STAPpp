@@ -24,10 +24,10 @@ public:
 	~CBar();
 
 //!	Read element data from stream Input
-	virtual bool Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList);
+	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList);
 
 //!	Write element data to stream OutputFile
-	virtual void Write(ofstream& OutputFile, int Ele);
+	virtual void Write(ofstream& OutputFile, unsigned int Ele);
 
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !

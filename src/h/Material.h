@@ -27,10 +27,10 @@ public:
 public:
 
 //!	Read material data from stream Input
-	virtual bool Read(ifstream& Input, int mset) = 0;
+	virtual bool Read(ifstream& Input, unsigned int mset) = 0;
 
 //!	Write material data to Stream OutputFile
-    virtual void Write(ofstream& OutputFile, int mset) = 0;
+    virtual void Write(ofstream& OutputFile, unsigned int mset) = 0;
 
 };
 
@@ -44,8 +44,8 @@ public:
 public:
 	
 //!	Read material data from stream Input
-	virtual bool Read(ifstream& Input, int mset);
+	virtual bool Read(ifstream& Input, unsigned int mset);
 
 //!	Write material data to Stream OutputFile
-	virtual void Write(ofstream& OutputFile, int mset);
+	virtual void Write(ofstream& OutputFile, unsigned int mset);
 };

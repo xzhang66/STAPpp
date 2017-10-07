@@ -22,13 +22,13 @@ class CSkylineMatrix
 public:
 
     // constructor
-    inline CSkylineMatrix(int N);
+    inline CSkylineMatrix(unsigned int N);
     
     // destructor
     inline ~CSkylineMatrix();
 
     // operator []
-    inline T_& operator()(int i, int j);
+    inline T_& operator()(unsigned int i, unsigned int j);
 
     // Allocate storage for the skyline matrix
     inline void Allocate();   // Allocate storage for the matrix
@@ -40,10 +40,10 @@ public:
     inline void ColumnHeight(unsigned int i, unsigned int height);
 
     // Set the element (i,j) to value
-    inline void set(int i, int j, T_ value);
+    inline void set(unsigned int i, unsigned int j, T_ value);
 
     // Return the address of element (i,j) in data_ (numbering from 0)
-    inline unsigned int address(int i, int j) const;
+    inline unsigned int address(unsigned int i, unsigned int j) const;
 
     // Return the dimension of the matrix (NEQ_)
     inline unsigned int dim() const;
@@ -55,7 +55,7 @@ public:
 
 // constructor functions
 template <class T_>
-inline CSkylineMatrix<T_>::CSkylineMatrix(int N)
+inline CSkylineMatrix<T_>::CSkylineMatrix(unsigned int N)
 {
     NEQ_ = N;
 
@@ -77,7 +77,7 @@ inline CSkylineMatrix<T_>::~CSkylineMatrix<T_>()
 
 // operator function
 template <class T_>
-inline T_& CSkylineMatrix<T_>::operator()(int i, int j)
+inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
 {
     return data_[address(i,j)];
 }
@@ -106,7 +106,7 @@ inline void CSkylineMatrix<T_>::ColumnHeight(unsigned int i, unsigned int height
 
 // Return the address of element (i,j) in data_ (numbering from 0)
 template <class T_>
-inline unsigned int CSkylineMatrix<T_>::address(int i, int j) const
+inline unsigned int CSkylineMatrix<T_>::address(unsigned int i, unsigned int j) const
 {
     if (j >= i)
         return DiagonalAddress_[j - 1] + (j - i) - 1;
@@ -116,7 +116,7 @@ inline unsigned int CSkylineMatrix<T_>::address(int i, int j) const
 
 // Set the element (i,j) to value
 template <class T_>
-inline void CSkylineMatrix<T_>::set(int i, int j, T_ value)
+inline void CSkylineMatrix<T_>::set(unsigned int i, unsigned int j, T_ value)
 {
     data_[address(i,j)] = value;
 }

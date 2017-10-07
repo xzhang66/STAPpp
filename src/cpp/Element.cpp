@@ -18,15 +18,15 @@ void CElement::CalculateColumnHeight(unsigned int* ColumnHeight)
     GenerateLocationMatrix();
 
 //  Look for the row number of the first non-zero element
-    int nfirstrow = INT_MAX;
-    for (int i = 0; i < ND; i++)
+    unsigned int nfirstrow = INT_MAX;
+    for (unsigned int i = 0; i < ND; i++)
         if (LocationMatrix[i] && LocationMatrix[i] < nfirstrow)
             nfirstrow = LocationMatrix[i];
 
 //	Calculate the column height contributed by this element
-	for (int i = 0; i < ND; i++)
+	for (unsigned int i = 0; i < ND; i++)
 	{
-		int column = LocationMatrix[i];
+		unsigned int column = LocationMatrix[i];
 		if (!column)
 			continue;
 
@@ -42,18 +42,18 @@ void CElement::assembly(double* Matrix, double* StiffnessMatrix, unsigned int* D
 	ElementStiffness(Matrix);
 	
 //	Assemble global stiffness matrix
-	for (int j = 0; j < ND; j++)
+	for (unsigned int j = 0; j < ND; j++)
 	{
-		int Lj = LocationMatrix[j];	// Global equation number corresponding to jth DOF of the element
+		unsigned int Lj = LocationMatrix[j];	// Global equation number corresponding to jth DOF of the element
 		if (!Lj) 
 			continue;
 
 //		Address of diagonal element of column j in the one dimensional element stiffness matrix
-		int DiagjElement = (j+1)*j/2 + 1;
+		unsigned int DiagjElement = (j+1)*j/2 + 1;
 
-		for (int i = 0; i <= j; i++)
+		for (unsigned int i = 0; i <= j; i++)
 		{
-			int Li = LocationMatrix[i];	// Global equation number corresponding to ith DOF of the element
+			unsigned int Li = LocationMatrix[i];	// Global equation number corresponding to ith DOF of the element
 			if (!Li) 
 				continue;
 

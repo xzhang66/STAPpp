@@ -16,9 +16,9 @@
 using namespace std;
 
 //	Clear an array
-template <class type> void clear( type* a, int N )
+template <class type> void clear( type* a, unsigned int N )
 {
-	for (int i = 0; i < N; i++)
+	for (unsigned int i = 0; i < N; i++)
 		a[i] = 0;
 }
 
@@ -153,7 +153,7 @@ void CDomain::CalculateEquationNumber()
 	NEQ = 0;
 	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
 	{
-		for (int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
+		for (unsigned int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 		{
 			if (NodeList[np].bcode[dof]) 
 				NodeList[np].bcode[dof] = 0;
@@ -214,7 +214,7 @@ bool CDomain::ReadElements()
 }
 
 //	Read bar element data from the input data file
-bool CDomain::ReadBarElementData(int EleGrp)
+bool CDomain::ReadBarElementData(unsigned int EleGrp)
 {
 //	Read material/section property lines
 	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
@@ -319,7 +319,7 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 //	Loop over for all concentrated loads in load case LoadCase
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
-		int dof = NodeList[LoadData->node[lnum] - 1].bcode[LoadData->dof[lnum] - 1];
+		unsigned int dof = NodeList[LoadData->node[lnum] - 1].bcode[LoadData->dof[lnum] - 1];
 		Force[dof - 1] += LoadData->load[lnum];
 	}
 

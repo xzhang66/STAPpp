@@ -57,12 +57,12 @@ void CLDLTSolver::LDLT()
 	for (unsigned int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
 	{
         // Row number of the first non-zero element in column j (Numbering starting from 1)
-		int mj = j - ColumnHeights[j-1];
+		unsigned int mj = j - ColumnHeights[j-1];
         
 		for (unsigned int i = mj+1; i <= j-1; i++)	// Loop for mj+1:j-1 (Numbering starting from 1)
 		{
             // Row number of the first nonzero element in column i (Numbering starting from 1)
-			int mi = i - ColumnHeights[i-1];
+			unsigned int mi = i - ColumnHeights[i-1];
 
 			double C = 0.0;
 			for (unsigned int r = max(mi, mj); r <= i-1; r++)
@@ -103,7 +103,7 @@ void CLDLTSolver::BackSubstitution()
 //	Reduce right-hand-side load vector (LV = R)
 	for (unsigned int i = 2; i <= N; i++)	// Loop for i=2:N (Numering starting from 1)
 	{
-        int mi = i - ColumnHeights[i-1];
+        unsigned int mi = i - ColumnHeights[i-1];
 
 		for (unsigned int j = mi; j <= i-1; j++)	// Loop for j=mi:i-1
 			Force[i-1] -= K[Address[i-1] + (i - j) - 1] * Force[j-1];	// V_i = R_i - sum_j (L_ji V_j)
@@ -113,11 +113,11 @@ void CLDLTSolver::BackSubstitution()
 	for (unsigned int i = 1; i <= N; i++)	// Loop for i=1:N
 		Force[i-1] /= K[Address[i-1] - 1];	// Vbar = D^(-1) V
 
-	for (int j = N; j >= 2; j--)	// Loop for j=N:2
+	for (unsigned int j = N; j >= 2; j--)	// Loop for j=N:2
 	{
-        int mj = j - ColumnHeights[j-1];
+        unsigned int mj = j - ColumnHeights[j-1];
 
-		for (int i = mj; i <= j-1; i++)	// Loop for i=mj:j-1
+		for (unsigned int i = mj; i <= j-1; i++)	// Loop for i=mj:j-1
 			Force[i-1] -= K[Address[j-1] + (j - i) - 1] * Force[j-1];	// a_i = Vbar_i - sum_j(L_ij Vbar_j)
 	}
 };

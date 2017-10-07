@@ -21,7 +21,7 @@ using namespace std;
 
 class CDomain;
 
-template <class type> void clear( type* a, int N );	// Clear an array
+template <class type> void clear( type* a, unsigned int N );	// Clear an array
 
 //!	Element base class
 /*!	All type of element classes should be derived from this base class */
@@ -30,7 +30,7 @@ class CElement
 protected:
 
 //!	Number of nodes per element
-	int NEN;
+	unsigned int NEN;
 
 //!	Nodes of the element
 	CNode** nodes;
@@ -39,10 +39,10 @@ protected:
 	CMaterial* ElementMaterial;	//!< Pointer to an element of MaterialSetList[][]
     
 //! Location Matrix of the element
-    int* LocationMatrix;
+    unsigned int* LocationMatrix;
 
 //! Dimension of the location matrix
-    int ND;
+    unsigned int ND;
 
 public:
 
@@ -50,10 +50,10 @@ public:
 	CElement() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
 
 //!	Read element data from stream Input
-	virtual bool Read(ifstream& Input, int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
+	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
 
 //!	Write element data to stream OutputFile
-	virtual void Write(ofstream& OutputFile, int Ele) = 0;
+	virtual void Write(ofstream& OutputFile, unsigned int Ele) = 0;
 
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !

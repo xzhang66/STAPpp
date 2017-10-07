@@ -20,7 +20,7 @@ CLoadCaseData :: ~CLoadCaseData()
 	delete [] load;
 }
 
-void CLoadCaseData :: Allocate(int num)
+void CLoadCaseData :: Allocate(unsigned int num)
 {
 	nloads = num;
 	node = new unsigned int[nloads];
@@ -29,11 +29,11 @@ void CLoadCaseData :: Allocate(int num)
 }; 
 
 //	Read load case data from stream Input
-bool CLoadCaseData :: Read(ifstream& Input, int lcase)
+bool CLoadCaseData :: Read(ifstream& Input, unsigned int lcase)
 {
 //	Load case number (LL) and number of concentrated loads in this load case(NL)
 	
-	int LL, NL;
+	unsigned int LL, NL;
 
 	Input >> LL >> NL;	
 
@@ -48,14 +48,14 @@ bool CLoadCaseData :: Read(ifstream& Input, int lcase)
 
 	Allocate(NL);
 
-	for (int i = 0; i < NL; i++)
+	for (unsigned int i = 0; i < NL; i++)
 		Input >> node[i] >> dof[i] >> load[i];
 
 	return true;
 }
 
 //	Write load case data to stream OutputFile
-void CLoadCaseData::Write(ofstream& OutputFile, int lcase)
+void CLoadCaseData::Write(ofstream& OutputFile, unsigned int lcase)
 {
 	for (unsigned int i = 0; i < nloads; i++)
 	{

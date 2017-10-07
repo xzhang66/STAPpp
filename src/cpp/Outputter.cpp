@@ -80,10 +80,10 @@ void COutputter::OutputNodeInfo()
 	cout << setiosflags(ios::scientific) <<setprecision(5);
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
-	int NUMNP = FEMData->GetNUMNP();
-	int NUMEG = FEMData->GetNUMEG();
-	int NLCASE = FEMData->GetNLCASE();
-	int MODEX = FEMData->GetMODEX();
+	unsigned int NUMNP = FEMData->GetNUMNP();
+	unsigned int NUMEG = FEMData->GetNUMEG();
+	unsigned int NLCASE = FEMData->GetNLCASE();
+	unsigned int MODEX = FEMData->GetMODEX();
 
 	cout << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
 	cout << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
@@ -106,7 +106,7 @@ void COutputter::OutputNodeInfo()
 	OutputFile << "    NODE       BOUNDARY                         NODAL POINT" << endl
 			   << "   NUMBER  CONDITION CODES                      COORDINATES" << endl;
  
-	for (int np = 0; np < NUMNP; np++)
+	for (unsigned int np = 0; np < NUMNP; np++)
 		NodeList[np].Write(OutputFile, np);
 
 	cout << endl;
@@ -117,7 +117,7 @@ void COutputter::OutputNodeInfo()
 void COutputter::OutputEquationNumber()
 {
 	CDomain* FEMData = CDomain::Instance();
-	int NUMNP = FEMData->GetNUMNP();
+	unsigned int NUMNP = FEMData->GetNUMNP();
 
 	CNode* NodeList = FEMData->GetNodeList();
 
@@ -129,7 +129,7 @@ void COutputter::OutputEquationNumber()
 	OutputFile << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
 	OutputFile << "        N           X    Y    Z" << endl;
 
-	for (int np = 0; np < NUMNP; np++)	// Loop over for all node
+	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
 		NodeList[np].WriteEquationNo(OutputFile, np);
 
 	cout << endl;
@@ -181,12 +181,12 @@ void COutputter::OutputElementInfo()
 }
 
 //	Output bar element data
-void COutputter::PrintBarElementData(int EleGrp)
+void COutputter::PrintBarElementData(unsigned int EleGrp)
 {
 
 	CDomain* FEMData = CDomain::Instance();
 
-	int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
+	unsigned int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
 	CBarMaterial* MaterialSet = (CBarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
@@ -209,7 +209,7 @@ void COutputter::PrintBarElementData(int EleGrp)
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
 //	Loop over for all property sets
-	for (int mset = 0; mset < NUMMAT; mset++)
+	for (unsigned int mset = 0; mset < NUMMAT; mset++)
 		MaterialSet[mset].Write(OutputFile, mset);
 
 	cout << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
@@ -264,7 +264,7 @@ void COutputter::OutputLoadInfo()
 }
 
 //	Print nodal displacement
-void COutputter::OutputNodalDisplacement(int lcase)
+void COutputter::OutputNodalDisplacement(unsigned int lcase)
 {
 	CDomain* FEMData = CDomain::Instance();
 	CNode* NodeList = FEMData->GetNodeList();
@@ -351,10 +351,10 @@ void COutputter::PrintColumnHeights()
 
 	CDomain* FEMData = CDomain::Instance();
 
-	int NEQ = FEMData->GetNEQ();
+	unsigned int NEQ = FEMData->GetNEQ();
 	unsigned int* ColumnHeights = FEMData->GetColumnHeights();
 
-	for (int col = 0; col < NEQ; col++)
+	for (unsigned int col = 0; col < NEQ; col++)
 	{
 		if (col+1 % 10 == 0)
 		{
@@ -377,10 +377,10 @@ void COutputter::PrintDiagonalAddress()
 
 	CDomain* FEMData = CDomain::Instance();
 
-	int NEQ = FEMData->GetNEQ();
+	unsigned int NEQ = FEMData->GetNEQ();
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
 
-	for (int col = 0; col <= NEQ; col++)
+	for (unsigned int col = 0; col <= NEQ; col++)
 	{
 		if (col+1 % 10 == 0)
 		{
@@ -404,14 +404,14 @@ void COutputter::PrintStiffnessMatrix()
 
 	CDomain* FEMData = CDomain::Instance();
 
-	int NEQ = FEMData->GetNEQ();
+	unsigned int NEQ = FEMData->GetNEQ();
 	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
 	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
 
 	cout << setiosflags(ios::scientific) <<setprecision(5);
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
-	for (int i = 0; i < DiagonalAddress[NEQ]-1; i++)
+	for (unsigned int i = 0; i < DiagonalAddress[NEQ]-1; i++)
 	{
 		cout << setw(14) << StiffnessMatrix[i];
 		OutputFile << setw(14) << StiffnessMatrix[i];
@@ -429,16 +429,16 @@ void COutputter::PrintStiffnessMatrix()
 	cout << "*** _Debug_ *** Full stiffness matrix" << endl;
 	OutputFile << "*** _Debug_ *** Full stiffness matrix" << endl;
 
-	for (int I = 0; I < NEQ; I++)
+	for (unsigned int I = 0; I < NEQ; I++)
 	{
-		for (int J = 0; J < NEQ; J++)
+		for (unsigned int J = 0; J < NEQ; J++)
 		{
-			int i = I;
-			int j = J;
+			unsigned int i = I;
+			unsigned int j = J;
 			if (i > j)
 				swap(i,j);
 
-			int H = DiagonalAddress[j + 1] - DiagonalAddress[j];
+			unsigned int H = DiagonalAddress[j + 1] - DiagonalAddress[j];
 			if (j - i - H >= 0) 
 			{
 				cout << setw(14) << 0.0;
@@ -460,14 +460,14 @@ void COutputter::PrintStiffnessMatrix()
 }
 
 //	Print displacement vector for debuging
-void COutputter::PrintDisplacement(int loadcase)
+void COutputter::PrintDisplacement(unsigned int loadcase)
 {
 	cout << "*** _Debug_ *** Displacement vector" << endl;
 	OutputFile << "*** _Debug_ *** Displacement vector" << endl;
 
 	CDomain* FEMData = CDomain::Instance();
 
-	int NEQ = FEMData->GetNEQ();
+	unsigned int NEQ = FEMData->GetNEQ();
 	double* Force = FEMData->GetForce();
 
 	cout << "  Load case = " << loadcase << endl;
@@ -476,7 +476,7 @@ void COutputter::PrintDisplacement(int loadcase)
 	cout << setiosflags(ios::scientific) <<setprecision(5);
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
-	for (int i = 0; i < NEQ; i++)
+	for (unsigned int i = 0; i < NEQ; i++)
 	{
 		if ((i+1) % 6 == 0)
 		{

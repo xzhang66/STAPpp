@@ -11,7 +11,6 @@
 
 #include "Node.h"
 
-
 CNode::CNode(double X, double Y, double Z)
 {
     XYZ[0] = X;		// Coordinates of the node
@@ -23,11 +22,10 @@ CNode::CNode(double X, double Y, double Z)
     bcode[2] = 0;
 };
 
-
 //	Read element data from stream Input
-bool CNode::Read(ifstream& Input, int np)
+bool CNode::Read(ifstream& Input, unsigned int np)
 {
-	int N;
+	unsigned int N;
 
 	Input >> N;	// node number
 	if (N != np + 1) 
@@ -48,7 +46,7 @@ bool CNode::Read(ifstream& Input, int np)
 }
 
 //	Output nodal point data to stream OutputFile
-void CNode::Write(ofstream& OutputFile, int np)
+void CNode::Write(ofstream& OutputFile, unsigned int np)
 {
 	cout << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
 		 << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
@@ -57,12 +55,12 @@ void CNode::Write(ofstream& OutputFile, int np)
 }
 
 //	Output equation numbers of nodal point to stream OutputFile
-void CNode::WriteEquationNo(ofstream& OutputFile, int np)
+void CNode::WriteEquationNo(ofstream& OutputFile, unsigned int np)
 {
 	cout << setw(9) << np+1 << "       ";
 	OutputFile << setw(9) << np+1 << "       ";
 
-	for (int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
+	for (unsigned int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 	{
 		cout << setw(5) << bcode[dof];
 		OutputFile << setw(5) << bcode[dof];
@@ -73,12 +71,12 @@ void CNode::WriteEquationNo(ofstream& OutputFile, int np)
 }
 
 //	Write nodal displacement
-void CNode::WriteNodalDisplacement(ofstream& OutputFile, int np, double* Displacement)
+void CNode::WriteNodalDisplacement(ofstream& OutputFile, unsigned int np, double* Displacement)
 {
 	cout << setw(5) << np + 1 << "        ";
 	OutputFile << setw(5) << np + 1 << "        ";
 
-	for (int j = 0; j < NDF; j++)
+	for (unsigned int j = 0; j < NDF; j++)
 	{
 		if (bcode[j] == 0)
 		{
