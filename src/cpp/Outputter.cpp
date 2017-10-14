@@ -8,6 +8,7 @@
 
 #include "Domain.h"
 #include "Outputter.h"
+#include "SkylineMatrix.h"
 
 #include <iostream>
 #include <iomanip>
@@ -352,7 +353,8 @@ void COutputter::PrintColumnHeights()
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-	unsigned int* ColumnHeights = FEMData->GetColumnHeights();
+    CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
 
 	for (unsigned int col = 0; col < NEQ; col++)
 	{
@@ -378,7 +380,8 @@ void COutputter::PrintDiagonalAddress()
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
+    CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
 
 	for (unsigned int col = 0; col <= NEQ; col++)
 	{
@@ -405,16 +408,16 @@ void COutputter::PrintStiffnessMatrix()
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-	unsigned int* DiagonalAddress = FEMData->GetDiagonalAddress();
-	double* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+    unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
 
 	cout << setiosflags(ios::scientific) <<setprecision(5);
 	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
 
-	for (unsigned int i = 0; i < DiagonalAddress[NEQ]-1; i++)
+	for (unsigned int i = 0; i < DiagonalAddress[NEQ] - DiagonalAddress[0]; i++)
 	{
-		cout << setw(14) << StiffnessMatrix[i];
-		OutputFile << setw(14) << StiffnessMatrix[i];
+		cout << setw(14) << (*StiffnessMatrix)(i);
+		OutputFile << setw(14) << (*StiffnessMatrix)(i);
 
         if ((i+1) % 6 == 0)
         {
@@ -429,25 +432,20 @@ void COutputter::PrintStiffnessMatrix()
 	cout << "*** _Debug_ *** Full stiffness matrix" << endl;
 	OutputFile << "*** _Debug_ *** Full stiffness matrix" << endl;
 
-	for (unsigned int I = 0; I < NEQ; I++)
+	for (int I = 1; I <= NEQ; I++)
 	{
-		for (unsigned int J = 0; J < NEQ; J++)
+		for (int J = 1; J <= NEQ; J++)
 		{
-			unsigned int i = I;
-			unsigned int j = J;
-			if (i > j)
-				swap(i,j);
-
-			unsigned int H = DiagonalAddress[j + 1] - DiagonalAddress[j];
-			if (j - i - H >= 0) 
+			int H = DiagonalAddress[J] - DiagonalAddress[J-1];
+			if (J - I - H >= 0)
 			{
 				cout << setw(14) << 0.0;
 				OutputFile << setw(14) << 0.0;
 			}
 			else
 			{
-				cout << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
-				OutputFile << setw(14) << StiffnessMatrix[DiagonalAddress[j] + j - i - 1];
+				cout << setw(14) << (*StiffnessMatrix)(I,J);
+				OutputFile << setw(14) << (*StiffnessMatrix)(I,J);
 			}
 		}
 
