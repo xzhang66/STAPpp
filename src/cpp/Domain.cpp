@@ -3,6 +3,8 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
+/*     Release 1.0, October 14, 2017                                         */
+/*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
@@ -49,10 +51,6 @@ CDomain::CDomain()
 	NWK = 0;
 	MK = 0;
 
-	StiffnessMatrix = NULL;
-	ColumnHeights = NULL;
-	DiagonalAddress = NULL;
-
 	Force = NULL; 
 }
 
@@ -71,11 +69,7 @@ CDomain::~CDomain()
 	delete [] NLOAD;
 	delete [] LoadCases;
 
-	delete [] StiffnessMatrix;
-	delete [] ColumnHeights;
-	delete [] DiagonalAddress;
-
-	delete [] Force; 
+	delete [] Force;
 }
 
 //	Return pointer to the instance of the Domain class
@@ -239,7 +233,8 @@ bool CDomain::ReadBarElementData(unsigned int EleGrp)
 //	Calculate column heights
 void CDomain::CalculateColumnHeights()
 {
-	clear(ColumnHeights, NEQ);	// Set all elements to zero
+    unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
+//	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
 		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
@@ -265,7 +260,9 @@ void CDomain::CalculateColumnHeights()
 //	Caution: Address is numbered from 1 !
 void CDomain::CalculateDiagnoalAddress()
 {
-	clear(DiagonalAddress, NEQ + 1);	// Set all elements to zero
+    unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
+    unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
+//	clear(DiagonalAddress, NEQ + 1);	// Set all elements to zero
 
 //	Calculate the address of diagonal elements
 //	M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
@@ -294,7 +291,7 @@ void CDomain::AssembleStiffnessMatrix()
 
 //		Loop over for all elements in group EleGrp
 		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-			ElementSetList[EleGrp][Ele].assembly(Matrix, StiffnessMatrix, DiagonalAddress);
+			ElementSetList[EleGrp][Ele].assembly(Matrix, StiffnessMatrix);
 
 		delete [] Matrix;
 	}
@@ -333,11 +330,8 @@ void CDomain::AllocateMatrices()
 //	Allocate for global force/displacement vector
 	Force = new double[NEQ];
 
-//	Allocate for column heights 
-	ColumnHeights = new unsigned int[NEQ];
-
-//	Allocate for address of diagonal elements
-	DiagonalAddress = new unsigned int[NEQ + 1];
+//  Create the banded stiffness matrix
+    StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
 
 //	Calculate column heights
 	CalculateColumnHeights();
@@ -346,8 +340,7 @@ void CDomain::AllocateMatrices()
 	CalculateDiagnoalAddress();
 
 //	Allocate for banded global stiffness matrix
-	StiffnessMatrix = new double[NWK];
-	clear(StiffnessMatrix, NWK);
+    StiffnessMatrix->Allocate();
 
 	COutputter* Output = COutputter::Instance();
 	Output->OutputTotalSystemData();

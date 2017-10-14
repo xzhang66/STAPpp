@@ -3,6 +3,8 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
+/*     Release 1.0, October 14, 2017                                         */
+/*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
@@ -17,6 +19,7 @@
 #include "Outputter.h"
 #include "Solver.h"
 #include "LoadCaseData.h"
+#include "SkylineMatrix.h"
 
 using namespace std;
 
@@ -93,13 +96,7 @@ private:
 //!	Banded stiffness matrix
 /*! A one-dimensional array storing only the elements below the	skyline of the 
     global stiffness matrix. */
-	double* StiffnessMatrix;
-
-//!	Column heights
-	unsigned int* ColumnHeights;
-
-//!	Address of diagonal elements in banded stiffness matrix
-	unsigned int* DiagonalAddress;
+    CSkylineMatrix<double>* StiffnessMatrix;
 
 //!	Global nodal force/displacement vector
 	double* Force;
@@ -204,13 +201,7 @@ public:
 //!	Return the list of load cases
 	inline CLoadCaseData* GetLoadCases() { return LoadCases; }
 
-//!	Return column heights
-	inline unsigned int* GetColumnHeights() { return ColumnHeights; }
-
 //!	Return pointer to the banded stiffness matrix
-	inline double* GetStiffnessMatrix() { return StiffnessMatrix; }
-
-//!	Return pointer to the array storing the address of diagonal elements
-	inline unsigned int* GetDiagonalAddress() { return DiagonalAddress; }
+	inline CSkylineMatrix<double>* GetStiffnessMatrix() { return StiffnessMatrix; }
 
 };

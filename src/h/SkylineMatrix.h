@@ -3,132 +3,157 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
+/*     Release 1.0, October 14, 2017                                         */
+/*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
 #pragma once
 
+//! CSkylineMatrix class is used to store the FEM stiffness matrix in skyline storage
 template <class T_>
 class CSkylineMatrix
 {
-    T_* data_;  // Store the skyline matrix
+//! Store the stiffness matrkix in skyline storage
+    T_* data_;
     
-    unsigned int NEQ_;  // Dimension of the matrix
-    unsigned int NWK_;  // Size of data_
+//! Dimension of the stiffness matrix
+    unsigned int NEQ_;
     
-    unsigned int* ColumnHeights_;   // Column hights
-    unsigned int* DiagonalAddress_; // Diagonal address of all columns in data_
+//! Size of the storage used to store the stiffness matrkix in skyline
+    unsigned int NWK_;
 
+//! Column hights
+    unsigned int* ColumnHeights_;
+    
+//! Diagonal address of all columns in data_
+    unsigned int* DiagonalAddress_;
+    
 public:
 
-    // constructor
+//! constructors
+    inline CSkylineMatrix();
     inline CSkylineMatrix(unsigned int N);
     
-    // destructor
+//! destructor
     inline ~CSkylineMatrix();
 
-    // operator []
+//! operator (i,j) where i and j number from 1
+//! For the sake of efficiency, the index bounds are not checked
     inline T_& operator()(unsigned int i, unsigned int j);
-
-    // Allocate storage for the skyline matrix
-    inline void Allocate();   // Allocate storage for the matrix
     
-    // Set the diagonal address of ith column
-    inline void DiagonalAddress(unsigned int i, unsigned int address);
+//! operator (i) where i numbers from 1
+//! For the sake of efficiency, the index bounds are not checked
+    inline T_ operator()(unsigned int i);
+
+//! Allocate storage for the skyline matrix
+    inline void Allocate();
+
+//! Return pointer to the ColumnHeights_
+    inline unsigned int* GetColumnHeights();
     
-    // Set the hight of ith column
-    inline void ColumnHeight(unsigned int i, unsigned int height);
+//! Return pointer to the DiagonalAddress_
+    inline unsigned int* GetDiagonalAddress();
 
-    // Set the element (i,j) to value
-    inline void set(unsigned int i, unsigned int j, T_ value);
-
-    // Return the address of element (i,j) in data_ (numbering from 0)
-    inline unsigned int address(unsigned int i, unsigned int j) const;
-
-    // Return the dimension of the matrix (NEQ_)
+//! Return the dimension of the stiffness matrix
     inline unsigned int dim() const;
     
-    // Return the size of the matrix (NWK_)
+//! Return the size of the storage used to store the stiffness matrkix in skyline
     inline unsigned int size() const;
 
 }; /* class definition */
 
-// constructor functions
+//! constructor functions
+template <class T_>
+inline CSkylineMatrix<T_>::CSkylineMatrix()
+{
+    NEQ_ = 0;
+    
+    data_ = NULL;
+    ColumnHeights_ = NULL;
+    DiagonalAddress_ = NULL;
+}
+
 template <class T_>
 inline CSkylineMatrix<T_>::CSkylineMatrix(unsigned int N)
 {
     NEQ_ = N;
 
     data_ = NULL;
+    
     ColumnHeights_ = new unsigned int [NEQ_];
+    for (unsigned int i = 0; i < NEQ_; i++)
+        ColumnHeights_[i] = 0;
+
     DiagonalAddress_ = new unsigned int [NEQ_ + 1];
+    for (unsigned int i = 0; i < NEQ_ + 1; i++)
+        DiagonalAddress_[i] = 0;
 }
 
-// destructor function
+//! destructor function
 template <class T_>
 inline CSkylineMatrix<T_>::~CSkylineMatrix<T_>()
 {
-    delete[] ColumnHeights_;
-    delete[] DiagonalAddress_;
+    if (ColumnHeights_)
+        delete[] ColumnHeights_;
+    
+    if (DiagonalAddress_)
+        delete[] DiagonalAddress_;
     
     if (data_)
         delete[] data_;
 }
 
-// operator function
+//! operator function (i,j) where i and j number from 1
 template <class T_>
 inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
 {
-    return data_[address(i,j)];
+    if (j >= i)
+        return data_[DiagonalAddress_[j - 1] + (j - i) - 1];
+    else
+        return data_[DiagonalAddress_[i - 1] + (i - j) - 1];
 }
 
-// Allocate storage for the matrix
+//! operator function (i) where i numbers from 1
+template <class T_>
+inline T_ CSkylineMatrix<T_>::operator()(unsigned int i)
+{
+    return data_[i];
+}
+
+//! Allocate storage for the matrix
 template <class T_>
 inline void CSkylineMatrix<T_>::Allocate()
 {
     NWK_ = DiagonalAddress_[NEQ_] - DiagonalAddress_[0];
+
     data_ = new T_[NWK_];
+    for (unsigned int i = 0; i < NWK_ + 1; i++)
+        data_[i] = 0;
 }
 
-// Set the diagonal address of ith column
+//! Return pointer to the ColumnHeights_
 template <class T_>
-inline void CSkylineMatrix<T_>::DiagonalAddress(unsigned int i, unsigned int address)
+inline unsigned int* CSkylineMatrix<T_>::GetColumnHeights()
 {
-    DiagonalAddress_[i-1] = address;
+    return ColumnHeights_;
 }
 
-// Set the hight of ith column
+//! Return pointer to the DiagonalAddress_
 template <class T_>
-inline void CSkylineMatrix<T_>::ColumnHeight(unsigned int i, unsigned int height)
+inline unsigned int* CSkylineMatrix<T_>::GetDiagonalAddress()
 {
-    ColumnHeights_[i-1] = height;
+    return DiagonalAddress_;
 }
 
-// Return the address of element (i,j) in data_ (numbering from 0)
-template <class T_>
-inline unsigned int CSkylineMatrix<T_>::address(unsigned int i, unsigned int j) const
-{
-    if (j >= i)
-        return DiagonalAddress_[j - 1] + (j - i) - 1;
-    else
-        return DiagonalAddress_[i - 1] + (i - j) - 1;
-}
-
-// Set the element (i,j) to value
-template <class T_>
-inline void CSkylineMatrix<T_>::set(unsigned int i, unsigned int j, T_ value)
-{
-    data_[address(i,j)] = value;
-}
-
-// Return the dimension of the matrix (NEQ_)
+//! Return the dimension of the stiffness matrix
 template <class T_>
 inline unsigned int CSkylineMatrix<T_>::dim() const
 {
     return(NEQ_);
 }
 
-// Return the size of the matrix (NWK_)
+//! Return the size of the storage used to store the stiffness matrkix in skyline
 template <class T_>
 inline unsigned int CSkylineMatrix<T_>::size() const
 {
