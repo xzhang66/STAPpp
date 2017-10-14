@@ -3,6 +3,8 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
+/*     Release 1.0, October 14, 2017                                         */
+/*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
