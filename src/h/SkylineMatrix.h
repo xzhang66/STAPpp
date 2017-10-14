@@ -26,11 +26,6 @@ class CSkylineMatrix
     
 //! Diagonal address of all columns in data_
     unsigned int* DiagonalAddress_;
-
-private:
-    
-//! Return the address of element (i,j) in data_ (i and j numbering from 1)
-    inline unsigned int address_(unsigned int i, unsigned int j) const;
     
 public:
 
@@ -42,9 +37,11 @@ public:
     inline ~CSkylineMatrix();
 
 //! operator (i,j) where i and j number from 1
+//! For the sake of efficiency, the index bounds are not checked
     inline T_& operator()(unsigned int i, unsigned int j);
     
 //! operator (i) where i numbers from 1
+//! For the sake of efficiency, the index bounds are not checked
     inline T_ operator()(unsigned int i);
 
 //! Allocate storage for the skyline matrix
@@ -109,7 +106,10 @@ inline CSkylineMatrix<T_>::~CSkylineMatrix<T_>()
 template <class T_>
 inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
 {
-    return data_[address_(i,j)];
+    if (j >= i)
+        return data_[DiagonalAddress_[j - 1] + (j - i) - 1];
+    else
+        return data_[DiagonalAddress_[i - 1] + (i - j) - 1];
 }
 
 //! operator function (i) where i numbers from 1
@@ -128,16 +128,6 @@ inline void CSkylineMatrix<T_>::Allocate()
     data_ = new T_[NWK_];
     for (unsigned int i = 0; i < NWK_ + 1; i++)
         data_[i] = 0;
-}
-
-//! Return the address of element (i,j) in data_ (i and j numbering from 1)
-template <class T_>
-inline unsigned int CSkylineMatrix<T_>::address_(unsigned int i, unsigned int j) const
-{
-    if (j >= i)
-        return DiagonalAddress_[j - 1] + (j - i) - 1;
-    else
-        return DiagonalAddress_[i - 1] + (i - j) - 1;
 }
 
 //! Return pointer to the ColumnHeights_
