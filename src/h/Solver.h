@@ -10,9 +10,7 @@
 
 #pragma once
 
-#include "Domain.h"
-
-using namespace std;
+#include "SkylineMatrix.h"
 
 //!	Base class for a solver
 /*	New solver should be derived from this base class, and match the storage scheme
@@ -21,13 +19,12 @@ class CSolver
 {
 protected:
 
-	CDomain* FEMData;
+	CSkylineMatrix<double>* K;
 
 public:
 
-	CSolver(CDomain* FEMData);
-
-	virtual void Solve() = 0;
+	CSolver(CSkylineMatrix<double>* K);
+    
 };
 
 //!	LDLT solver: A in core solver using skyline storage  and column reduction scheme
@@ -36,14 +33,11 @@ class CLDLTSolver : public CSolver
 public:
 
 //!	Constructor
-	CLDLTSolver(CDomain* FEMData) : CSolver(FEMData) {};
+	CLDLTSolver(CSkylineMatrix<double>* K) : CSolver(K) {};
 
 //!	Perform L*D*L(T) factorization of the stiffness matrix
 	void LDLT();
 
 //!	Reduce right-hand-side load vector and back substitute
-	void BackSubstitution(); 
-
-//!	Solve the equilibrium equations 
-	virtual void Solve();
+	void BackSubstitution(double* Force); 
 };

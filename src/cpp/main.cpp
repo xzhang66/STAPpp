@@ -55,13 +55,37 @@ int main(int argc, char *argv[])
     double time_assemble = timer.ElapsedTime();
 
 //  Solve the linear equilibrium equations for displacements
-	CLDLTSolver* S = new CLDLTSolver(FEMData);
-	S->Solve();
+	CLDLTSolver* S = new CLDLTSolver(FEMData->GetStiffnessMatrix());
+//	S->Solve();
     
+//  Perform L*D*L(T) factorization of stiffness matrix
+    S->LDLT();
+
+    COutputter* Output = COutputter::Instance();
+
+#ifdef _DEBUG_
+    Output->PrintStiffnessMatrix();
+#endif
+        
+//  Loop over for all load cases
+    for (unsigned int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
+    {
+//      Assemble righ-hand-side vector (force vector)
+        FEMData->AssembleForce(lcase + 1);
+            
+//      Reduce right-hand-side force vector and back substitute
+        S->BackSubstitution(FEMData->GetForce());
+            
+#ifdef _DEBUG_
+        Output->PrintDisplacement(lcase);
+#endif
+            
+        Output->OutputNodalDisplacement(lcase);
+    }
+
     double time_solution = timer.ElapsedTime();
 
 //  Calculate and output stresses of all elements
-	COutputter* Output = COutputter::Instance();
 	Output->OutputElementStress();
     
     double time_stress = timer.ElapsedTime();

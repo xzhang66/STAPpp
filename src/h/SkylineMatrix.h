@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <string>
+
 //! CSkylineMatrix class is used to store the FEM stiffness matrix in skyline storage
 template <class T_>
 class CSkylineMatrix
