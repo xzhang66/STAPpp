@@ -55,11 +55,10 @@ int main(int argc, char *argv[])
     double time_assemble = timer.ElapsedTime();
 
 //  Solve the linear equilibrium equations for displacements
-	CLDLTSolver* S = new CLDLTSolver(FEMData->GetStiffnessMatrix());
-//	S->Solve();
+	CLDLTSolver* Solver = new CLDLTSolver(FEMData->GetStiffnessMatrix());
     
 //  Perform L*D*L(T) factorization of stiffness matrix
-    S->LDLT();
+    Solver->LDLT();
 
     COutputter* Output = COutputter::Instance();
 
@@ -74,7 +73,7 @@ int main(int argc, char *argv[])
         FEMData->AssembleForce(lcase + 1);
             
 //      Reduce right-hand-side force vector and back substitute
-        S->BackSubstitution(FEMData->GetForce());
+        Solver->BackSubstitution(FEMData->GetForce());
             
 #ifdef _DEBUG_
         Output->PrintDisplacement(lcase);
