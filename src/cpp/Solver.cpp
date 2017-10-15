@@ -16,43 +16,12 @@
 
 using namespace std;
 
-CSolver::CSolver(CDomain* FEMData) : FEMData(FEMData) {};
-
-void CLDLTSolver::Solve()
-{ 
-	COutputter* Output = COutputter::Instance();
-
-//	Perform L*D*L(T) factorization of stiffness matrix
-	LDLT();
-	
-#ifdef _DEBUG_
-	Output->PrintStiffnessMatrix();
-#endif
-
-//	Loop over for all load cases
-	for (unsigned int lcase = 0; lcase < FEMData->GetNLCASE(); lcase++)
-	{
-//		Assemble righ-hand-side vector (force vector)
-		FEMData->AssembleForce(lcase + 1);
-
-//		Reduce right-hand-side force vector and back substitute 
-		BackSubstitution();
-	
-#ifdef _DEBUG_
-		Output->PrintDisplacement(lcase);
-#endif
-
-		Output->OutputNodalDisplacement(lcase);
-	}
-
-	return; 
-};
+CSolver::CSolver(CSkylineMatrix<double>* K) : K(K) {};
 
 // LDLT facterization
 void CLDLTSolver::LDLT()
 {
-	CSkylineMatrix<double>* K = FEMData->GetStiffnessMatrix();
-	unsigned int N = FEMData->GetNEQ();
+	unsigned int N = K->dim();
     unsigned int* ColumnHeights = K->GetColumnHeights();   // Column Hights
 
 	for (unsigned int j = 2; j <= N; j++)      // Loop for column 2:n (Numbering starting from 1)
@@ -91,12 +60,9 @@ void CLDLTSolver::LDLT()
 };
 
 // Solve displacement by back substitution
-void CLDLTSolver::BackSubstitution()
+void CLDLTSolver::BackSubstitution(double* Force)
 {
-	double* Force = FEMData->GetForce();        //  Force vector (Numering starting from 1)
-	CSkylineMatrix<double>* K = FEMData->GetStiffnessMatrix();  //  Factorized stiffness matrix
-
-	unsigned int N = FEMData->GetNEQ();
+	unsigned int N = K->dim();
     unsigned int* ColumnHeights = K->GetColumnHeights();   // Column Hights
 
 //	Reduce right-hand-side load vector (LV = R)
