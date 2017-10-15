@@ -59,15 +59,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aad508429856f377aa23a2e3059e57576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bc141fd89c8031fd69db17e2bf75e9d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#a8bc141fd89c8031fd69db17e2bf75e9d">~CLoadCaseData</a> ()</td></tr>
 <tr class="separator:a8bc141fd89c8031fd69db17e2bf75e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d4beaf5d3d80ff4737981685d8ef945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#a4d4beaf5d3d80ff4737981685d8ef945">Allocate</a> (int num)</td></tr>
-<tr class="memdesc:a4d4beaf5d3d80ff4737981685d8ef945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nloads, and new array node, dof and load.  <a href="#a4d4beaf5d3d80ff4737981685d8ef945">More...</a><br /></td></tr>
-<tr class="separator:a4d4beaf5d3d80ff4737981685d8ef945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43624b34b8d9652b3afa5db8c17ff789"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#a43624b34b8d9652b3afa5db8c17ff789">Read</a> (ifstream &amp;Input, int lcase)</td></tr>
-<tr class="memdesc:a43624b34b8d9652b3afa5db8c17ff789"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read load case data from stream Input.  <a href="#a43624b34b8d9652b3afa5db8c17ff789">More...</a><br /></td></tr>
-<tr class="separator:a43624b34b8d9652b3afa5db8c17ff789"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfba8dabf09b47e0c642edba50a4c7ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#adfba8dabf09b47e0c642edba50a4c7ce">Write</a> (ofstream &amp;OutputFile, int lcase)</td></tr>
-<tr class="memdesc:adfba8dabf09b47e0c642edba50a4c7ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write load case data to stream OutputFile.  <a href="#adfba8dabf09b47e0c642edba50a4c7ce">More...</a><br /></td></tr>
-<tr class="separator:adfba8dabf09b47e0c642edba50a4c7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab06d7257a70d93eda06d55f958110e69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#ab06d7257a70d93eda06d55f958110e69">Allocate</a> (unsigned int num)</td></tr>
+<tr class="memdesc:ab06d7257a70d93eda06d55f958110e69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nloads, and new array node, dof and load.  <a href="#ab06d7257a70d93eda06d55f958110e69">More...</a><br /></td></tr>
+<tr class="separator:ab06d7257a70d93eda06d55f958110e69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab14e462f06eb6e73b494e2222fdb2acb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#ab14e462f06eb6e73b494e2222fdb2acb">Read</a> (ifstream &amp;Input, unsigned int lcase)</td></tr>
+<tr class="memdesc:ab14e462f06eb6e73b494e2222fdb2acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read load case data from stream Input.  <a href="#ab14e462f06eb6e73b494e2222fdb2acb">More...</a><br /></td></tr>
+<tr class="separator:ab14e462f06eb6e73b494e2222fdb2acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6da9b2c02564c4a78ed9e16fd95cd21a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_load_case_data.html#a6da9b2c02564c4a78ed9e16fd95cd21a">Write</a> (ofstream &amp;OutputFile, unsigned int lcase)</td></tr>
+<tr class="memdesc:a6da9b2c02564c4a78ed9e16fd95cd21a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write load case data to stream OutputFile.  <a href="#a6da9b2c02564c4a78ed9e16fd95cd21a">More...</a><br /></td></tr>
+<tr class="separator:a6da9b2c02564c4a78ed9e16fd95cd21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -130,8 +130,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4d4beaf5d3d80ff4737981685d8ef945"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d4beaf5d3d80ff4737981685d8ef945">&#9670;&nbsp;</a></span>Allocate()</h2>
+<a id="ab06d7257a70d93eda06d55f958110e69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab06d7257a70d93eda06d55f958110e69">&#9670;&nbsp;</a></span>Allocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,7 +139,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">void CLoadCaseData::Allocate </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>num</em></td><td>)</td>
           <td></td>
         </tr>
@@ -150,8 +150,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a43624b34b8d9652b3afa5db8c17ff789"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43624b34b8d9652b3afa5db8c17ff789">&#9670;&nbsp;</a></span>Read()</h2>
+<a id="ab14e462f06eb6e73b494e2222fdb2acb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab14e462f06eb6e73b494e2222fdb2acb">&#9670;&nbsp;</a></span>Read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,7 +165,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>lcase</em>&#160;</td>
         </tr>
         <tr>
@@ -180,8 +180,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="adfba8dabf09b47e0c642edba50a4c7ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfba8dabf09b47e0c642edba50a4c7ce">&#9670;&nbsp;</a></span>Write()</h2>
+<a id="a6da9b2c02564c4a78ed9e16fd95cd21a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6da9b2c02564c4a78ed9e16fd95cd21a">&#9670;&nbsp;</a></span>Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +195,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>lcase</em>&#160;</td>
         </tr>
         <tr>
@@ -276,8 +276,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/xzhang/GitHub/stappp/src/h/<a class="el" href="_load_case_data_8h_source.html">LoadCaseData.h</a></li>
-<li>/Users/xzhang/GitHub/stappp/src/cpp/<a class="el" href="_load_case_data_8cpp.html">LoadCaseData.cpp</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/h/<a class="el" href="_load_case_data_8h_source.html">LoadCaseData.h</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/cpp/<a class="el" href="_load_case_data_8cpp.html">LoadCaseData.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

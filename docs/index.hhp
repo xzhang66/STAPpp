@@ -20,6 +20,7 @@ _load_case_data_8h_source.html
 _material_8h_source.html
 _node_8h_source.html
 _outputter_8h_source.html
+_skyline_matrix_8h_source.html
 _solver_8h_source.html
 _bar_8cpp.html
 _clock_8cpp.html
@@ -39,6 +40,7 @@ _load_case_data_8h.html
 _material_8h.html
 _node_8h.html
 _outputter_8h.html
+_skyline_matrix_8h.html
 _solver_8h.html
 class_c_bar.html
 class_c_bar-members.html
@@ -60,6 +62,8 @@ class_c_node.html
 class_c_node-members.html
 class_c_outputter.html
 class_c_outputter-members.html
+class_c_skyline_matrix.html
+class_c_skyline_matrix-members.html
 class_c_solver.html
 class_c_solver-members.html
 graph_legend.html
@@ -75,6 +79,7 @@ inherits.html
 functions.html
 functions_func.html
 functions_vars.html
+functions_rela.html
 files.html
 globals.html
 globals_func.html
@@ -117,6 +122,8 @@ _node_8h__incl.png
 _node_8h__dep__incl.png
 _outputter_8h__incl.png
 _outputter_8h__dep__incl.png
+_skyline_matrix_8h__incl.png
+_skyline_matrix_8h__dep__incl.png
 _solver_8h__incl.png
 _solver_8h__dep__incl.png
 class_c_bar__inherit__graph.png
@@ -130,6 +137,7 @@ class_c_l_d_l_t_solver__inherit__graph.png
 class_c_l_d_l_t_solver__coll__graph.png
 class_c_material__inherit__graph.png
 class_c_outputter__coll__graph.png
+class_c_skyline_matrix__coll__graph.png
 class_c_solver__inherit__graph.png
 class_c_solver__coll__graph.png
 graph_legend.png
@@ -143,3 +151,5 @@ inherit_graph_4.png
 inherit_graph_5.png
 inherit_graph_6.png
 inherit_graph_7.png
+inherit_graph_8.png
+inherit_graph_9.png

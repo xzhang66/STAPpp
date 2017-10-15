@@ -44,7 +44,7 @@ $(function() {
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_c_solver-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">CSolver Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">CSolver Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -57,7 +57,7 @@ Inheritance diagram for CSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_solver__inherit__graph.png" border="0" usemap="#_c_solver_inherit__map" alt="Inheritance graph"/></div>
 <map name="_c_solver_inherit__map" id="_c_solver_inherit__map">
-<area shape="rect" id="node2" href="class_c_l_d_l_t_solver.html" title="LDLT solver: A in core solver using skyline storage and column reduction scheme. " alt="" coords="4,83,104,111"/>
+<area shape="rect" id="node2" href="class_c_l_d_l_t_solver.html" title="LDLT solver: A in core solver using skyline storage and column reduction scheme. " alt="" coords="5,79,106,104"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -65,31 +65,25 @@ Collaboration diagram for CSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_solver__coll__graph.png" border="0" usemap="#_c_solver_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_solver_coll__map" id="_c_solver_coll__map">
-<area shape="rect" id="node2" href="class_c_domain.html" title="Domain class : Define the problem domain. " alt="" coords="178,193,253,221"/>
-<area shape="rect" id="node3" href="class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="4,99,123,127"/>
-<area shape="rect" id="node4" href="class_c_element.html" title="Element base class. " alt="" coords="288,99,367,127"/>
-<area shape="rect" id="node5" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="157,6,235,34"/>
-<area shape="rect" id="node6" href="class_c_node.html" title="Node class. " alt="" coords="353,6,415,34"/>
+<area shape="rect" id="node2" href="class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="5,5,179,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af213c6d1218caf1cede7c5165b90821b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#af213c6d1218caf1cede7c5165b90821b">CSolver</a> (<a class="el" href="class_c_domain.html">CDomain</a> *<a class="el" href="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4">FEMData</a>)</td></tr>
-<tr class="separator:af213c6d1218caf1cede7c5165b90821b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a532d7d8f907f9d591b8bab33831736c4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#a532d7d8f907f9d591b8bab33831736c4">Solve</a> ()=0</td></tr>
-<tr class="separator:a532d7d8f907f9d591b8bab33831736c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f47f5d6be787d89657dd881682a860"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#a32f47f5d6be787d89657dd881682a860">CSolver</a> (<a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *<a class="el" href="class_c_solver.html#ae9b029d79d397c0ace964f175c75f1c2">K</a>)</td></tr>
+<tr class="separator:a32f47f5d6be787d89657dd881682a860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a9abd7b6cea99126fdd5b783070a7b1c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4">FEMData</a></td></tr>
-<tr class="separator:a9abd7b6cea99126fdd5b783070a7b1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b029d79d397c0ace964f175c75f1c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#ae9b029d79d397c0ace964f175c75f1c2">K</a></td></tr>
+<tr class="separator:ae9b029d79d397c0ace964f175c75f1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for a solver. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af213c6d1218caf1cede7c5165b90821b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af213c6d1218caf1cede7c5165b90821b">&#9670;&nbsp;</a></span>CSolver()</h2>
+<a id="a32f47f5d6be787d89657dd881682a860"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32f47f5d6be787d89657dd881682a860">&#9670;&nbsp;</a></span>CSolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -97,46 +91,18 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">CSolver::CSolver </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td>
-          <td class="paramname"><em>FEMData</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td>
+          <td class="paramname"><em>K</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a532d7d8f907f9d591b8bab33831736c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a532d7d8f907f9d591b8bab33831736c4">&#9670;&nbsp;</a></span>Solve()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void CSolver::Solve </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_c_l_d_l_t_solver.html#a09c5f761a7fde6f0b1e5ae2baf332ae0">CLDLTSolver</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9abd7b6cea99126fdd5b783070a7b1c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9abd7b6cea99126fdd5b783070a7b1c4">&#9670;&nbsp;</a></span>FEMData</h2>
+<a id="ae9b029d79d397c0ace964f175c75f1c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9b029d79d397c0ace964f175c75f1c2">&#9670;&nbsp;</a></span>K</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,7 +111,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_domain.html">CDomain</a>* CSolver::FEMData</td>
+          <td class="memname"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt;double&gt;* CSolver::K</td>
         </tr>
       </table>
   </td>
@@ -158,8 +124,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/xzhang/GitHub/stappp/src/h/<a class="el" href="_solver_8h_source.html">Solver.h</a></li>
-<li>/Users/xzhang/GitHub/stappp/src/cpp/<a class="el" href="_solver_8cpp.html">Solver.cpp</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/h/<a class="el" href="_solver_8h_source.html">Solver.h</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/cpp/<a class="el" href="_solver_8cpp.html">Solver.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
