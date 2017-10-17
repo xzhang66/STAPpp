@@ -13,6 +13,7 @@
 #include <cmath>
 #include <cfloat>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 

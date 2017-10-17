@@ -190,7 +190,7 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
-	CBarMaterial* MaterialSet = (CBarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
+	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial*>(FEMData->GetMaterialSetList()[EleGrp]);
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
 	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
@@ -316,7 +316,7 @@ void COutputter::OutputElementStress()
 		{
 			ElementSetList[EleGrp][Ele].ElementStress(&stress, Displacement);
 
-			CBarMaterial* material = (CBarMaterial *) ElementSetList[EleGrp][Ele].GetElementMaterial();
+			CBarMaterial* material = dynamic_cast<CBarMaterial *>(ElementSetList[EleGrp][Ele].GetElementMaterial());
 			cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 			OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 		}

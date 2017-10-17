@@ -212,7 +212,7 @@ bool CDomain::ReadBarElementData(unsigned int EleGrp)
 {
 //	Read material/section property lines
 	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
-    CBarMaterial* mlist = (CBarMaterial*) MaterialSetList[EleGrp];
+    CBarMaterial* mlist = dynamic_cast<CBarMaterial*>( MaterialSetList[EleGrp]);
 
 //	Loop over for all material property sets in group EleGrp
 	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
