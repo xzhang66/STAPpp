@@ -317,7 +317,9 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
 		unsigned int dof = NodeList[LoadData->node[lnum] - 1].bcode[LoadData->dof[lnum] - 1];
-		Force[dof - 1] += LoadData->load[lnum];
+        
+        if(dof) // The DOF is activated
+            Force[dof - 1] += LoadData->load[lnum];
 	}
 
 	return true;
