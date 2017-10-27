@@ -181,13 +181,13 @@ bool CDomain::ReadElements()
 void CDomain::CalculateColumnHeights()
 {
     unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
-//	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
     {
         CElementGroup* ElemengGrp = &EleGrpList[EleGrp];
         unsigned int NUME = ElemengGrp->GetNUME();
         CElement* ElementList = ElemengGrp->GetElementList();
+        
 		for (unsigned int Ele = 0; Ele < NUME; Ele++)	//	Loop over for all elements in group EleGrp
 			ElementList[Ele].CalculateColumnHeight(ColumnHeights);
     }
@@ -266,8 +266,6 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 
 	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
-	clear(Force, NEQ);
-
 //	Loop over for all concentrated loads in load case LoadCase
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
@@ -284,6 +282,7 @@ void CDomain::AllocateMatrices()
 {
 //	Allocate for global force/displacement vector
 	Force = new double[NEQ];
+    clear(Force, NEQ);
 
 //  Create the banded stiffness matrix
     StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
