@@ -12,6 +12,19 @@
 
 #include "Element.h"
 
+//! Virtual deconstructor
+CElement::~CElement()
+{
+    if (!nodes)
+        delete [] nodes;
+    
+    if (!ElementMaterial)
+        delete [] ElementMaterial;
+
+    if (!LocationMatrix)
+        delete [] LocationMatrix;
+}
+
 //  Calculate the column height, used with the skyline storage scheme
 void CElement::CalculateColumnHeight(unsigned int* ColumnHeight)
 {

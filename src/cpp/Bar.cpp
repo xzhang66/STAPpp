@@ -31,8 +31,6 @@ CBar::CBar()
 //	Desconstructor
 CBar::~CBar()
 {
-	delete [] nodes;
-    delete [] LocationMatrix;
 }
 
 //	Read element data from stream Input

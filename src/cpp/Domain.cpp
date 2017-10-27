@@ -24,7 +24,7 @@ template <class type> void clear( type* a, unsigned int N )
 		a[i] = 0;
 }
 
-CDomain* CDomain::_instance = NULL;
+CDomain* CDomain::_instance = nullptr;
 
 //	Constructor
 CDomain::CDomain()
@@ -33,25 +33,20 @@ CDomain::CDomain()
 	MODEX = 0;
 
 	NUMNP = 0;
-	NodeList = NULL;
+	NodeList = nullptr;
 	
 	NUMEG = 0;
-	ElementTypes = NULL;
-	NUME = NULL;
-	ElementSetList = NULL;
-	
-	NUMMAT = NULL;
-	MaterialSetList = NULL;
+	EleGrpList = nullptr;
 	
 	NLCASE = 0;
-	NLOAD = NULL;
-	LoadCases = NULL;
+	NLOAD = nullptr;
+	LoadCases = nullptr;
 	
 	NEQ = 0;
 	NWK = 0;
 	MK = 0;
 
-	Force = NULL; 
+	Force = nullptr;
 }
 
 //	Desconstructor
@@ -59,12 +54,7 @@ CDomain::~CDomain()
 {
 	delete [] NodeList;
 
-	delete [] ElementTypes;
-	delete [] NUME;
-	delete [] ElementSetList;
-
-	delete [] NUMMAT;
-	delete [] MaterialSetList;
+	delete [] EleGrpList;
 
 	delete [] NLOAD;
 	delete [] LoadCases;
@@ -177,68 +167,30 @@ bool CDomain::ReadLoadCases()
 // Read element data
 bool CDomain::ReadElements()
 {
-
-//	Read element group control line
-	ElementTypes = new unsigned int[NUMEG];	// Element type of each group
-	NUME = new unsigned int[NUMEG];			// Number of elements in each group
-	ElementSetList = new CElement*[NUMEG];	// Element list in each group
-
-	NUMMAT = new unsigned int[NUMEG];		// Material set number of each group
-	MaterialSetList = new CMaterial*[NUMEG];	// Material list in each group
+    EleGrpList = new CElementGroup[NUMEG];
 
 //	Loop over for all element group
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
-	{
-		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
-
-		switch (ElementTypes[EleGrp])
-		{
-		case 1:	// Bar element
-			if (!ReadBarElementData(EleGrp))
-                return false;
-			break;
-
-		default:	// Invalid element type
-            cout << "*** Error *** Elment type " << ElementTypes[EleGrp] << " of group "
-                 << EleGrp+1 << " has not been implemented.\n\n";
-			return false;
-		}
-	}
-	return true;
-}
-
-//	Read bar element data from the input data file
-bool CDomain::ReadBarElementData(unsigned int EleGrp)
-{
-//	Read material/section property lines
-	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
-    CBarMaterial* mlist = (CBarMaterial*) MaterialSetList[EleGrp];
-
-//	Loop over for all material property sets in group EleGrp
-	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
-		if (!mlist[mset].Read(Input, mset))
-			return false;
-
-//	Read element data lines
-	ElementSetList[EleGrp] = new CBar[NUME[EleGrp]];	// Elements of gorup EleGrp
-
-//	Loop over for all elements in group EleGrp
-	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		if (!ElementSetList[EleGrp][Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
-			return false;
-
-	return true;
+        if (!EleGrpList[EleGrp].Read(Input))
+            return false;
+    
+    return true;
 }
 
 //	Calculate column heights
 void CDomain::CalculateColumnHeights()
 {
     unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
-//	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
-		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
-			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
+    {
+        CElementGroup* ElemengGrp = &EleGrpList[EleGrp];
+        unsigned int NUME = ElemengGrp->GetNUME();
+        CElement* ElementList = ElemengGrp->GetElementList();
+        
+		for (unsigned int Ele = 0; Ele < NUME; Ele++)	//	Loop over for all elements in group EleGrp
+			ElementList[Ele].CalculateColumnHeight(ColumnHeights);
+    }
 
 //	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
 	MK = ColumnHeights[0];
@@ -262,7 +214,6 @@ void CDomain::CalculateDiagnoalAddress()
 {
     unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
     unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
-//	clear(DiagonalAddress, NEQ + 1);	// Set all elements to zero
 
 //	Calculate the address of diagonal elements
 //	M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
@@ -286,12 +237,16 @@ void CDomain::AssembleStiffnessMatrix()
 //	Loop over for all element groups
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		unsigned int size = ElementSetList[EleGrp][0].SizeOfStiffnessMatrix();
+        CElementGroup* ElemengGrp = &EleGrpList[EleGrp];
+        unsigned int NUME = ElemengGrp->GetNUME();
+        CElement* ElementList = ElemengGrp->GetElementList();
+
+		unsigned int size = ElementList[0].SizeOfStiffnessMatrix();
 		double* Matrix = new double[size];
 
 //		Loop over for all elements in group EleGrp
-		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-			ElementSetList[EleGrp][Ele].assembly(Matrix, StiffnessMatrix);
+		for (unsigned int Ele = 0; Ele < NUME; Ele++)
+			ElementList[Ele].assembly(Matrix, StiffnessMatrix);
 
 		delete [] Matrix;
 	}
@@ -311,8 +266,6 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 
 	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
-	clear(Force, NEQ);
-
 //	Loop over for all concentrated loads in load case LoadCase
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
@@ -329,6 +282,7 @@ void CDomain::AllocateMatrices()
 {
 //	Allocate for global force/displacement vector
 	Force = new double[NEQ];
+    clear(Force, NEQ);
 
 //  Create the banded stiffness matrix
     StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
