@@ -28,6 +28,9 @@ public:
 
 public:
 
+//! Virtual deconstructor
+    virtual ~CMaterial() {};
+
 //!	Read material data from stream Input
 	virtual bool Read(ifstream& Input, unsigned int mset) = 0;
 
