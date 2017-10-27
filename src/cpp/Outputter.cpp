@@ -186,11 +186,11 @@ void COutputter::OutputElementInfo()
 //	Output bar element data
 void COutputter::PrintBarElementData(unsigned int EleGrp)
 {
-
 	CDomain* FEMData = CDomain::Instance();
-
-	unsigned int NUMMAT = FEMData->GetEleGrpList()[EleGrp].GetNUMMAT();
-	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial*>(FEMData->GetEleGrpList()[EleGrp].GetMaterialList());
+    
+    CElementGroup* ElementGroup = &FEMData->GetEleGrpList()[EleGrp];
+	unsigned int NUMMAT = ElementGroup->GetNUMMAT();
+	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial*>(ElementGroup->GetMaterialList());
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
 	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
@@ -223,8 +223,8 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 	OutputFile << " ELEMENT     NODE     NODE       MATERIAL" << endl
 			   << " NUMBER-N      I        J       SET NUMBER" << endl; 
 
-    CBar* ElementList = dynamic_cast<CBar*>(FEMData->GetEleGrpList()[EleGrp].GetElementList());
-    unsigned int NUME = FEMData->GetEleGrpList()[EleGrp].GetNUME();
+    CBar* ElementList = dynamic_cast<CBar*>(ElementGroup->GetElementList());
+    unsigned int NUME = ElementGroup->GetNUME();
 
 //	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
@@ -324,7 +324,7 @@ void COutputter::OutputElementStress()
                     CBar* EleList = dynamic_cast<CBar*>(EleGrpList->GetElementList());
                     EleList[Ele].ElementStress(&stress, Displacement);
                     
-                    CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleGrpList->GetElementList()[Ele].GetElementMaterial());
+                    CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleList[Ele].GetElementMaterial());
                     cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
                     OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
                 }
@@ -386,6 +386,7 @@ void COutputter::PrintColumnHeights()
 		cout << setw(8) << ColumnHeights[col];
 		OutputFile << setw(8) << ColumnHeights[col];
 	}
+    
 	cout << endl << endl;
 	OutputFile << endl << endl;
 }
