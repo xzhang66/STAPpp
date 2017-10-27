@@ -301,26 +301,42 @@ void COutputter::OutputElementStress()
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl
-			 << "  ELEMENT             FORCE            STRESS" << endl 
-			 << "  NUMBER" << endl;
-		OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl
-				   << "  ELEMENT             FORCE            STRESS" << endl 
-				   << "  NUMBER" << endl;
+        cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl;
+        OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl;
 
-		double stress;
-        
         CElementGroup* EleGrpList = &FEMData->GetEleGrpList()[EleGrp];
-        
         unsigned int NUME = EleGrpList->GetNUME();
-		for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		{
-			EleGrpList->GetElementList()[Ele].ElementStress(&stress, Displacement);
+        unsigned int ElementType = EleGrpList->GetElementType();
 
-			CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleGrpList->GetElementList()[Ele].GetElementMaterial());
-			cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
-			OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
-		}
+        switch (ElementType)
+        {
+            case 1:    // Bar element
+                cout << "  ELEMENT             FORCE            STRESS" << endl
+                     << "  NUMBER" << endl;
+                
+                OutputFile << "  ELEMENT             FORCE            STRESS" << endl
+                     << "  NUMBER" << endl;
+                
+                double stress;
+                
+                for (unsigned int Ele = 0; Ele < NUME; Ele++)
+                {
+                    CBar* EleList = dynamic_cast<CBar*>(EleGrpList->GetElementList());
+                    EleList[Ele].ElementStress(&stress, Displacement);
+                    
+                    CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleGrpList->GetElementList()[Ele].GetElementMaterial());
+                    cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
+                    OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
+                }
+                
+                cout << endl;
+                OutputFile << endl;
+                
+                break;
+                
+            default:    // Invalid element type
+                cout << "*** Error *** Elment type " << ElementType <<  " has not been implemented.\n\n";
+        }
 	}
 }
 
