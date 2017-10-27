@@ -53,7 +53,7 @@ public:
 	CElement() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
 
 //! Virtual deconstructor
-    virtual ~CElement() {};
+    virtual ~CElement();
 
 //!	Read element data from stream Input
 	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
