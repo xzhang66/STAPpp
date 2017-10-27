@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.0, October 14, 2017                                         */
+/*     Release 1.02, October 27, 2017                                        */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -51,6 +51,9 @@ public:
 
 //!	Constructor
 	CElement() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+
+//! Virtual deconstructor
+    virtual ~CElement();
 
 //!	Read element data from stream Input
 	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;

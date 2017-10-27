@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.0, October 14, 2017                                         */
+/*     Release 1.02, October 27, 2017                                        */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -27,6 +27,9 @@ public:
 	double E;  //!< Young's modulus
 
 public:
+
+//! Virtual deconstructor
+    virtual ~CMaterial() {};
 
 //!	Read material data from stream Input
 	virtual bool Read(ifstream& Input, unsigned int mset) = 0;

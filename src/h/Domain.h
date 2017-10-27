@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.0, October 14, 2017                                         */
+/*     Release 1.02, October 27, 2017                                        */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -16,6 +16,7 @@
 
 #include "Node.h"
 #include "Bar.h"
+#include "ElementGroup.h"
 #include "Outputter.h"
 #include "Solver.h"
 #include "LoadCaseData.h"
@@ -56,25 +57,9 @@ private:
 /*! An element group consists of a convenient collection of elements with same type */
 	unsigned int NUMEG;
 
-//!	Element type of each group
-	unsigned int* ElementTypes;
-
-//!	Number of elements in each element group
-	unsigned int* NUME;
-
-//!	Element Set List
-/*!		ElementSetList[i] - ith element set */
-/*!		ElementSetList[i][j] - jth element in ith set */
-	CElement** ElementSetList;
-
-//!	Number of different sets of material/section properties in each element group
-	unsigned int* NUMMAT;
-
-//!	Material set list
-/*!		MaterialSetList[i] - ith material set */
-/*!		MaterialSetList[i][j] - jth material in ith set */
-	CMaterial** MaterialSetList;
-
+//! Element group list
+    CElementGroup* EleGrpList;
+    
 //!	Number of load cases
 	unsigned int NLCASE;
 
@@ -124,9 +109,6 @@ public:
 //!	Read element data
 	bool ReadElements();
 
-//!	Read bar element data from the input data file
-	bool ReadBarElementData(unsigned int EleGrp);
-
 //!	Calculate global equation numbers corresponding to every degree of freedom of each node
 	void CalculateEquationNumber();
 
@@ -168,23 +150,11 @@ public:
 //!	Return the node list
 	inline CNode* GetNodeList() { return NodeList; }
 
-//!	Return the number of elements in each element group
-	inline unsigned int* GetNUME() { return NUME; }
-
 //!	Return total number of element groups
 	inline unsigned int GetNUMEG() { return NUMEG; }
 
-//!	Element type of each group
-	inline unsigned int* GetElementTypes() {return ElementTypes; }
-
-//!	Return element Set List 
-	inline CElement** GetElementSetList() { return ElementSetList; }
-
-//!	Return number of different sets of material/section properties in each element group
-	inline unsigned int* GetNUMMAT() { return NUMMAT; }
-
-//!	Return material set list
-	inline CMaterial** GetMaterialSetList() { return MaterialSetList; }
+//! Return element group list
+    CElementGroup* GetEleGrpList() { return EleGrpList; }
 
 //!	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }

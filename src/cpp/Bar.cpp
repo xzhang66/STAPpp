@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.0, October 14, 2017                                         */
+/*     Release 1.02, October 27, 2017                                        */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -31,8 +31,6 @@ CBar::CBar()
 //	Desconstructor
 CBar::~CBar()
 {
-	delete [] nodes;
-    delete [] LocationMatrix;
 }
 
 //	Read element data from stream Input

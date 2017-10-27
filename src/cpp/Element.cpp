@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.0, October 14, 2017                                         */
+/*     Release 1.02, October 27, 2017                                        */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -11,6 +11,19 @@
 #include <algorithm>
 
 #include "Element.h"
+
+//! Virtual deconstructor
+CElement::~CElement()
+{
+    if (!nodes)
+        delete [] nodes;
+    
+    if (!ElementMaterial)
+        delete [] ElementMaterial;
+
+    if (!LocationMatrix)
+        delete [] LocationMatrix;
+}
 
 //  Calculate the column height, used with the skyline storage scheme
 void CElement::CalculateColumnHeight(unsigned int* ColumnHeight)
