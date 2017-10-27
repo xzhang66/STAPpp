@@ -56,7 +56,7 @@ Inheritance diagram for CLDLTSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_l_d_l_t_solver__inherit__graph.png" border="0" usemap="#_c_l_d_l_t_solver_inherit__map" alt="Inheritance graph"/></div>
 <map name="_c_l_d_l_t_solver_inherit__map" id="_c_l_d_l_t_solver_inherit__map">
-<area shape="rect" id="node2" href="class_c_solver.html" title="Base class for a solver. " alt="" coords="20,6,88,34"/>
+<area shape="rect" id="node2" href="class_c_solver.html" title="Base class for a solver. " alt="" coords="21,5,90,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -64,44 +64,37 @@ Collaboration diagram for CLDLTSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_l_d_l_t_solver__coll__graph.png" border="0" usemap="#_c_l_d_l_t_solver_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_l_d_l_t_solver_coll__map" id="_c_l_d_l_t_solver_coll__map">
-<area shape="rect" id="node2" href="class_c_solver.html" title="Base class for a solver. " alt="" coords="182,286,249,314"/>
-<area shape="rect" id="node3" href="class_c_domain.html" title="Domain class : Define the problem domain. " alt="" coords="178,193,253,221"/>
-<area shape="rect" id="node4" href="class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="4,99,123,127"/>
-<area shape="rect" id="node5" href="class_c_element.html" title="Element base class. " alt="" coords="288,99,367,127"/>
-<area shape="rect" id="node6" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="157,6,235,34"/>
-<area shape="rect" id="node7" href="class_c_node.html" title="Node class. " alt="" coords="353,6,415,34"/>
+<area shape="rect" id="node2" href="class_c_solver.html" title="Base class for a solver. " alt="" coords="58,92,126,117"/>
+<area shape="rect" id="node3" href="class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="5,5,179,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8f65e27a61f9d66a0e0ba5f8770a198b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#a8f65e27a61f9d66a0e0ba5f8770a198b">CLDLTSolver</a> (<a class="el" href="class_c_domain.html">CDomain</a> *<a class="el" href="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4">FEMData</a>)</td></tr>
-<tr class="memdesc:a8f65e27a61f9d66a0e0ba5f8770a198b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8f65e27a61f9d66a0e0ba5f8770a198b">More...</a><br /></td></tr>
-<tr class="separator:a8f65e27a61f9d66a0e0ba5f8770a198b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920638747f8cdaafbd9b363324e4560f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#a920638747f8cdaafbd9b363324e4560f">CLDLTSolver</a> (<a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *<a class="el" href="class_c_solver.html#ae9b029d79d397c0ace964f175c75f1c2">K</a>)</td></tr>
+<tr class="memdesc:a920638747f8cdaafbd9b363324e4560f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a920638747f8cdaafbd9b363324e4560f">More...</a><br /></td></tr>
+<tr class="separator:a920638747f8cdaafbd9b363324e4560f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb3ef2f7d722995f96df406c5851d83d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#abb3ef2f7d722995f96df406c5851d83d">LDLT</a> ()</td></tr>
 <tr class="memdesc:abb3ef2f7d722995f96df406c5851d83d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform L*D*L(T) factorization of the stiffness matrix.  <a href="#abb3ef2f7d722995f96df406c5851d83d">More...</a><br /></td></tr>
 <tr class="separator:abb3ef2f7d722995f96df406c5851d83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a803dfb49f04c6eac2b45fe71a62f9078"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#a803dfb49f04c6eac2b45fe71a62f9078">BackSubstitution</a> ()</td></tr>
-<tr class="memdesc:a803dfb49f04c6eac2b45fe71a62f9078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reduce right-hand-side load vector and back substitute.  <a href="#a803dfb49f04c6eac2b45fe71a62f9078">More...</a><br /></td></tr>
-<tr class="separator:a803dfb49f04c6eac2b45fe71a62f9078"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c5f761a7fde6f0b1e5ae2baf332ae0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#a09c5f761a7fde6f0b1e5ae2baf332ae0">Solve</a> ()</td></tr>
-<tr class="memdesc:a09c5f761a7fde6f0b1e5ae2baf332ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the equilibrium equations.  <a href="#a09c5f761a7fde6f0b1e5ae2baf332ae0">More...</a><br /></td></tr>
-<tr class="separator:a09c5f761a7fde6f0b1e5ae2baf332ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38c2435c3ffdc9fc7677936455ecbf03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_l_d_l_t_solver.html#a38c2435c3ffdc9fc7677936455ecbf03">BackSubstitution</a> (double *Force)</td></tr>
+<tr class="memdesc:a38c2435c3ffdc9fc7677936455ecbf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reduce right-hand-side load vector and back substitute.  <a href="#a38c2435c3ffdc9fc7677936455ecbf03">More...</a><br /></td></tr>
+<tr class="separator:a38c2435c3ffdc9fc7677936455ecbf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_c_solver"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_c_solver')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_c_solver.html">CSolver</a></td></tr>
-<tr class="memitem:af213c6d1218caf1cede7c5165b90821b inherit pub_methods_class_c_solver"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#af213c6d1218caf1cede7c5165b90821b">CSolver</a> (<a class="el" href="class_c_domain.html">CDomain</a> *<a class="el" href="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4">FEMData</a>)</td></tr>
-<tr class="separator:af213c6d1218caf1cede7c5165b90821b inherit pub_methods_class_c_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f47f5d6be787d89657dd881682a860 inherit pub_methods_class_c_solver"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#a32f47f5d6be787d89657dd881682a860">CSolver</a> (<a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *<a class="el" href="class_c_solver.html#ae9b029d79d397c0ace964f175c75f1c2">K</a>)</td></tr>
+<tr class="separator:a32f47f5d6be787d89657dd881682a860 inherit pub_methods_class_c_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_c_solver"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_c_solver')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_c_solver.html">CSolver</a></td></tr>
-<tr class="memitem:a9abd7b6cea99126fdd5b783070a7b1c4 inherit pro_attribs_class_c_solver"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#a9abd7b6cea99126fdd5b783070a7b1c4">FEMData</a></td></tr>
-<tr class="separator:a9abd7b6cea99126fdd5b783070a7b1c4 inherit pro_attribs_class_c_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b029d79d397c0ace964f175c75f1c2 inherit pro_attribs_class_c_solver"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_solver.html#ae9b029d79d397c0ace964f175c75f1c2">K</a></td></tr>
+<tr class="separator:ae9b029d79d397c0ace964f175c75f1c2 inherit pro_attribs_class_c_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>LDLT solver: A in core solver using skyline storage and column reduction scheme. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8f65e27a61f9d66a0e0ba5f8770a198b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f65e27a61f9d66a0e0ba5f8770a198b">&#9670;&nbsp;</a></span>CLDLTSolver()</h2>
+<a id="a920638747f8cdaafbd9b363324e4560f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a920638747f8cdaafbd9b363324e4560f">&#9670;&nbsp;</a></span>CLDLTSolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,8 +105,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">CLDLTSolver::CLDLTSolver </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td>
-          <td class="paramname"><em>FEMData</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td>
+          <td class="paramname"><em>K</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -129,8 +122,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a803dfb49f04c6eac2b45fe71a62f9078"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a803dfb49f04c6eac2b45fe71a62f9078">&#9670;&nbsp;</a></span>BackSubstitution()</h2>
+<a id="a38c2435c3ffdc9fc7677936455ecbf03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38c2435c3ffdc9fc7677936455ecbf03">&#9670;&nbsp;</a></span>BackSubstitution()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -138,7 +131,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void CLDLTSolver::BackSubstitution </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>Force</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -167,38 +161,9 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a09c5f761a7fde6f0b1e5ae2baf332ae0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c5f761a7fde6f0b1e5ae2baf332ae0">&#9670;&nbsp;</a></span>Solve()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CLDLTSolver::Solve </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Solve the equilibrium equations. </p>
-
-<p>Implements <a class="el" href="class_c_solver.html#a532d7d8f907f9d591b8bab33831736c4">CSolver</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/xzhang/GitHub/stappp/src/h/<a class="el" href="_solver_8h_source.html">Solver.h</a></li>
-<li>/Users/xzhang/GitHub/stappp/src/cpp/<a class="el" href="_solver_8cpp.html">Solver.cpp</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/h/<a class="el" href="_solver_8h_source.html">Solver.h</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/cpp/<a class="el" href="_solver_8cpp.html">Solver.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

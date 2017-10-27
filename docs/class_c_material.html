@@ -57,18 +57,18 @@ Inheritance diagram for CMaterial:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_material__inherit__graph.png" border="0" usemap="#_c_material_inherit__map" alt="Inheritance graph"/></div>
 <map name="_c_material_inherit__map" id="_c_material_inherit__map">
-<area shape="rect" id="node2" href="class_c_bar_material.html" title="Material class for bar element. " alt="" coords="5,83,104,111"/>
+<area shape="rect" id="node2" href="class_c_bar_material.html" title="Material class for bar element. " alt="" coords="5,79,104,104"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9aa5016ce932903f1bfcc0394c1eda29"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_material.html#a9aa5016ce932903f1bfcc0394c1eda29">Read</a> (ifstream &amp;Input, int mset)=0</td></tr>
-<tr class="memdesc:a9aa5016ce932903f1bfcc0394c1eda29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read material data from stream Input.  <a href="#a9aa5016ce932903f1bfcc0394c1eda29">More...</a><br /></td></tr>
-<tr class="separator:a9aa5016ce932903f1bfcc0394c1eda29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9589e972559e887926a03d18389e6a9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_material.html#ae9589e972559e887926a03d18389e6a9">Write</a> (ofstream &amp;OutputFile, int mset)=0</td></tr>
-<tr class="memdesc:ae9589e972559e887926a03d18389e6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write material data to Stream OutputFile.  <a href="#ae9589e972559e887926a03d18389e6a9">More...</a><br /></td></tr>
-<tr class="separator:ae9589e972559e887926a03d18389e6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97499629b63e25ac581b915108563afb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_material.html#a97499629b63e25ac581b915108563afb">Read</a> (ifstream &amp;Input, unsigned int mset)=0</td></tr>
+<tr class="memdesc:a97499629b63e25ac581b915108563afb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read material data from stream Input.  <a href="#a97499629b63e25ac581b915108563afb">More...</a><br /></td></tr>
+<tr class="separator:a97499629b63e25ac581b915108563afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ac1ce7032e128227107a8c971c121c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_material.html#a00ac1ce7032e128227107a8c971c121c">Write</a> (ofstream &amp;OutputFile, unsigned int mset)=0</td></tr>
+<tr class="memdesc:a00ac1ce7032e128227107a8c971c121c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write material data to Stream OutputFile.  <a href="#a00ac1ce7032e128227107a8c971c121c">More...</a><br /></td></tr>
+<tr class="separator:a00ac1ce7032e128227107a8c971c121c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -83,8 +83,8 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Material base class which only define one data member. </p>
 <p>All type of material classes should be derived from this base class </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9aa5016ce932903f1bfcc0394c1eda29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aa5016ce932903f1bfcc0394c1eda29">&#9670;&nbsp;</a></span>Read()</h2>
+<a id="a97499629b63e25ac581b915108563afb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97499629b63e25ac581b915108563afb">&#9670;&nbsp;</a></span>Read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -101,7 +101,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>mset</em>&#160;</td>
         </tr>
         <tr>
@@ -119,12 +119,12 @@ Public Attributes</h2></td></tr>
 
 <p>Read material data from stream Input. </p>
 
-<p>Implemented in <a class="el" href="class_c_bar_material.html#a86bbc46e4d004dc4686d5d46cab8c182">CBarMaterial</a>.</p>
+<p>Implemented in <a class="el" href="class_c_bar_material.html#a73f9ada1e908ee4303f4ca1a376e9d12">CBarMaterial</a>.</p>
 
 </div>
 </div>
-<a id="ae9589e972559e887926a03d18389e6a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9589e972559e887926a03d18389e6a9">&#9670;&nbsp;</a></span>Write()</h2>
+<a id="a00ac1ce7032e128227107a8c971c121c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ac1ce7032e128227107a8c971c121c">&#9670;&nbsp;</a></span>Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +141,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>mset</em>&#160;</td>
         </tr>
         <tr>
@@ -159,7 +159,7 @@ Public Attributes</h2></td></tr>
 
 <p>Write material data to Stream OutputFile. </p>
 
-<p>Implemented in <a class="el" href="class_c_bar_material.html#afea28a47ec11c838d7031e8d2676015a">CBarMaterial</a>.</p>
+<p>Implemented in <a class="el" href="class_c_bar_material.html#a52ac5edcbce1afb9518ca33ec93f083a">CBarMaterial</a>.</p>
 
 </div>
 </div>
@@ -197,7 +197,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/xzhang/GitHub/stappp/src/h/<a class="el" href="_material_8h_source.html">Material.h</a></li>
+<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/h/<a class="el" href="_material_8h_source.html">Material.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

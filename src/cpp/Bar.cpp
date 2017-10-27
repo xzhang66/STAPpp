@@ -53,7 +53,7 @@ bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNod
 	unsigned int N1, N2;	// Left node number and right node number
 
 	Input >> N1 >> N2 >> MSet;
-	ElementMaterial = &((CBarMaterial*)MaterialSets)[MSet - 1];
+	ElementMaterial = &(dynamic_cast<CBarMaterial*>(MaterialSets))[MSet - 1];
 	nodes[0] = &NodeList[N1 - 1];
 	nodes[1] = &NodeList[N2 - 1];
 
@@ -109,7 +109,7 @@ void CBar::ElementStiffness(double* Matrix)
 
 //	Calculate element stiffness matrix
 
-	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = dynamic_cast<CBarMaterial*>(ElementMaterial);	// Pointer to material of the element
 
 	double k = material->E * material->Area / L / L2;
 
@@ -139,7 +139,7 @@ void CBar::ElementStiffness(double* Matrix)
 //	Calculate element stress 
 void CBar::ElementStress(double* stress, double* Displacement)
 {
-	CBarMaterial* material = (CBarMaterial*)ElementMaterial;	// Pointer to material of the element
+	CBarMaterial* material = dynamic_cast<CBarMaterial*>(ElementMaterial);	// Pointer to material of the element
 
 	double DX[3];	//	dx = x2-x1, dy = y2-y1, dz = z2-z1
 	double L2 = 0;	//	Square of bar length (L^2)
