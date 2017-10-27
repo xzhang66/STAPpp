@@ -71,9 +71,9 @@ inline CSkylineMatrix<T_>::CSkylineMatrix()
 {
     NEQ_ = 0;
     
-    data_ = NULL;
-    ColumnHeights_ = NULL;
-    DiagonalAddress_ = NULL;
+    data_ = nullptr;
+    ColumnHeights_ = nullptr;
+    DiagonalAddress_ = nullptr;
 }
 
 template <class T_>
@@ -81,7 +81,7 @@ inline CSkylineMatrix<T_>::CSkylineMatrix(unsigned int N)
 {
     NEQ_ = N;
 
-    data_ = NULL;
+    data_ = nullptr;
     
     ColumnHeights_ = new unsigned int [NEQ_];
     for (unsigned int i = 0; i < NEQ_; i++)
