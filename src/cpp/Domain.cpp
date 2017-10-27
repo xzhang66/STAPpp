@@ -24,7 +24,7 @@ template <class type> void clear( type* a, unsigned int N )
 		a[i] = 0;
 }
 
-CDomain* CDomain::_instance = NULL;
+CDomain* CDomain::_instance = nullptr;
 
 //	Constructor
 CDomain::CDomain()
@@ -33,20 +33,20 @@ CDomain::CDomain()
 	MODEX = 0;
 
 	NUMNP = 0;
-	NodeList = NULL;
+	NodeList = nullptr;
 	
 	NUMEG = 0;
 	EleGrpList = nullptr;
 	
 	NLCASE = 0;
-	NLOAD = NULL;
-	LoadCases = NULL;
+	NLOAD = nullptr;
+	LoadCases = nullptr;
 	
 	NEQ = 0;
 	NWK = 0;
 	MK = 0;
 
-	Force = NULL; 
+	Force = nullptr;
 }
 
 //	Desconstructor
@@ -209,7 +209,6 @@ void CDomain::CalculateDiagnoalAddress()
 {
     unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
     unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
-//	clear(DiagonalAddress, NEQ + 1);	// Set all elements to zero
 
 //	Calculate the address of diagonal elements
 //	M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
