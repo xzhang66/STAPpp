@@ -156,8 +156,8 @@ void COutputter::OutputElementInfo()
 		cout << " E L E M E N T   D E F I N I T I O N" << endl << endl;
 		OutputFile << " E L E M E N T   D E F I N I T I O N" << endl << endl;
 
-		unsigned int ElementType = FEMData->GetElementTypes()[EleGrp];
-		unsigned int NUME = FEMData->GetNUME()[EleGrp];
+        unsigned int ElementType = FEMData->GetEleGrpList()[EleGrp].GetElementType();
+		unsigned int NUME = FEMData->GetEleGrpList()[EleGrp].GetNUME();
 
 		cout << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5) << ElementType << endl;
 		cout << "     EQ.1, TRUSS ELEMENTS" << endl 
@@ -189,8 +189,8 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	CDomain* FEMData = CDomain::Instance();
 
-	unsigned int NUMMAT = FEMData->GetNUMMAT()[EleGrp];
-	CBarMaterial* MaterialSet = (CBarMaterial*) FEMData->GetMaterialSetList()[EleGrp];
+	unsigned int NUMMAT = FEMData->GetEleGrpList()[EleGrp].GetNUMMAT();
+	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial*>(FEMData->GetEleGrpList()[EleGrp].GetMaterialList());
 
 	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
 	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
@@ -223,13 +223,12 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 	OutputFile << " ELEMENT     NODE     NODE       MATERIAL" << endl
 			   << " NUMBER-N      I        J       SET NUMBER" << endl; 
 
-	CElement** ElementSetList = FEMData->GetElementSetList();
-	CBar* ElementGroup = (CBar* ) ElementSetList[EleGrp];
-	unsigned int* NUME = FEMData->GetNUME();
+    CBar* ElementList = dynamic_cast<CBar*>(FEMData->GetEleGrpList()[EleGrp].GetElementList());
+    unsigned int NUME = FEMData->GetEleGrpList()[EleGrp].GetNUME();
 
 //	Loop over for all elements in group EleGrp
-	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		ElementGroup[Ele].Write(OutputFile, Ele);
+	for (unsigned int Ele = 0; Ele < NUME; Ele++)
+		ElementList[Ele].Write(OutputFile, Ele);
 
 	cout << endl;
 	OutputFile << endl;
@@ -299,8 +298,6 @@ void COutputter::OutputElementStress()
 	double* Displacement = FEMData->GetDisplacement();
 
 	unsigned int NUMEG = FEMData->GetNUMEG();
-	unsigned int* NUME = FEMData->GetNUME();
-	CElement** ElementSetList = FEMData->GetElementSetList();
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
@@ -312,11 +309,15 @@ void COutputter::OutputElementStress()
 				   << "  NUMBER" << endl;
 
 		double stress;
-		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
+        
+        CElementGroup* EleGrpList = &FEMData->GetEleGrpList()[EleGrp];
+        
+        unsigned int NUME = EleGrpList->GetNUME();
+		for (unsigned int Ele = 0; Ele < NUME; Ele++)
 		{
-			ElementSetList[EleGrp][Ele].ElementStress(&stress, Displacement);
+			EleGrpList->GetElementList()[Ele].ElementStress(&stress, Displacement);
 
-			CBarMaterial* material = (CBarMaterial *) ElementSetList[EleGrp][Ele].GetElementMaterial();
+			CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleGrpList->GetElementList()[Ele].GetElementMaterial());
 			cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 			OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
 		}

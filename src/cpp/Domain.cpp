@@ -36,12 +36,7 @@ CDomain::CDomain()
 	NodeList = NULL;
 	
 	NUMEG = 0;
-	ElementTypes = NULL;
-	NUME = NULL;
-	ElementSetList = NULL;
-	
-	NUMMAT = NULL;
-	MaterialSetList = NULL;
+	EleGrpList = nullptr;
 	
 	NLCASE = 0;
 	NLOAD = NULL;
@@ -59,12 +54,7 @@ CDomain::~CDomain()
 {
 	delete [] NodeList;
 
-	delete [] ElementTypes;
-	delete [] NUME;
-	delete [] ElementSetList;
-
-	delete [] NUMMAT;
-	delete [] MaterialSetList;
+	delete [] EleGrpList;
 
 	delete [] NLOAD;
 	delete [] LoadCases;
@@ -177,57 +167,14 @@ bool CDomain::ReadLoadCases()
 // Read element data
 bool CDomain::ReadElements()
 {
-
-//	Read element group control line
-	ElementTypes = new unsigned int[NUMEG];	// Element type of each group
-	NUME = new unsigned int[NUMEG];			// Number of elements in each group
-	ElementSetList = new CElement*[NUMEG];	// Element list in each group
-
-	NUMMAT = new unsigned int[NUMEG];		// Material set number of each group
-	MaterialSetList = new CMaterial*[NUMEG];	// Material list in each group
+    EleGrpList = new CElementGroup[NUMEG];
 
 //	Loop over for all element group
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
-	{
-		Input >> ElementTypes[EleGrp] >> NUME[EleGrp] >> NUMMAT[EleGrp];
-
-		switch (ElementTypes[EleGrp])
-		{
-		case 1:	// Bar element
-			if (!ReadBarElementData(EleGrp))
-                return false;
-			break;
-
-		default:	// Invalid element type
-            cout << "*** Error *** Elment type " << ElementTypes[EleGrp] << " of group "
-                 << EleGrp+1 << " has not been implemented.\n\n";
-			return false;
-		}
-	}
-	return true;
-}
-
-//	Read bar element data from the input data file
-bool CDomain::ReadBarElementData(unsigned int EleGrp)
-{
-//	Read material/section property lines
-	MaterialSetList[EleGrp] = new CBarMaterial[NUMMAT[EleGrp]];	// Materials for group EleGrp
-    CBarMaterial* mlist = (CBarMaterial*) MaterialSetList[EleGrp];
-
-//	Loop over for all material property sets in group EleGrp
-	for (unsigned int mset = 0; mset < NUMMAT[EleGrp]; mset++)
-		if (!mlist[mset].Read(Input, mset))
-			return false;
-
-//	Read element data lines
-	ElementSetList[EleGrp] = new CBar[NUME[EleGrp]];	// Elements of gorup EleGrp
-
-//	Loop over for all elements in group EleGrp
-	for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-		if (!ElementSetList[EleGrp][Ele].Read(Input, Ele, MaterialSetList[EleGrp], NodeList))
-			return false;
-
-	return true;
+        if (!EleGrpList[EleGrp].Read(Input))
+            return false;
+    
+    return true;
 }
 
 //	Calculate column heights
@@ -237,8 +184,8 @@ void CDomain::CalculateColumnHeights()
 //	clear(ColumnHeights, NEQ);	// Set all elements to zero
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
-		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)	//	Loop over for all elements in group EleGrp
-			ElementSetList[EleGrp][Ele].CalculateColumnHeight(ColumnHeights);
+		for (unsigned int Ele = 0; Ele < EleGrpList->GetNUME(); Ele++)	//	Loop over for all elements in group EleGrp
+			EleGrpList->GetElementList()[Ele].CalculateColumnHeight(ColumnHeights);
 
 //	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
 	MK = ColumnHeights[0];
@@ -286,12 +233,12 @@ void CDomain::AssembleStiffnessMatrix()
 //	Loop over for all element groups
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		unsigned int size = ElementSetList[EleGrp][0].SizeOfStiffnessMatrix();
+		unsigned int size = EleGrpList->GetElementList()[0].SizeOfStiffnessMatrix();
 		double* Matrix = new double[size];
 
 //		Loop over for all elements in group EleGrp
-		for (unsigned int Ele = 0; Ele < NUME[EleGrp]; Ele++)
-			ElementSetList[EleGrp][Ele].assembly(Matrix, StiffnessMatrix);
+		for (unsigned int Ele = 0; Ele < EleGrpList->GetNUME(); Ele++)
+			EleGrpList->GetElementList()[Ele].assembly(Matrix, StiffnessMatrix);
 
 		delete [] Matrix;
 	}
