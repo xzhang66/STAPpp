@@ -78,7 +78,7 @@ bool CDomain::ReadData(string FileName, string OutFile)
 
 	if (!Input) 
 	{
-		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
+		cerr << "*** Error *** File " << FileName << " does not exist !" << endl;
 		exit(3);
 	}
 

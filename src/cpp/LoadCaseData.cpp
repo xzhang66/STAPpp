@@ -41,7 +41,7 @@ bool CLoadCaseData :: Read(ifstream& Input, unsigned int lcase)
 
 	if (LL != lcase + 1) 
 	{
-		cout << "*** Error *** Load case must be inputted in order !" << endl 
+		cerr << "*** Error *** Load case must be inputted in order !" << endl 
 			 << "   Expected load case : " << lcase + 1 << endl
 			 << "   Provided load case : " << LL << endl;
 
@@ -56,12 +56,11 @@ bool CLoadCaseData :: Read(ifstream& Input, unsigned int lcase)
 	return true;
 }
 
-//	Write load case data to stream OutputFile
-void CLoadCaseData::Write(ofstream& OutputFile, unsigned int lcase)
+//	Write load case data to stream
+void CLoadCaseData::Write(COutputter& output, unsigned int lcase)
 {
 	for (unsigned int i = 0; i < nloads; i++)
 	{
-		cout << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;
-		OutputFile << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;
+		output << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;
 	}
 }

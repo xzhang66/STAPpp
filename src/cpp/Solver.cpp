@@ -51,9 +51,9 @@ void CLDLTSolver::LDLT()
 
         if (fabs((*K)(j,j)) <= FLT_MIN)
         {
-            cout << "*** Error *** Stiffness matrix is not positive definite !" << endl
-            << "    Euqation no = " << j << endl
-            << "    Pivot = " << (*K)(j,j) << endl;
+            cerr << "*** Error *** Stiffness matrix is not positive definite !" << endl
+            	 << "    Euqation no = " << j << endl
+            	 << "    Pivot = " << (*K)(j,j) << endl;
             
             exit(4);
         }
