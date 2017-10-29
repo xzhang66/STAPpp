@@ -69,7 +69,8 @@ public:
 
 //!	Print total system data
 	void OutputTotalSystemData();
-	
+
+//! Overide the operator <<
 	template <typename T>
 	COutputter& operator<<(const T& item) 
 	{
@@ -78,7 +79,7 @@ public:
 		return *this;
 	}
 
-	typedef std::basic_ostream<char, std::char_traits<char>> CharOstream;
+	typedef std::basic_ostream<char, std::char_traits<char> > CharOstream;
 	COutputter& operator<<(CharOstream& (*op)(CharOstream&)) 
 	{
 		op(std::cout);
