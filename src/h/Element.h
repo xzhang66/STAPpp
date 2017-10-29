@@ -15,6 +15,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <climits>
 
 #include "Node.h"
 #include "Material.h"
