@@ -37,8 +37,8 @@ void Clock::Stop()
 {
 	if (!st0_) 
 	{
-		cout << "\n*** Error *** In Clock :: Stop()";
-		cout << " : Method Start() must have been called before.\n";
+		cerr << "\n*** Error *** In Clock :: Stop()";
+		cerr << " : Method Start() must have been called before.\n";
 	}
 
 	if(!st1_)
@@ -54,13 +54,13 @@ void Clock::Resume()
 {
 	if (!st0_) 
 	{
-		cout << "\n*** Error *** In Clock :: Resume()";
-		cout << " : Method Start() must have been called before.\n";
+		cerr << "\n*** Error *** In Clock :: Resume()";
+		cerr << " : Method Start() must have been called before.\n";
 	}
 
 	if (!st1_) {
-        cout << "\n*** Error *** In Clock::Resume()";
-		cout << " : Method Stop() must have been called before.\n";
+        cerr << "\n*** Error *** In Clock::Resume()";
+		cerr << " : Method Stop() must have been called before.\n";
 	}
 	else  
 	{
@@ -82,8 +82,8 @@ double Clock::ElapsedTime()
 	double elapsed;
 
 	if (!st0_) {
-		cout << "\n*** Error *** In Clock :: ElapsedTime()";
-		cout << " : Method Start() must have been called before.\n";
+		cerr << "\n*** Error *** In Clock :: ElapsedTime()";
+		cerr << " : Method Start() must have been called before.\n";
 	}
 
 	if (st1_)  // Timer has been stopped.

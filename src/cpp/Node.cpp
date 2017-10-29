@@ -32,7 +32,7 @@ bool CNode::Read(ifstream& Input, unsigned int np)
 	Input >> N;	// node number
 	if (N != np + 1) 
 	{
-		cout << "*** Error *** Nodes must be inputted in order !" << endl 
+		cerr << "*** Error *** Nodes must be inputted in order !" << endl 
 			 << "   Expected node number : " << np + 1 << endl
 			 << "   Provided node number : " << N << endl;
 
@@ -47,51 +47,42 @@ bool CNode::Read(ifstream& Input, unsigned int np)
 	return true;
 }
 
-//	Output nodal point data to stream OutputFile
-void CNode::Write(ofstream& OutputFile, unsigned int np)
+//	Output nodal point data to stream
+void CNode::Write(COutputter& output, unsigned int np)
 {
-	cout << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
-		 << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
-	OutputFile << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
-			   << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
+	output << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
+		   << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
 }
 
-//	Output equation numbers of nodal point to stream OutputFile
-void CNode::WriteEquationNo(ofstream& OutputFile, unsigned int np)
+//	Output equation numbers of nodal point to stream
+void CNode::WriteEquationNo(COutputter& output, unsigned int np)
 {
-	cout << setw(9) << np+1 << "       ";
-	OutputFile << setw(9) << np+1 << "       ";
+	output << setw(9) << np+1 << "       ";
 
 	for (unsigned int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 	{
-		cout << setw(5) << bcode[dof];
-		OutputFile << setw(5) << bcode[dof];
+		output << setw(5) << bcode[dof];
 	}
 
-	cout << endl;
-	OutputFile << endl;
+	output << endl;
 }
 
 //	Write nodal displacement
-void CNode::WriteNodalDisplacement(ofstream& OutputFile, unsigned int np, double* Displacement)
+void CNode::WriteNodalDisplacement(COutputter& output, unsigned int np, double* Displacement)
 {
-	cout << setw(5) << np + 1 << "        ";
-	OutputFile << setw(5) << np + 1 << "        ";
+	output << setw(5) << np + 1 << "        ";
 
 	for (unsigned int j = 0; j < NDF; j++)
 	{
 		if (bcode[j] == 0)
 		{
-			cout << setw(18) << 0.0;
-			OutputFile << setw(18) << 0.0;
+			output << setw(18) << 0.0;
 		}
 		else
 		{
-			cout << setw(18) << Displacement[bcode[j] - 1];
-			OutputFile << setw(18) << Displacement[bcode[j] - 1];
+			output << setw(18) << Displacement[bcode[j] - 1];
 		}
 	}
 
-	cout << endl;
-	OutputFile << endl;
+	output << endl;
 }

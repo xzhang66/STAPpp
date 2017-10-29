@@ -55,7 +55,7 @@ bool CElementGroup::Read(ifstream& Input)
             break;
             
         default:    // Invalid element type
-            cout << "*** Error *** Elment type " << ElementType_ <<  " has not been implemented.\n\n";
+            cerr << "*** Error *** Elment type " << ElementType_ <<  " has not been implemented.\n\n";
             return false;
     }
 

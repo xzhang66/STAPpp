@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "Outputter.h"
+
 #include <string>
 #include <fstream>
 
@@ -36,6 +38,6 @@ public:
 //!	Read load case data from stream Input
 	bool Read(ifstream& Input, unsigned int lcase);
 
-//!	Write load case data to stream OutputFile
-	void Write(ofstream& OutputFile, unsigned int lcase);
+//!	Write load case data to stream
+	void Write(COutputter& output, unsigned int lcase);
 };

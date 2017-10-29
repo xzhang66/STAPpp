@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 //  Read data and define the problem domain
 	if (!FEMData->ReadData(InFile, OutFile))
 	{
-		cout << "*** Error *** Data input failed!" << endl;
+		cerr << "*** Error *** Data input failed!" << endl;
 		exit(1);
 	}
     
@@ -91,19 +91,11 @@ int main(int argc, char *argv[])
     
     timer.Stop();
     
-    cout << "\n S O L U T I O N   T I M E   L O G   I N   S E C \n\n"
-         << "     TIME FOR INPUT PHASE = " << time_input << endl
-         << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
-         << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
-         << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
-
-    
-    ofstream* OutputFile = Output->GetOutputFile();
-    *OutputFile << "\n S O L U T I O N   T I M E   L O G   I N   S E C \n\n"
-                << "     TIME FOR INPUT PHASE = " << time_input << endl
-                << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
-                << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
-                << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
+    *Output << "\n S O L U T I O N   T I M E   L O G   I N   S E C \n\n"
+            << "     TIME FOR INPUT PHASE = " << time_input << endl
+            << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
+            << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
+            << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
 
 	return 0;
 }

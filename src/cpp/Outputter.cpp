@@ -19,28 +19,30 @@
 using namespace std;
 
 //	Output current time and date
-void COutputter::PrintTime(const struct tm * ptm, ostream& output)
+void COutputter::PrintTime(const struct tm* ptm, COutputter &output)
 {
-	const char *weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-	const char *month[]   = {"January", "February", "March", "April", "May", "June", "July", "August",
-		               "September", "October", "November", "December"};
+	const char* weekday[] = {"Sunday", "Monday", "Tuesday", "Wednesday",
+							 "Thursday", "Friday", "Saturday"};
+	const char* month[] = {"January", "February", "March", "April", "May", "June",
+						   "July", "August", "September", "October", "November", "December"};
 
 	output << "        (";
 	output << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << " on ";
-	output << month[ptm->tm_mon+1] << " " << ptm->tm_mday << ", " << ptm->tm_year + 1900 << ", " 
-		   << weekday[ptm->tm_wday] << ")" << endl << endl;
+	output << month[ptm->tm_mon] << " " << ptm->tm_mday << ", " << ptm->tm_year + 1900 << ", "
+		   << weekday[ptm->tm_wday] << ")" << endl
+		   << endl;
 }
 
-COutputter* COutputter::_instance = NULL;
+COutputter* COutputter::_instance = nullptr;
 
 //	Constructor
 COutputter::COutputter(string FileName)
 {
 	OutputFile.open(FileName);
 
-	if (!OutputFile) 
+	if (!OutputFile)
 	{
-		cout << "*** Error *** File " << FileName << " does not exist !" << endl;
+		cerr << "*** Error *** File " << FileName << " does not exist !" << endl;
 		exit(3);
 	}
 }
@@ -48,7 +50,8 @@ COutputter::COutputter(string FileName)
 //	Return the single instance of the class
 COutputter* COutputter::Instance(string FileName)
 {
-	if (!_instance) _instance = new COutputter(FileName);
+	if (!_instance)
+		_instance = new COutputter(FileName);
 	return _instance;
 }
 
@@ -57,17 +60,15 @@ void COutputter::OutputHeading()
 {
 	CDomain* FEMData = CDomain::Instance();
 
-	cout << "TITLE : " << FEMData->GetTitle() << endl;
-	OutputFile << "TITLE : " << FEMData->GetTitle() << endl;
-    
+	*this << "TITLE : " << FEMData->GetTitle() << endl;
+
 	time_t rawtime;
-	struct tm *timeinfo;
-    
+	struct tm* timeinfo;
+
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	PrintTime(timeinfo, cout);
-	PrintTime(timeinfo, OutputFile);
+	PrintTime(timeinfo, *this);
 }
 
 //	Print nodal data
@@ -77,43 +78,32 @@ void COutputter::OutputNodeInfo()
 
 	CNode* NodeList = FEMData->GetNodeList();
 
-	cout << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
-	OutputFile << "C O N T R O L   I N F O R M A T I O N" << endl<< endl;
+	*this << "C O N T R O L   I N F O R M A T I O N" << endl
+		  << endl;
 
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+	*this << setiosflags(ios::scientific) << setprecision(5);
 
 	unsigned int NUMNP = FEMData->GetNUMNP();
 	unsigned int NUMEG = FEMData->GetNUMEG();
 	unsigned int NLCASE = FEMData->GetNLCASE();
 	unsigned int MODEX = FEMData->GetMODEX();
 
-	cout << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
-	cout << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
-	cout << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
-	cout << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
-	cout << "         EQ.0, DATA CHECK" << endl
-		 << "         EQ.1, EXECUTION" << endl << endl;
+	*this << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
+	*this << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
+	*this << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
+	*this << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
+	*this << "         EQ.0, DATA CHECK" << endl
+		  << "         EQ.1, EXECUTION" << endl
+		  << endl;
 
-	OutputFile << "      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =" << setw(6) << NUMNP << endl;
-	OutputFile << "      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =" << setw(6) << NUMEG << endl;
-	OutputFile << "      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =" << setw(6) << NLCASE << endl;
-	OutputFile << "      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =" << setw(6) << MODEX << endl;
-	OutputFile << "         EQ.0, DATA CHECK" << endl
-			   << "         EQ.1, EXECUTION" << endl << endl;
+	*this << " N O D A L   P O I N T   D A T A" << endl << endl;
+	*this << "    NODE       BOUNDARY                         NODAL POINT" << endl
+		  << "   NUMBER  CONDITION  CODES                     COORDINATES" << endl;
 
-	cout << " N O D A L   P O I N T   D A T A" << endl << endl;
-	cout << "    NODE       BOUNDARY                         NODAL POINT" << endl
-		 << "   NUMBER  CONDITION  CODES                     COORDINATES" << endl;
-	OutputFile << " N O D A L   P O I N T   D A T A" << endl << endl;
-	OutputFile << "    NODE       BOUNDARY                         NODAL POINT" << endl
-			   << "   NUMBER  CONDITION CODES                      COORDINATES" << endl;
- 
 	for (unsigned int np = 0; np < NUMNP; np++)
-		NodeList[np].Write(OutputFile, np);
+		NodeList[np].Write(*this, np);
 
-	cout << endl;
-	OutputFile << endl;
+	*this << endl;
 }
 
 //	Output equation numbers
@@ -124,114 +114,97 @@ void COutputter::OutputEquationNumber()
 
 	CNode* NodeList = FEMData->GetNodeList();
 
-	cout << " EQUATION NUMBERS" << endl << endl;
-	cout << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
-	cout << "        N           X    Y    Z" << endl;
+	*this << " EQUATION NUMBERS" << endl
+		  << endl;
+	*this << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
+	*this << "        N           X    Y    Z" << endl;
 
-	OutputFile << " EQUATION NUMBERS" << endl << endl;
-	OutputFile << "   NODE NUMBER   DEGREES OF FREEDOM" << endl;
-	OutputFile << "        N           X    Y    Z" << endl;
+	for (unsigned int np = 0; np < NUMNP; np++) // Loop over for all node
+		NodeList[np].WriteEquationNo(*this, np);
 
-	for (unsigned int np = 0; np < NUMNP; np++)	// Loop over for all node
-		NodeList[np].WriteEquationNo(OutputFile, np);
-
-	cout << endl;
-	OutputFile << endl;
+	*this << endl;
 }
 
 //	Output element data
 void COutputter::OutputElementInfo()
 {
-//	Print element group control line
+	//	Print element group control line
 
 	CDomain* FEMData = CDomain::Instance();
-    
+
 	unsigned int NUMEG = FEMData->GetNUMEG();
 
-	cout << " E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
-	OutputFile << "E L E M E N T   G R O U P   D A T A" << endl << endl << endl;
+	*this << " E L E M E N T   G R O U P   D A T A" << endl
+		  << endl
+		  << endl;
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-		cout << " E L E M E N T   D E F I N I T I O N" << endl << endl;
-		OutputFile << " E L E M E N T   D E F I N I T I O N" << endl << endl;
+		*this << " E L E M E N T   D E F I N I T I O N" << endl
+			  << endl;
 
-        unsigned int ElementType = FEMData->GetEleGrpList()[EleGrp].GetElementType();
+		unsigned int ElementType = FEMData->GetEleGrpList()[EleGrp].GetElementType();
 		unsigned int NUME = FEMData->GetEleGrpList()[EleGrp].GetNUME();
 
-		cout << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5) << ElementType << endl;
-		cout << "     EQ.1, TRUSS ELEMENTS" << endl 
-			 << "     EQ.2, ELEMENTS CURRENTLY" << endl
-			 << "     EQ.3, NOT AVAILABLE" << endl << endl;
+		*this << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5)
+			  << ElementType << endl;
+		*this << "     EQ.1, TRUSS ELEMENTS" << endl
+			  << "     EQ.2, ELEMENTS CURRENTLY" << endl
+			  << "     EQ.3, NOT AVAILABLE" << endl
+			  << endl;
 
-		cout << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME << endl << endl;
-
-		OutputFile << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5) << ElementType << endl;
-		OutputFile << "     EQ.1, TRUSS ELEMENTS" << endl 
-				   << "     EQ.2, ELEMENTS CURRENTLY" << endl
-				   << "     EQ.3, NOT AVAILABLE" << endl << endl;
-
-		OutputFile << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME << endl << endl;
+		*this << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME
+			  << endl
+			  << endl;
 
 		switch (ElementType)
 		{
-		case 1:	// Bar element
+		case 1: // Bar element
 			PrintBarElementData(EleGrp);
 			break;
-
-		} 
+		}
 	}
 }
-
 //	Output bar element data
 void COutputter::PrintBarElementData(unsigned int EleGrp)
 {
 	CDomain* FEMData = CDomain::Instance();
-    
-    CElementGroup* ElementGroup = &FEMData->GetEleGrpList()[EleGrp];
+
+	CElementGroup* ElementGroup = &FEMData->GetEleGrpList()[EleGrp];
 	unsigned int NUMMAT = ElementGroup->GetNUMMAT();
-	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial*>(ElementGroup->GetMaterialList());
+	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial *>(ElementGroup->GetMaterialList());
 
-	cout << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
-	cout << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
-	cout << " AND CROSS-SECTIONAL  CONSTANTS  . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT << endl << endl;
+	*this << " M A T E R I A L   D E F I N I T I O N" << endl
+		  << endl;
+	*this << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
+	*this << " AND CROSS-SECTIONAL  CONSTANTS  . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT
+		  << endl
+		  << endl;
 
-	cout << "  SET       YOUNG'S     CROSS-SECTIONAL" << endl
-		 << " NUMBER     MODULUS          AREA" << endl
-		 << "               E              A" << endl;
-	
-	OutputFile << " M A T E R I A L   D E F I N I T I O N" << endl << endl;
-	OutputFile << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
-	OutputFile << " AND CROSS-SECTIONAL  CONSTANTS  . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT << endl << endl;
+	*this << "  SET       YOUNG'S     CROSS-SECTIONAL" << endl
+		  << " NUMBER     MODULUS          AREA" << endl
+		  << "               E              A" << endl;
 
-	OutputFile << "  SET       YOUNG'S     CROSS-SECTIONAL" << endl
-			   << " NUMBER     MODULUS          AREA" << endl
-			   << "               E              A" << endl;
+	*this << setiosflags(ios::scientific) << setprecision(5);
 
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
-
-//	Loop over for all property sets
+	//	Loop over for all property sets
 	for (unsigned int mset = 0; mset < NUMMAT; mset++)
-		MaterialSet[mset].Write(OutputFile, mset);
+		MaterialSet[mset].Write(*this, mset);
 
-	cout << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
-	cout << " ELEMENT     NODE     NODE       MATERIAL" << endl
-		 << " NUMBER-N      I        J       SET NUMBER" << endl; 
+	*this << endl
+		  << endl
+		  << " E L E M E N T   I N F O R M A T I O N" << endl;
+	*this << " ELEMENT     NODE     NODE       MATERIAL" << endl
+		  << " NUMBER-N      I        J       SET NUMBER" << endl;
 
-	OutputFile << endl << endl << " E L E M E N T   I N F O R M A T I O N" << endl;
-	OutputFile << " ELEMENT     NODE     NODE       MATERIAL" << endl
-			   << " NUMBER-N      I        J       SET NUMBER" << endl; 
+	CBar* ElementList = dynamic_cast<CBar *>(ElementGroup->GetElementList());
+	unsigned int NUME = ElementGroup->GetNUME();
 
-    CBar* ElementList = dynamic_cast<CBar*>(ElementGroup->GetElementList());
-    unsigned int NUME = ElementGroup->GetNUME();
-
-//	Loop over for all elements in group EleGrp
+	//	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		ElementList[Ele].Write(OutputFile, Ele);
+		ElementList[Ele].Write(*this, Ele);
 
-	cout << endl;
-	OutputFile << endl;
+	*this << endl;
 }
 
 //	Print load data
@@ -243,25 +216,19 @@ void COutputter::OutputLoadInfo()
 	{
 		CLoadCaseData* LoadData = &FEMData->GetLoadCases()[lcase - 1];
 
-		cout << setiosflags(ios::scientific);
-		OutputFile << setiosflags(ios::scientific);
+		*this << setiosflags(ios::scientific);
+		*this << " L O A D   C A S E   D A T A" << endl
+			  << endl;
 
-		cout << " L O A D   C A S E   D A T A" << endl << endl;
-		OutputFile << " L O A D   C A S E   D A T A" << endl << endl;
+		*this << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
+		*this << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << LoadData->nloads << endl
+			  << endl;
+		*this << "    NODE       DIRECTION      LOAD" << endl
+			  << "   NUMBER                   MAGNITUDE" << endl;
 
-		cout << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-		cout << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << LoadData->nloads << endl << endl;
-		cout << "    NODE       DIRECTION      LOAD" << endl
-			 << "   NUMBER                   MAGNITUDE" << endl;
-		OutputFile << "     LOAD CASE NUMBER . . . . . . . =" << setw(6) << lcase << endl;
-		OutputFile << "     NUMBER OF CONCENTRATED LOADS . =" << setw(6) << LoadData->nloads << endl << endl;
-		OutputFile << "    NODE       DIRECTION      LOAD" << endl
-				   << "   NUMBER                   MAGNITUDE" << endl;
+		LoadData->Write(*this, lcase);
 
-		LoadData->Write(OutputFile, lcase);
-
-		cout << endl;
-		OutputFile << endl;
+		*this << endl;
 	}
 }
 
@@ -272,25 +239,23 @@ void COutputter::OutputNodalDisplacement(unsigned int lcase)
 	CNode* NodeList = FEMData->GetNodeList();
 	double* Displacement = FEMData->GetDisplacement();
 
-	cout << " LOAD CASE" << setw(5) << lcase+1 << endl << endl << endl;
-	OutputFile << " LOAD CASE" << setw(5) << lcase+1 << endl << endl << endl;
+	*this << " LOAD CASE" << setw(5) << lcase + 1 << endl
+		  << endl
+		  << endl;
 
-	cout << setiosflags(ios::scientific);
-	OutputFile << setiosflags(ios::scientific);
+	*this << setiosflags(ios::scientific);
 
-	cout << " D I S P L A C E M E N T S" << endl << endl;
-	cout << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
-	OutputFile << " D I S P L A C E M E N T S" << endl << endl;
-	OutputFile << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
+	*this << " D I S P L A C E M E N T S" << endl
+		  << endl;
+	*this << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
 	for (unsigned int np = 0; np < FEMData->GetNUMNP(); np++)
-		NodeList[np].WriteNodalDisplacement(OutputFile, np, Displacement);
+		NodeList[np].WriteNodalDisplacement(*this, np, Displacement);
 
-	cout << endl;
-	OutputFile << endl;
+	*this << endl;
 }
 
-//	Calculate stresses 
+//	Calculate stresses
 void COutputter::OutputElementStress()
 {
 	CDomain* FEMData = CDomain::Instance();
@@ -301,42 +266,41 @@ void COutputter::OutputElementStress()
 
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
 	{
-        cout << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl;
-        OutputFile << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5) << EleGrp+1 << endl << endl;
+		*this << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5)
+			  << EleGrp + 1 << endl
+			  << endl;
 
-        CElementGroup* EleGrpList = &FEMData->GetEleGrpList()[EleGrp];
-        unsigned int NUME = EleGrpList->GetNUME();
-        unsigned int ElementType = EleGrpList->GetElementType();
+		CElementGroup* EleGrpList = &FEMData->GetEleGrpList()[EleGrp];
+		unsigned int NUME = EleGrpList->GetNUME();
+		unsigned int ElementType = EleGrpList->GetElementType();
 
-        switch (ElementType)
-        {
-            case 1:    // Bar element
-                cout << "  ELEMENT             FORCE            STRESS" << endl
-                     << "  NUMBER" << endl;
-                
-                OutputFile << "  ELEMENT             FORCE            STRESS" << endl
-                     << "  NUMBER" << endl;
-                
-                double stress;
-                
-                for (unsigned int Ele = 0; Ele < NUME; Ele++)
-                {
-                    CBar* EleList = dynamic_cast<CBar*>(EleGrpList->GetElementList());
-                    EleList[Ele].ElementStress(&stress, Displacement);
-                    
-                    CBarMaterial* material = dynamic_cast<CBarMaterial*>(EleList[Ele].GetElementMaterial());
-                    cout << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
-                    OutputFile << setw(5) << Ele+1 << setw(22) << stress*material->Area << setw(18) << stress << endl;
-                }
-                
-                cout << endl;
-                OutputFile << endl;
-                
-                break;
-                
-            default:    // Invalid element type
-                cout << "*** Error *** Elment type " << ElementType <<  " has not been implemented.\n\n";
-        }
+		switch (ElementType)
+		{
+		case 1: // Bar element
+			*this << "  ELEMENT             FORCE            STRESS" << endl
+				  << "  NUMBER" << endl;
+
+			double stress;
+
+			for (unsigned int Ele = 0; Ele < NUME; Ele++)
+			{
+				CBar* EleList = dynamic_cast<CBar *>(EleGrpList->GetElementList());
+				EleList[Ele].ElementStress(&stress, Displacement);
+
+				CBarMaterial* material =
+					dynamic_cast<CBarMaterial *>(EleList[Ele].GetElementMaterial());
+				*this << setw(5) << Ele + 1 << setw(22) << stress * material->Area << setw(18)
+					  << stress << endl;
+			}
+
+			*this << endl;
+
+			break;
+
+		default: // Invalid element type
+			cerr << "*** Error *** Elment type " << ElementType
+				 << " has not been implemented.\n\n";
+		}
 	}
 }
 
@@ -345,20 +309,19 @@ void COutputter::OutputTotalSystemData()
 {
 	CDomain* FEMData = CDomain::Instance();
 
-	cout << "	TOTAL SYSTEM DATA" << endl << endl;
-	OutputFile << "	TOTAL SYSTEM DATA" << endl << endl;
+	*this << "	TOTAL SYSTEM DATA" << endl
+		  << endl;
 
-	cout << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = " << FEMData->GetNEQ() << endl
-		 << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = " << FEMData->GetNWK() << endl
-		 << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = " << FEMData->GetMK() << endl
-		 << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = " << FEMData->GetNWK()/FEMData->GetNEQ() 
-		 << endl << endl << endl;
-
-	OutputFile << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = " << FEMData->GetNEQ() << endl
-			   << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = " << FEMData->GetNWK() << endl
-			   << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = " << FEMData->GetMK() << endl
-			   << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = " << FEMData->GetNWK()/FEMData->GetNEQ() 
-			   << endl << endl << endl;
+	*this << "     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = " << FEMData->GetNEQ()
+		  << endl
+		  << "     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = " << FEMData->GetNWK()
+		  << endl
+		  << "     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = " << FEMData->GetMK()
+		  << endl
+		  << "     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = "
+		  << FEMData->GetNWK() / FEMData->GetNEQ() << endl
+		  << endl
+		  << endl;
 }
 
 #ifdef _DEBUG_
@@ -366,148 +329,128 @@ void COutputter::OutputTotalSystemData()
 //	Print column heights for debuging
 void COutputter::PrintColumnHeights()
 {
-	cout << "*** _Debug_ *** Column Heights" << endl;
-	OutputFile << "*** _Debug_ *** Column Heights" << endl;
+	*this << "*** _Debug_ *** Column Heights" << endl;
 
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-    CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
 	unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
 
 	for (unsigned int col = 0; col < NEQ; col++)
 	{
-		if (col+1 % 10 == 0)
+		if (col + 1 % 10 == 0)
 		{
-			cout << endl;
-			OutputFile << endl;
+			*this << endl;
 		}
 
-		cout << setw(8) << ColumnHeights[col];
-		OutputFile << setw(8) << ColumnHeights[col];
+		*this << setw(8) << ColumnHeights[col];
 	}
-    
-	cout << endl << endl;
-	OutputFile << endl << endl;
+
+	*this << endl
+		  << endl;
 }
 
 //	Print address of diagonal elements for debuging
 void COutputter::PrintDiagonalAddress()
 {
-	cout << "*** _Debug_ *** Address of Diagonal Element" << endl;
-	OutputFile << "*** _Debug_ *** Address of Diagonal Element" << endl;
+	*this << "*** _Debug_ *** Address of Diagonal Element" << endl;
 
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-    CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
 	unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
 
 	for (unsigned int col = 0; col <= NEQ; col++)
 	{
-		if (col+1 % 10 == 0)
+		if (col + 1 % 10 == 0)
 		{
-			cout << endl;
-			OutputFile << endl;
+			*this << endl;
 		}
 
-		cout << setw(8) << DiagonalAddress[col];
-		OutputFile << setw(8) << DiagonalAddress[col];
+		*this << setw(8) << DiagonalAddress[col];
 	}
 
-	cout << endl << endl;
-	OutputFile << endl << endl;
+	*this << endl
+		  << endl;
 }
 
 //	Print banded and full stiffness matrix for debuging
 void COutputter::PrintStiffnessMatrix()
 {
-	cout << "*** _Debug_ *** Banded stiffness matrix" << endl;
-	OutputFile << "*** _Debug_ *** Banded stiffness matrix" << endl;
+	*this << "*** _Debug_ *** Banded stiffness matrix" << endl;
 
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
-	CSkylineMatrix<double>* StiffnessMatrix = FEMData->GetStiffnessMatrix();
-    unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
+	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
+	unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
 
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+	*this << setiosflags(ios::scientific) << setprecision(5);
 
 	for (unsigned int i = 0; i < DiagonalAddress[NEQ] - DiagonalAddress[0]; i++)
 	{
-		cout << setw(14) << (*StiffnessMatrix)(i);
-		OutputFile << setw(14) << (*StiffnessMatrix)(i);
+		*this << setw(14) << (*StiffnessMatrix)(i);
 
-        if ((i+1) % 6 == 0)
-        {
-            cout << endl;
-            OutputFile << endl;
-        }
+		if ((i + 1) % 6 == 0)
+		{
+			*this << endl;
+		}
 	}
 
-	cout << endl << endl;
-	OutputFile << endl << endl;
+	*this << endl
+		  << endl;
 
-	cout << "*** _Debug_ *** Full stiffness matrix" << endl;
-	OutputFile << "*** _Debug_ *** Full stiffness matrix" << endl;
+	*this << "*** _Debug_ *** Full stiffness matrix" << endl;
 
 	for (int I = 1; I <= NEQ; I++)
 	{
 		for (int J = 1; J <= NEQ; J++)
 		{
-			int H = DiagonalAddress[J] - DiagonalAddress[J-1];
+			int H = DiagonalAddress[J] - DiagonalAddress[J - 1];
 			if (J - I - H >= 0)
 			{
-				cout << setw(14) << 0.0;
-				OutputFile << setw(14) << 0.0;
+				*this << setw(14) << 0.0;
 			}
 			else
 			{
-				cout << setw(14) << (*StiffnessMatrix)(I,J);
-				OutputFile << setw(14) << (*StiffnessMatrix)(I,J);
+				*this << setw(14) << (*StiffnessMatrix)(I, J);
 			}
 		}
 
-		cout << endl;
-		OutputFile << endl;
+		*this << endl;
 	}
 
-	cout << endl;
-	OutputFile << endl;
+	*this << endl;
 }
 
 //	Print displacement vector for debuging
 void COutputter::PrintDisplacement(unsigned int loadcase)
 {
-	cout << "*** _Debug_ *** Displacement vector" << endl;
-	OutputFile << "*** _Debug_ *** Displacement vector" << endl;
+	*this << "*** _Debug_ *** Displacement vector" << endl;
 
 	CDomain* FEMData = CDomain::Instance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	double* Force = FEMData->GetForce();
 
-	cout << "  Load case = " << loadcase << endl;
-	OutputFile << "  Load case = " << loadcase << endl;
+	*this << "  Load case = " << loadcase << endl;
 
-	cout << setiosflags(ios::scientific) <<setprecision(5);
-	OutputFile << setiosflags(ios::scientific) <<setprecision(5);
+	*this << setiosflags(ios::scientific) << setprecision(5);
 
 	for (unsigned int i = 0; i < NEQ; i++)
 	{
-		if ((i+1) % 6 == 0)
+		if ((i + 1) % 6 == 0)
 		{
-			cout << endl;
-			OutputFile << endl;
+			*this << endl;
 		}
 
-		cout << setw(14) << Force[i];
-		OutputFile << setw(14) << Force[i];
+		*this << setw(14) << Force[i];
 	}
 
-	cout << endl << endl;
-	OutputFile << endl << endl;
+	*this << endl
+		  << endl;
 }
 
 #endif
