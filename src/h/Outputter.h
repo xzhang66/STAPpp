@@ -70,7 +70,7 @@ public:
 //!	Print total system data
 	void OutputTotalSystemData();
 
-//! Overide the operator <<
+//! Overload the operator <<
 	template <typename T>
 	COutputter& operator<<(const T& item) 
 	{
