@@ -43,8 +43,8 @@ bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNod
 	if (N != Ele + 1)
 	{
 		cerr << "*** Error *** Elements must be inputted in order !" << endl 
-			 << "   Expected element : " << Ele + 1 << endl
-			 << "   Provided element : " << N << endl;
+			 << "    Expected element : " << Ele + 1 << endl
+			 << "    Provided element : " << N << endl;
 
 		return false;
 	}

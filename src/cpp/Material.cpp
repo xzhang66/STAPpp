@@ -24,8 +24,8 @@ bool CBarMaterial::Read(ifstream& Input, unsigned int mset)
 	if (nset != mset + 1)
 	{
 		cerr << "*** Error *** Material sets must be inputted in order !" << endl 
-			 << "   Expected set : " << mset + 1 << endl
-			 << "   Provided set : " << nset << endl;
+			 << "    Expected set : " << mset + 1 << endl
+			 << "    Provided set : " << nset << endl;
 
 		return false;
 	}
