@@ -130,7 +130,7 @@ inline void CSkylineMatrix<T_>::Allocate()
     NWK_ = DiagonalAddress_[NEQ_] - DiagonalAddress_[0];
 
     data_ = new T_[NWK_];
-    for (unsigned int i = 0; i < NWK_ + 1; i++)
+    for (unsigned int i = 0; i < NWK_; i++)
         data_[i] = 0;
 }
 
