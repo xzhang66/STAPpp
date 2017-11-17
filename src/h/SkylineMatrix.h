@@ -131,7 +131,7 @@ inline void CSkylineMatrix<T_>::Allocate()
 
     data_ = new T_[NWK_];
     for (unsigned int i = 0; i < NWK_; i++)
-        data_[i] = 0;
+        data_[i] = T_(0);
 }
 
 //! Return pointer to the ColumnHeights_

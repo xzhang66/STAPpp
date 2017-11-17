@@ -25,7 +25,7 @@ CBar::CBar()
     ND = 6;
     LocationMatrix = new unsigned int[ND];
 
-	ElementMaterial = NULL;
+	ElementMaterial = nullptr;
 }
 
 //	Desconstructor
@@ -53,7 +53,7 @@ bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNod
 	unsigned int N1, N2;	// Left node number and right node number
 
 	Input >> N1 >> N2 >> MSet;
-	ElementMaterial = &(dynamic_cast<CBarMaterial*>(MaterialSets))[MSet - 1];
+    ElementMaterial = dynamic_cast<CBarMaterial*>(MaterialSets) + MSet - 1;
 	nodes[0] = &NodeList[N1 - 1];
 	nodes[1] = &NodeList[N2 - 1];
 

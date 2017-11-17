@@ -47,6 +47,7 @@ CDomain::CDomain()
 	MK = 0;
 
 	Force = nullptr;
+    StiffnessMatrix = nullptr;
 }
 
 //	Desconstructor
@@ -60,6 +61,7 @@ CDomain::~CDomain()
 	delete [] LoadCases;
 
 	delete [] Force;
+    delete StiffnessMatrix;
 }
 
 //	Return pointer to the instance of the Domain class

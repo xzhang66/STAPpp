@@ -51,7 +51,7 @@ protected:
 public:
 
 //!	Constructor
-	CElement() : NEN(0), nodes(NULL), ElementMaterial(NULL) {};
+	CElement() : NEN(0), nodes(nullptr), ElementMaterial(nullptr) {};
 
 //! Virtual deconstructor
     virtual ~CElement();
