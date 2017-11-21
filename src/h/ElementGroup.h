@@ -19,12 +19,17 @@
 
 using namespace std;
 
+//! Define set of element types
 enum ElementTypes
 {
     UNDEFINED = 0,
-    Bar,
-    Plane,
-    Triangle
+    Bar,    // Bar element
+    Q4,     // 4Q element
+    T3,     // 3T element
+    H8,     // 8H element
+    Beam,   // Beam element
+    Plate,  // Plate element
+    Shell   // Shell elment
 };
 
 //! Element group class
@@ -64,10 +69,13 @@ public:
     //! Read element group data from stream Input
     bool Read(ifstream& Input);
 
+    //! Calculate the size of the derived element class and material class
     void CalculateMemberSize();
 
+    //! Allocate array of derived elements
     void AllocateElement(std::size_t size);
 
+    //! Allocate array of derived materials
     void AllocateMaterial(std::size_t size);
 
     //! Read element data from the input data file
@@ -79,6 +87,7 @@ public:
     //! Return the number of elements in the group
     unsigned int GetNUME() { return NUME_; }
 
+    //! Return the index-th element in this element group
     CElement& GetElement(unsigned int index);
 
     CMaterial& GetMaterial(unsigned int index);

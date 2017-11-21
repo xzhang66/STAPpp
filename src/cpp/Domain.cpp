@@ -247,7 +247,7 @@ void CDomain::AssembleStiffnessMatrix()
 		for (unsigned int Ele = 0; Ele < NUME; Ele++)
 			ElementGrp.GetElement(Ele).assembly(Matrix, StiffnessMatrix);
 
-		delete Matrix;
+		delete[] Matrix;
 		Matrix = nullptr;
 	}
 

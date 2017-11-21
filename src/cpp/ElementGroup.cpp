@@ -41,16 +41,19 @@ CElementGroup::~CElementGroup()
         delete [] MaterialList_;
 }
 
+//! Get the index-th element in this element group
 CElement& CElementGroup::GetElement(unsigned int index)
 {
     return *(CElement*)((std::size_t)(ElementList_) + index*ElementSize_);
 }
 
+//! Return index-th material in this element group
 CMaterial& CElementGroup::GetMaterial(unsigned int index)
 {
     return *(CMaterial*)((std::size_t)(MaterialList_) + index*MaterialSize_);
 }
 
+//! Calculate the size of the derived element and material class
 void CElementGroup::CalculateMemberSize()
 {
     switch (ElementType_)
@@ -69,6 +72,7 @@ void CElementGroup::CalculateMemberSize()
     }
 }
 
+//! Allocate array of derived elements
 void CElementGroup::AllocateElement(std::size_t size)
 {
     switch(ElementType_)
@@ -82,6 +86,7 @@ void CElementGroup::AllocateElement(std::size_t size)
     }
 }
 
+//! Allocate array of derived materials
 void CElementGroup::AllocateMaterial(std::size_t size)
 {
     switch(ElementType_)
