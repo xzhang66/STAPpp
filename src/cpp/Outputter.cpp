@@ -143,7 +143,7 @@ void COutputter::OutputElementInfo()
 		*this << " E L E M E N T   D E F I N I T I O N" << endl
 			  << endl;
 
-		unsigned int ElementType = FEMData->GetEleGrpList()[EleGrp].GetElementType();
+		ElementTypes ElementType = FEMData->GetEleGrpList()[EleGrp].GetElementType();
 		unsigned int NUME = FEMData->GetEleGrpList()[EleGrp].GetNUME();
 
 		*this << " ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =" << setw(5)
@@ -159,9 +159,9 @@ void COutputter::OutputElementInfo()
 
 		switch (ElementType)
 		{
-		case 1: // Bar element
-			PrintBarElementData(EleGrp);
-			break;
+			case ElementTypes::Bar: // Bar element
+				PrintBarElementData(EleGrp);
+				break;
 		}
 	}
 }
@@ -170,9 +170,8 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 {
 	CDomain* FEMData = CDomain::Instance();
 
-	CElementGroup* ElementGroup = &FEMData->GetEleGrpList()[EleGrp];
-	unsigned int NUMMAT = ElementGroup->GetNUMMAT();
-	CBarMaterial* MaterialSet = dynamic_cast<CBarMaterial *>(ElementGroup->GetMaterialList());
+	CElementGroup& ElementGroup = FEMData->GetEleGrpList()[EleGrp];
+	unsigned int NUMMAT = ElementGroup.GetNUMMAT();
 
 	*this << " M A T E R I A L   D E F I N I T I O N" << endl
 		  << endl;
@@ -189,7 +188,7 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all property sets
 	for (unsigned int mset = 0; mset < NUMMAT; mset++)
-		MaterialSet[mset].Write(*this, mset);
+		ElementGroup.GetMaterial(mset).Write(*this, mset);
 
 	*this << endl
 		  << endl
@@ -197,12 +196,11 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 	*this << " ELEMENT     NODE     NODE       MATERIAL" << endl
 		  << " NUMBER-N      I        J       SET NUMBER" << endl;
 
-	CBar* ElementList = dynamic_cast<CBar *>(ElementGroup->GetElementList());
-	unsigned int NUME = ElementGroup->GetNUME();
+	unsigned int NUME = ElementGroup.GetNUME();
 
 	//	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		ElementList[Ele].Write(*this, Ele);
+		ElementGroup.GetElement(Ele).Write(*this, Ele);
 
 	*this << endl;
 }
@@ -264,42 +262,41 @@ void COutputter::OutputElementStress()
 
 	unsigned int NUMEG = FEMData->GetNUMEG();
 
-	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)
+	for (unsigned int EleGrpIndex = 0; EleGrpIndex < NUMEG; EleGrpIndex++)
 	{
 		*this << " S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P" << setw(5)
-			  << EleGrp + 1 << endl
+			  << EleGrpIndex + 1 << endl
 			  << endl;
 
-		CElementGroup* EleGrpList = &FEMData->GetEleGrpList()[EleGrp];
-		unsigned int NUME = EleGrpList->GetNUME();
-		unsigned int ElementType = EleGrpList->GetElementType();
+		CElementGroup& EleGrp = FEMData->GetEleGrpList()[EleGrpIndex];
+		unsigned int NUME = EleGrp.GetNUME();
+		ElementTypes ElementType = EleGrp.GetElementType();
 
 		switch (ElementType)
 		{
-		case 1: // Bar element
-			*this << "  ELEMENT             FORCE            STRESS" << endl
-				  << "  NUMBER" << endl;
+			case ElementTypes::Bar: // Bar element
+				*this << "  ELEMENT             FORCE            STRESS" << endl
+					<< "  NUMBER" << endl;
 
-			double stress;
+				double stress;
 
-			for (unsigned int Ele = 0; Ele < NUME; Ele++)
-			{
-				CBar* EleList = dynamic_cast<CBar *>(EleGrpList->GetElementList());
-				EleList[Ele].ElementStress(&stress, Displacement);
+				for (unsigned int Ele = 0; Ele < NUME; Ele++)
+				{
+					CElement& Element = EleGrp.GetElement(Ele);
+					Element.ElementStress(&stress, Displacement);
 
-				CBarMaterial* material =
-					dynamic_cast<CBarMaterial *>(EleList[Ele].GetElementMaterial());
-				*this << setw(5) << Ele + 1 << setw(22) << stress * material->Area << setw(18)
-					  << stress << endl;
-			}
+					CBarMaterial& material = *dynamic_cast<CBarMaterial*>(Element.GetElementMaterial());
+					*this << setw(5) << Ele + 1 << setw(22) << stress * material.Area << setw(18)
+						<< stress << endl;
+				}
 
-			*this << endl;
+				*this << endl;
 
-			break;
+				break;
 
-		default: // Invalid element type
-			cerr << "*** Error *** Elment type " << ElementType
-				 << " has not been implemented.\n\n";
+			default: // Invalid element type
+				cerr << "*** Error *** Elment type " << ElementType
+					<< " has not been implemented.\n\n";
 		}
 	}
 }
