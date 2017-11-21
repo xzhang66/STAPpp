@@ -63,9 +63,35 @@ void CElementGroup::CalculateMemberSize()
             MaterialSize_ = sizeof(CBarMaterial);
             break;
         default:
-            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::SetElementType." << std::endl;
+            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::CalculateMemberSize." << std::endl;
             exit(5);
             break;
+    }
+}
+
+void CElementGroup::AllocateElement(std::size_t size)
+{
+    switch(ElementType_)
+    {
+        case ElementTypes::Bar:
+            ElementList_ = new CBar[size];
+            break;
+        default:
+            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::AllocateElement." << std::endl;
+            exit(5);
+    }
+}
+
+void CElementGroup::AllocateMaterial(std::size_t size)
+{
+    switch(ElementType_)
+    {
+        case ElementTypes::Bar:
+            MaterialList_ = new CBarMaterial[size];
+            break;
+        default:
+            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::AllocateMaterial." << std::endl;
+            exit(5);
     }
 }
 
@@ -76,40 +102,29 @@ bool CElementGroup::Read(ifstream& Input)
     
     CalculateMemberSize();
 
-    switch (ElementType_)
-    {
-        case ElementTypes::Bar:    // Bar element       
-            if (!ReadBarElementData(Input))
-                return false;
-            break;
-            
-        default:    // Invalid element type
-            cerr << "*** Error *** Elment type " << ElementType_ <<  " has not been implemented.\n\n";
-            return false;
-    }
+    if (!ReadElementData(Input))
+        return false;
 
     return true;
 }
 
 //  Read bar element data from the input data file
-bool CElementGroup::ReadBarElementData(ifstream& Input)
+bool CElementGroup::ReadElementData(ifstream& Input)
 {
 //  Read material/section property lines
-    MaterialList_ = new CBarMaterial[NUMMAT_];    // Materials for group EleGrp
-    CBarMaterial* mlist = dynamic_cast<CBarMaterial*>(MaterialList_);
+    AllocateMaterial(NUMMAT_);
     
 //  Loop over for all material property sets in this element group
     for (unsigned int mset = 0; mset < NUMMAT_; mset++)
-        if (!mlist[mset].Read(Input, mset))
+        if (!GetMaterial(mset).Read(Input, mset))
             return false;
     
 //  Read element data lines
-    ElementList_ = new CBar[NUME_];    // Elements of gorup EleGrp
-    CBar* elist = dynamic_cast<CBar*>(ElementList_);
+    AllocateElement(NUME_);
     
 //  Loop over for all elements in this element group
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)
-        if (!elist[Ele].Read(Input, Ele, MaterialList_, NodeList_))
+        if (!GetElement(Ele).Read(Input, Ele, MaterialList_, NodeList_))
             return false;
     
     return true;

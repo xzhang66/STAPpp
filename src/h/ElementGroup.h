@@ -19,17 +19,12 @@
 
 using namespace std;
 
-//! enum of element type
 enum ElementTypes
 {
     UNDEFINED = 0,
-    Bar,    // Bar element
-    Q4,     // 4Q element
-    T3,     // 3T element
-    H8,     // 8H element
-    Beam,   // Beam element
-    Plate,  // Plate element
-    Shell   // Shell elment
+    Bar,
+    Plane,
+    Triangle
 };
 
 //! Element group class
@@ -71,8 +66,12 @@ public:
 
     void CalculateMemberSize();
 
-    //! Read bar element data from the input data file
-    bool ReadBarElementData(ifstream& Input);
+    void AllocateElement(std::size_t size);
+
+    void AllocateMaterial(std::size_t size);
+
+    //! Read element data from the input data file
+    bool ReadElementData(ifstream& Input);
 
     //! Return element type of this group
     ElementTypes GetElementType() { return ElementType_; }
