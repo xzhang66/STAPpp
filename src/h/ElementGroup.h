@@ -19,12 +19,17 @@
 
 using namespace std;
 
+//! enum of element type
 enum ElementTypes
 {
     UNDEFINED = 0,
-    Bar,
-    Plane,
-    Triangle
+    Bar,    // Bar element
+    Q4,     // 4Q element
+    T3,     // 3T element
+    H8,     // 8H element
+    Beam,   // Beam element
+    Plate,  // Plate element
+    Shell   // Shell elment
 };
 
 //! Element group class
