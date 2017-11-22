@@ -42,10 +42,8 @@ private:
     //! Element type of this group
     ElementTypes ElementType_;
 
-    //! Element size of this group
+    //! Size of an Element object in this group
     std::size_t ElementSize_;
-
-    std::size_t MaterialSize_;
 
     //! Number of elements in this group
     unsigned int NUME_;
@@ -58,6 +56,9 @@ private:
 
     //! Material list in this group
     CMaterial* MaterialList_;
+
+    //! Size of an Material object in this group
+    std::size_t MaterialSize_;
 
 public:
     //! Constructor
@@ -90,6 +91,7 @@ public:
     //! Return the index-th element in this element group
     CElement& GetElement(unsigned int index);
 
+    //! Return the index-th material in this group
     CMaterial& GetMaterial(unsigned int index);
 
     //! Return the number of material/section property setss in this element group
