@@ -67,12 +67,6 @@ private:
 //!	Total number of equations in the system
 	unsigned int NEQ;
 
-//!	Number of elements in banded global stiffness matrix
-	unsigned int NWK;
-
-//!	Maximum half bandwith
-	unsigned int MK;
-
 //!	Banded stiffness matrix
 /*! A one-dimensional array storing only the elements below the	skyline of the 
     global stiffness matrix. */
@@ -135,12 +129,6 @@ public:
 
 //!	Return the total number of nodal points
 	inline unsigned int GetNUMNP() { return NUMNP; }
-
-//!	Return the number of banded global stiffness matrix elements
-	inline unsigned int GetNWK() { return NWK; }
-
-//!	Return the maximum half bandwith
-	inline unsigned int GetMK() { return MK; }
 
 //!	Return the node list
 	inline CNode* GetNodeList() { return NodeList; }

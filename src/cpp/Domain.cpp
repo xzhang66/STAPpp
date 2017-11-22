@@ -42,8 +42,6 @@ CDomain::CDomain()
 	LoadCases = nullptr;
 	
 	NEQ = 0;
-	NWK = 0;
-	MK = 0;
 
 	Force = nullptr;
 	StiffnessMatrix = nullptr;
@@ -190,14 +188,14 @@ void CDomain::CalculateColumnHeights()
         {
             CElement& Element = ElementGrp.GetElement(Ele);
 
-            //  Generate location matrix
+            // Generate location matrix
             Element.GenerateLocationMatrix();
             
             StiffnessMatrix->CalculateColumnHeight(Element.GetLocationMatrix(), Element.GetND());
         }
     }
     
-    MK = StiffnessMatrix->GetMaximumHalfBandwidth();
+    StiffnessMatrix->CalculateMaximumHalfBandwidth();
     
 #ifdef _DEBUG_
 	COutputter* Output = COutputter::Instance();
@@ -218,9 +216,6 @@ void CDomain::CalculateDiagnoalAddress()
 	DiagonalAddress[0] = 1;
 	for (unsigned int col = 1; col <= NEQ; col++)
 		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
-
-//	Number of elements in banded global stiffness matrix
-	NWK = DiagonalAddress[NEQ] - DiagonalAddress[0];
 
 #ifdef _DEBUG_
 	COutputter* Output = COutputter::Instance();
