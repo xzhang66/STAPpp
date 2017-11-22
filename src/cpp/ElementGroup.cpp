@@ -66,14 +66,14 @@ void CElementGroup::CalculateMemberSize()
             MaterialSize_ = sizeof(CBarMaterial);
             break;
         default:
-            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::CalculateMemberSize." << std::endl;
+            std::cerr << "Type " << ElementType_ << " not available. See CElementGroup::CalculateMemberSize." << std::endl;
             exit(5);
             break;
     }
 }
 
 //! Allocate array of derived elements
-void CElementGroup::AllocateElement(std::size_t size)
+void CElementGroup::AllocateElements(std::size_t size)
 {
     switch(ElementType_)
     {
@@ -81,13 +81,13 @@ void CElementGroup::AllocateElement(std::size_t size)
             ElementList_ = new CBar[size];
             break;
         default:
-            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::AllocateElement." << std::endl;
+            std::cerr << "Type " << ElementType_ << " not available. See CElementGroup::AllocateElement." << std::endl;
             exit(5);
     }
 }
 
 //! Allocate array of derived materials
-void CElementGroup::AllocateMaterial(std::size_t size)
+void CElementGroup::AllocateMaterials(std::size_t size)
 {
     switch(ElementType_)
     {
@@ -95,7 +95,7 @@ void CElementGroup::AllocateMaterial(std::size_t size)
             MaterialList_ = new CBarMaterial[size];
             break;
         default:
-            std::cerr << "Type " << ElementType_ << " not finished yet. See CElementGroup::AllocateMaterial." << std::endl;
+            std::cerr << "Type " << ElementType_ << " not available. See CElementGroup::AllocateMaterial." << std::endl;
             exit(5);
     }
 }
@@ -117,7 +117,7 @@ bool CElementGroup::Read(ifstream& Input)
 bool CElementGroup::ReadElementData(ifstream& Input)
 {
 //  Read material/section property lines
-    AllocateMaterial(NUMMAT_);
+    AllocateMaterials(NUMMAT_);
     
 //  Loop over for all material property sets in this element group
     for (unsigned int mset = 0; mset < NUMMAT_; mset++)
@@ -125,7 +125,7 @@ bool CElementGroup::ReadElementData(ifstream& Input)
             return false;
     
 //  Read element data lines
-    AllocateElement(NUME_);
+    AllocateElements(NUME_);
     
 //  Loop over for all elements in this element group
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)

@@ -74,10 +74,10 @@ public:
     void CalculateMemberSize();
 
     //! Allocate array of derived elements
-    void AllocateElement(std::size_t size);
+    void AllocateElements(std::size_t size);
 
     //! Allocate array of derived materials
-    void AllocateMaterial(std::size_t size);
+    void AllocateMaterials(std::size_t size);
 
     //! Read element data from the input data file
     bool ReadElementData(ifstream& Input);
