@@ -60,7 +60,11 @@ public:
 
 //! Calculate the maximum half bandwidth ( = max(ColumnHeights) + 1 )
     void CalculateMaximumHalfBandwidth();
-    
+
+//! Calculate address of diagonal elements in banded matrix
+//! Caution: Address is numbered from 1 !
+    void CalculateDiagnoalAddress();
+
 //! Assemble the element stiffness matrix to the global stiffness matrix
     void Assembly(double* Matrix, unsigned int* LocationMatrix, size_t ND);
 
@@ -250,5 +254,23 @@ void CSkylineMatrix<T_>::Assembly(double* Matrix, unsigned int* LocationMatrix, 
     }
     
     return;
+}
+
+//    Calculate address of diagonal elements in banded matrix
+//    Caution: Address is numbered from 1 !
+template <class T_>
+void CSkylineMatrix<T_>::CalculateDiagnoalAddress()
+{
+    //    Calculate the address of diagonal elements
+    //    M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
+    DiagonalAddress_[0] = 1;
+    for (unsigned int col = 1; col <= NEQ_; col++)
+        DiagonalAddress_[col] = DiagonalAddress_[col - 1] + ColumnHeights_[col-1] + 1;
+    
+#ifdef _DEBUG_
+    COutputter* Output = COutputter::Instance();
+    Output->PrintDiagonalAddress();
+#endif
+    
 }
 

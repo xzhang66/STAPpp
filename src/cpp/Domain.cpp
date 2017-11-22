@@ -204,26 +204,6 @@ void CDomain::CalculateColumnHeights()
 
 }
 
-//	Calculate address of diagonal elements in banded matrix
-//	Caution: Address is numbered from 1 !
-void CDomain::CalculateDiagnoalAddress()
-{
-    unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
-    unsigned int* DiagonalAddress = StiffnessMatrix->GetDiagonalAddress();
-
-//	Calculate the address of diagonal elements
-//	M(0) = 1;  M(i+1) = M(i) + H(i) + 1 (i = 0:NEQ)
-	DiagonalAddress[0] = 1;
-	for (unsigned int col = 1; col <= NEQ; col++)
-		DiagonalAddress[col] = DiagonalAddress[col - 1] + ColumnHeights[col-1] + 1;
-
-#ifdef _DEBUG_
-	COutputter* Output = COutputter::Instance();
-	Output->PrintDiagonalAddress();
-#endif
-
-}
-
 //	Assemble the banded gloabl stiffness matrix
 void CDomain::AssembleStiffnessMatrix()
 {
@@ -290,7 +270,7 @@ void CDomain::AllocateMatrices()
 	CalculateColumnHeights();
 
 //	Calculate address of diagonal elements in banded matrix
-	CalculateDiagnoalAddress();
+	StiffnessMatrix->CalculateDiagnoalAddress();
 
 //	Allocate for banded global stiffness matrix
     StiffnessMatrix->Allocate();
