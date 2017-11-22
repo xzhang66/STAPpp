@@ -15,12 +15,12 @@
 //! Virtual deconstructor
 CElement::~CElement()
 {
-    if (!nodes)
-        delete [] nodes;
+    if (!nodes_)
+        delete [] nodes_;
     
-    if (!ElementMaterial)
-        delete [] ElementMaterial;
+    if (!ElementMaterial_)
+        delete [] ElementMaterial_;
 
-    if (!LocationMatrix)
-        delete [] LocationMatrix;
+    if (!LocationMatrix_)
+        delete [] LocationMatrix_;
 }

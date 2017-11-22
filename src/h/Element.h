@@ -24,24 +24,24 @@ class CElement
 protected:
 
 //!	Number of nodes per element
-	unsigned int NEN;
+	unsigned int NEN_;
 
 //!	Nodes of the element
-	CNode** nodes;
+	CNode** nodes_;
 
 //!	Material of the element
-	CMaterial* ElementMaterial;	//!< Pointer to an element of MaterialSetList[][]
+	CMaterial* ElementMaterial_;	//!< Pointer to an element of MaterialSetList[][]
     
 //! Location Matrix of the element
-    unsigned int* LocationMatrix;
+    unsigned int* LocationMatrix_;
 
 //! Dimension of the location matrix
-    unsigned int ND;
+    unsigned int ND_;
 
 public:
 
 //!	Constructor
-	CElement() : NEN(0), nodes(nullptr), ElementMaterial(nullptr) {};
+	CElement() : NEN_(0), nodes_(nullptr), ElementMaterial_(nullptr) {};
 
 //! Virtual deconstructor
     virtual ~CElement();
@@ -63,16 +63,16 @@ public:
 	virtual void ElementStress(double* stress, double* Displacement) = 0;
 
 //!	Return nodes of the element
-	inline CNode** GetNodes() { return nodes; }
+	inline CNode** GetNodes() { return nodes_; }
 
 //!	Return material of the element
-	inline CMaterial* GetElementMaterial() { return ElementMaterial; }
+	inline CMaterial* GetElementMaterial() { return ElementMaterial_; }
     
     //! Return the Location Matrix of the element
-    inline unsigned int* GetLocationMatrix() { return LocationMatrix; }
+    inline unsigned int* GetLocationMatrix() { return LocationMatrix_; }
     
     //! Return the dimension of the location matrix
-    inline unsigned int GetND() { return ND; }
+    inline unsigned int GetND() { return ND_; }
 
 //!	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
