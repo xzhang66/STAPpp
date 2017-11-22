@@ -77,7 +77,6 @@ void CBar::GenerateLocationMatrix()
             LocationMatrix_[i++] = nodes_[N]->bcode[D];
 }
 
-
 //	Return the size of the element stiffness matrix (stored as an array column by column)
 //	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
 //	has 21 elements
