@@ -98,6 +98,8 @@ template <class T_>
 inline CSkylineMatrix<T_>::CSkylineMatrix(unsigned int N)
 {
     NEQ_ = N;
+    MK_  = 0;
+    NWK_ = 0;
 
     data_ = nullptr;
     
