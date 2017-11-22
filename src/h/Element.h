@@ -44,7 +44,16 @@ public:
 	CElement() : NEN_(0), nodes_(nullptr), ElementMaterial_(nullptr) {};
 
 //! Virtual deconstructor
-    virtual ~CElement();
+    virtual ~CElement() {
+        if (!nodes_)
+            delete [] nodes_;
+        
+        if (!ElementMaterial_)
+            delete [] ElementMaterial_;
+        
+        if (!LocationMatrix_)
+            delete [] LocationMatrix_;
+    }
 
 //!	Read element data from stream Input
 	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
