@@ -15,7 +15,6 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <climits>
 
 #include "Node.h"
 #include "Material.h"
@@ -65,12 +64,6 @@ public:
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !
     virtual void GenerateLocationMatrix() = 0;
-    
-//! Calculate the column height, used with the skyline storage scheme
-	void CalculateColumnHeight(unsigned int* ColumnHeight); 
-
-//!	Assemble the element stiffness matrix to the global stiffness matrix
-	void assembly(double* Matrix, CSkylineMatrix<double>* StiffnessMatrix);
 
 //!	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0; 
@@ -83,6 +76,12 @@ public:
 
 //!	Return material of the element
 	inline CMaterial* GetElementMaterial() { return ElementMaterial; }
+    
+    //! Return the Location Matrix of the element
+    inline unsigned int* GetLocationMatrix() { return LocationMatrix; }
+    
+    //! Return the dimension of the location matrix
+    inline unsigned int GetND() { return ND; }
 
 //!	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     

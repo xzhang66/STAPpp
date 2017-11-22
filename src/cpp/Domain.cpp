@@ -181,26 +181,24 @@ bool CDomain::ReadElements()
 //	Calculate column heights
 void CDomain::CalculateColumnHeights()
 {
-    unsigned int* ColumnHeights = StiffnessMatrix->GetColumnHeights();
-
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
     {
         CElementGroup& ElementGrp = EleGrpList[EleGrp];
         unsigned int NUME = ElementGrp.GetNUME();
         
 		for (unsigned int Ele = 0; Ele < NUME; Ele++)	//	Loop over for all elements in group EleGrp
-			ElementGrp.GetElement(Ele).CalculateColumnHeight(ColumnHeights);
+        {
+            CElement& Element = ElementGrp.GetElement(Ele);
+
+            //  Generate location matrix
+            Element.GenerateLocationMatrix();
+            
+            StiffnessMatrix->CalculateColumnHeight(Element.GetLocationMatrix(), Element.GetND());
+        }
     }
-
-//	Maximum half bandwidth ( = max(ColumnHeights) + 1 )
-	MK = ColumnHeights[0];
-
-	for (unsigned int i=1; i<NEQ; i++)
-		if (MK < ColumnHeights[i])
-			MK = ColumnHeights[i];
-
-	MK = MK + 1;
-
+    
+    MK = StiffnessMatrix->GetMaximumHalfBandwidth();
+    
 #ifdef _DEBUG_
 	COutputter* Output = COutputter::Instance();
 	Output->PrintColumnHeights();
@@ -245,7 +243,11 @@ void CDomain::AssembleStiffnessMatrix()
 
 //		Loop over for all elements in group EleGrp
 		for (unsigned int Ele = 0; Ele < NUME; Ele++)
-			ElementGrp.GetElement(Ele).assembly(Matrix, StiffnessMatrix);
+        {
+            CElement& Element = ElementGrp.GetElement(Ele);
+            Element.ElementStiffness(Matrix);
+            StiffnessMatrix->Assembly(Matrix, Element.GetLocationMatrix(), Element.GetND());
+        }
 
 		delete[] Matrix;
 		Matrix = nullptr;

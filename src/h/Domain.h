@@ -15,7 +15,6 @@
 #include <vector>
 
 #include "Node.h"
-#include "Bar.h"
 #include "ElementGroup.h"
 #include "Outputter.h"
 #include "Solver.h"
