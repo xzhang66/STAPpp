@@ -10,19 +10,10 @@
 
 #pragma once
 
-#include <stddef.h>
-#include <vector>
-#include <string>
-#include <iostream>
-#include <fstream>
-
 #include "Node.h"
 #include "Material.h"
-#include "SkylineMatrix.h"
 
 using namespace std;
-
-class CDomain;
 
 template <class type> void clear( type* a, unsigned int N );	// Clear an array
 
