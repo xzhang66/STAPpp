@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.1, November 22, 2017                                        */
+/*     Release 1.11, November 22, 2017                                       */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -200,7 +200,7 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		ElementGroup.GetElement(Ele).Write(*this, Ele);
+		ElementGroup[Ele].Write(*this, Ele);
 
 	*this << endl;
 }
@@ -282,7 +282,7 @@ void COutputter::OutputElementStress()
 
 				for (unsigned int Ele = 0; Ele < NUME; Ele++)
 				{
-					CElement& Element = EleGrp.GetElement(Ele);
+					CElement& Element = EleGrp[Ele];
 					Element.ElementStress(&stress, Displacement);
 
 					CBarMaterial& material = *dynamic_cast<CBarMaterial*>(Element.GetElementMaterial());

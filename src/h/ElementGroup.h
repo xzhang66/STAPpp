@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.1, November 22, 2017                                        */
+/*     Release 1.11, November 22, 2017                                       */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -88,8 +88,9 @@ public:
     //! Return the number of elements in the group
     unsigned int GetNUME() { return NUME_; }
 
-    //! Return the index-th element in this element group
-    CElement& GetElement(unsigned int index);
+    //! operator []
+    //! For the sake of efficiency, the index bounds are not checked
+    CElement& operator[](unsigned int i);
 
     //! Return the index-th material in this group
     CMaterial& GetMaterial(unsigned int index);

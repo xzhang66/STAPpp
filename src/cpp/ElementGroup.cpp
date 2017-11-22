@@ -3,7 +3,7 @@
 /*     Computational Dynamics Laboratory                                     */
 /*     School of Aerospace Engineering, Tsinghua University                  */
 /*                                                                           */
-/*     Release 1.1, November 22, 2017                                        */
+/*     Release 1.11, November 22, 2017                                       */
 /*                                                                           */
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
@@ -41,10 +41,11 @@ CElementGroup::~CElementGroup()
         delete [] MaterialList_;
 }
 
-//! Get the index-th element in this element group
-CElement& CElementGroup::GetElement(unsigned int index)
+//! operator []
+//! For the sake of efficiency, the index bounds are not checked
+CElement& CElementGroup::operator[](unsigned int i)
 {
-    return *(CElement*)((std::size_t)(ElementList_) + index*ElementSize_);
+    return *(CElement*)((std::size_t)(ElementList_) + i*ElementSize_);
 }
 
 //! Return index-th material in this element group
@@ -129,7 +130,7 @@ bool CElementGroup::ReadElementData(ifstream& Input)
     
 //  Loop over for all elements in this element group
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)
-        if (!GetElement(Ele).Read(Input, Ele, MaterialList_, NodeList_))
+        if (!(*this)[Ele].Read(Input, Ele, MaterialList_, NodeList_))
             return false;
     
     return true;
