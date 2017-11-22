@@ -11,9 +11,6 @@
 #include "Domain.h"
 #include "Material.h"
 
-#include <iomanip>
-#include <iostream>
-
 using namespace std;
 
 //	Clear an array

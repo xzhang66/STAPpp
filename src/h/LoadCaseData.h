@@ -12,9 +12,6 @@
 
 #include "Outputter.h"
 
-#include <string>
-#include <fstream>
-
 using namespace std;
 
 //! Class LoadData is used to store load data

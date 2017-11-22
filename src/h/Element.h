@@ -85,6 +85,4 @@ public:
 
 //!	Return the size of the element stiffness matrix (stored as an array column by column)
 	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
-
-	friend class CDomain;	// Allow class Domain to access its protected member
 };

@@ -12,10 +12,6 @@
 
 #include "Outputter.h"
 
-#include <stddef.h>
-#include <iostream>
-#include <fstream>
-
 using namespace std;
 
 //!	Material base class which only define one data member

@@ -8,9 +8,6 @@
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
-#include <string>
-#include <iostream>
-
 #include "Domain.h"
 #include "Bar.h"
 #include "Outputter.h"

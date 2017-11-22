@@ -12,9 +12,6 @@
 
 #include "Outputter.h"
 
-#include <iostream>
-#include <fstream>
-
 using namespace std;
 
 //!	Node class
@@ -53,5 +50,4 @@ public:
 
 //!	Write nodal displacement
 	void WriteNodalDisplacement(COutputter& OutputFile, unsigned int np, double* Displacement);
-
 };
