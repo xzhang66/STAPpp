@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -46,6 +46,12 @@ $(function() {
 : <a class="el" href="class_c_load_case_data.html#ab06d7257a70d93eda06d55f958110e69">CLoadCaseData</a>
 , <a class="el" href="class_c_skyline_matrix.html#a431da491ecc0c21a688ae57975ee6d87">CSkylineMatrix&lt; T_ &gt;</a>
 </li>
+<li>AllocateElements()
+: <a class="el" href="class_c_element_group.html#a2bb288c08f4ac38bc5b721a990cf8db3">CElementGroup</a>
+</li>
+<li>AllocateMaterials()
+: <a class="el" href="class_c_element_group.html#ab9400a6f2f3ef4fce17db9881571dc2d">CElementGroup</a>
+</li>
 <li>AllocateMatrices()
 : <a class="el" href="class_c_domain.html#a8d8778ea80cca6c2b1766c6281bb27fb">CDomain</a>
 </li>
@@ -55,8 +61,8 @@ $(function() {
 <li>AssembleStiffnessMatrix()
 : <a class="el" href="class_c_domain.html#a3da94b9ff12cee16725811319381eff2">CDomain</a>
 </li>
-<li>assembly()
-: <a class="el" href="class_c_element.html#ad02a121c629f5b4d4d508cb8c0a4aed3">CElement</a>
+<li>Assembly()
+: <a class="el" href="class_c_skyline_matrix.html#aa2365934ee37f684fce1fada014fc42d">CSkylineMatrix&lt; T_ &gt;</a>
 </li>
 </ul>
 
@@ -70,16 +76,22 @@ $(function() {
 
 <h3><a id="index_c"></a>- c -</h3><ul>
 <li>CalculateColumnHeight()
-: <a class="el" href="class_c_element.html#a0539a65dd0f7900d5c4b5e9cd1df8abb">CElement</a>
+: <a class="el" href="class_c_skyline_matrix.html#a3a1fa077c37f647d58401e2caeebb3d7">CSkylineMatrix&lt; T_ &gt;</a>
 </li>
 <li>CalculateColumnHeights()
 : <a class="el" href="class_c_domain.html#a45b5d1e1497327e3598330f9fbb44a0b">CDomain</a>
 </li>
 <li>CalculateDiagnoalAddress()
-: <a class="el" href="class_c_domain.html#a14dd5afbd4b14cf16884d6adee4daf61">CDomain</a>
+: <a class="el" href="class_c_skyline_matrix.html#a6b9a8e0669971771ebac4d8027dfd947">CSkylineMatrix&lt; T_ &gt;</a>
 </li>
 <li>CalculateEquationNumber()
 : <a class="el" href="class_c_domain.html#a4bb81e6126a3af7a934f614e1abaa7d6">CDomain</a>
+</li>
+<li>CalculateMaximumHalfBandwidth()
+: <a class="el" href="class_c_skyline_matrix.html#a6f7faee81cfb1aa319ba915a7b2d67cf">CSkylineMatrix&lt; T_ &gt;</a>
+</li>
+<li>CalculateMemberSize()
+: <a class="el" href="class_c_element_group.html#a97657b5e4b76eec95563fc24c709af0c">CElementGroup</a>
 </li>
 <li>CBar()
 : <a class="el" href="class_c_bar.html#a4ff7c5318a3074711f3f3f0ca0fac5ce">CBar</a>
@@ -89,6 +101,9 @@ $(function() {
 </li>
 <li>CElement()
 : <a class="el" href="class_c_element.html#a1bea8a7fd6a8c1529b7bd41f34bd8edf">CElement</a>
+</li>
+<li>CElementGroup()
+: <a class="el" href="class_c_element_group.html#ab233f19f71a7e3f37dc1e787c4e46144">CElementGroup</a>
 </li>
 <li>CLDLTSolver()
 : <a class="el" href="class_c_l_d_l_t_solver.html#a920638747f8cdaafbd9b363324e4560f">CLDLTSolver</a>
@@ -153,14 +168,14 @@ $(function() {
 <li>GetDisplacement()
 : <a class="el" href="class_c_domain.html#a6af0683d436481864d3e042d5e8360a8">CDomain</a>
 </li>
+<li>GetEleGrpList()
+: <a class="el" href="class_c_domain.html#a6ab52d7c9bf4a03ae8954da32a4fc2ec">CDomain</a>
+</li>
 <li>GetElementMaterial()
 : <a class="el" href="class_c_element.html#a9c3aa0155a858d271530a462612aad9c">CElement</a>
 </li>
-<li>GetElementSetList()
-: <a class="el" href="class_c_domain.html#af1cf348efce9a2a68c10629e59d053f6">CDomain</a>
-</li>
-<li>GetElementTypes()
-: <a class="el" href="class_c_domain.html#a75104bfb1048137e4a2ce408cd106e2e">CDomain</a>
+<li>GetElementType()
+: <a class="el" href="class_c_element_group.html#a8e69644fa80d571d87affc66b4782dce">CElementGroup</a>
 </li>
 <li>GetForce()
 : <a class="el" href="class_c_domain.html#a0935b1b927a3009dc59b1c55d1c9c1f7">CDomain</a>
@@ -168,14 +183,20 @@ $(function() {
 <li>GetLoadCases()
 : <a class="el" href="class_c_domain.html#ad764e6ae1c6df1ad84b250773fd8a44b">CDomain</a>
 </li>
-<li>GetMaterialSetList()
-: <a class="el" href="class_c_domain.html#aa392754138abad8b2b06989dff347db5">CDomain</a>
+<li>GetLocationMatrix()
+: <a class="el" href="class_c_element.html#afa3238dbdc0018d96fd7fa126eb07064">CElement</a>
 </li>
-<li>GetMK()
-: <a class="el" href="class_c_domain.html#a29553432cdd970c9726a43ca0ab8f46b">CDomain</a>
+<li>GetMaterial()
+: <a class="el" href="class_c_element_group.html#ad7e50ce96c498e6512e43683fbc38827">CElementGroup</a>
+</li>
+<li>GetMaximumHalfBandwidth()
+: <a class="el" href="class_c_skyline_matrix.html#a2eaeb842810a8dd9c91b8f96a3624ca5">CSkylineMatrix&lt; T_ &gt;</a>
 </li>
 <li>GetMODEX()
 : <a class="el" href="class_c_domain.html#af3994927ada797f0aed55ce780ecb056">CDomain</a>
+</li>
+<li>GetND()
+: <a class="el" href="class_c_element.html#a656024fea9b83fbb69fddb908c98d479">CElement</a>
 </li>
 <li>GetNEQ()
 : <a class="el" href="class_c_domain.html#ab0bab7ee93c97c43d474dd07d0993956">CDomain</a>
@@ -193,19 +214,16 @@ $(function() {
 : <a class="el" href="class_c_element.html#a9a13dc46d9eba3a1ecf2677da7d45465">CElement</a>
 </li>
 <li>GetNUME()
-: <a class="el" href="class_c_domain.html#aa8094ce3184224463e99233820269791">CDomain</a>
+: <a class="el" href="class_c_element_group.html#a1c3689f034be19563083f1d8d3b111c7">CElementGroup</a>
 </li>
 <li>GetNUMEG()
 : <a class="el" href="class_c_domain.html#aba540711d3917aed41ccf408138d2a89">CDomain</a>
 </li>
 <li>GetNUMMAT()
-: <a class="el" href="class_c_domain.html#a91550b4289f53a4add3563e0d618a87d">CDomain</a>
+: <a class="el" href="class_c_element_group.html#ad1cf6bcf051b2b6fbac606485299c676">CElementGroup</a>
 </li>
 <li>GetNUMNP()
 : <a class="el" href="class_c_domain.html#a79ef02bcdfe04e4f9d0af98a27b0bb64">CDomain</a>
-</li>
-<li>GetNWK()
-: <a class="el" href="class_c_domain.html#af91e886fced3f012cb3f8bc541d4e633">CDomain</a>
 </li>
 <li>GetOutputFile()
 : <a class="el" href="class_c_outputter.html#af6f977648147e8c513b7af136e5f22df">COutputter</a>
@@ -237,6 +255,12 @@ $(function() {
 <h3><a id="index_o"></a>- o -</h3><ul>
 <li>operator()()
 : <a class="el" href="class_c_skyline_matrix.html#a069b5219f587617308b126359a908926">CSkylineMatrix&lt; T_ &gt;</a>
+</li>
+<li>operator&lt;&lt;()
+: <a class="el" href="class_c_outputter.html#a2c69a1a184b47bd47f23a26ce7c561bb">COutputter</a>
+</li>
+<li>operator[]()
+: <a class="el" href="class_c_element_group.html#a996500d147415d7037458360c7f7290d">CElementGroup</a>
 </li>
 <li>OutputElementInfo()
 : <a class="el" href="class_c_outputter.html#ae0a95d3b057dc0dc72e0202d1c34a7f1">COutputter</a>
@@ -270,7 +294,7 @@ $(function() {
 : <a class="el" href="class_c_outputter.html#a33df7b3f51ee7932db12df2c3e4748fd">COutputter</a>
 </li>
 <li>PrintTime()
-: <a class="el" href="class_c_outputter.html#a642c14c93f4ce32b8dfc4857fd9921be">COutputter</a>
+: <a class="el" href="class_c_outputter.html#a165a7156f67311da620713564df385f7">COutputter</a>
 </li>
 </ul>
 
@@ -280,15 +304,16 @@ $(function() {
 : <a class="el" href="class_c_bar.html#a9dab4ce4b4dc467b77a673d515973a80">CBar</a>
 , <a class="el" href="class_c_bar_material.html#a73f9ada1e908ee4303f4ca1a376e9d12">CBarMaterial</a>
 , <a class="el" href="class_c_element.html#a9e84fbf9db78de66c9fd19c0c65b8fb7">CElement</a>
+, <a class="el" href="class_c_element_group.html#a0c6fcc8e686fa0f68bf49eb7b27f6690">CElementGroup</a>
 , <a class="el" href="class_c_load_case_data.html#ab14e462f06eb6e73b494e2222fdb2acb">CLoadCaseData</a>
 , <a class="el" href="class_c_material.html#a97499629b63e25ac581b915108563afb">CMaterial</a>
 , <a class="el" href="class_c_node.html#a51f2aa3422b76ddff706ee7180b829ec">CNode</a>
 </li>
-<li>ReadBarElementData()
-: <a class="el" href="class_c_domain.html#a9565aa1bd7478955682cebfde2035029">CDomain</a>
-</li>
 <li>ReadData()
 : <a class="el" href="class_c_domain.html#a774f823c7cb2ccc0c31d8c39775b02ea">CDomain</a>
+</li>
+<li>ReadElementData()
+: <a class="el" href="class_c_element_group.html#a6fa74bf45e79856ea3d650952896ab68">CElementGroup</a>
 </li>
 <li>ReadElements()
 : <a class="el" href="class_c_domain.html#a85c5d050e61b83aff9ddd4713a5de88d">CDomain</a>
@@ -324,18 +349,18 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>Write()
-: <a class="el" href="class_c_bar.html#a4231decc59a5caec261a489812677c4a">CBar</a>
-, <a class="el" href="class_c_bar_material.html#a52ac5edcbce1afb9518ca33ec93f083a">CBarMaterial</a>
-, <a class="el" href="class_c_element.html#a3e58a659dcc2f9f676effa3453ad4e8d">CElement</a>
-, <a class="el" href="class_c_load_case_data.html#a6da9b2c02564c4a78ed9e16fd95cd21a">CLoadCaseData</a>
-, <a class="el" href="class_c_material.html#a00ac1ce7032e128227107a8c971c121c">CMaterial</a>
-, <a class="el" href="class_c_node.html#aa5a83008d5fedc28d1bf2578ce88a555">CNode</a>
+: <a class="el" href="class_c_bar.html#ae175e9ebbbb88f38e97e917fad4a4752">CBar</a>
+, <a class="el" href="class_c_bar_material.html#a15ac9a6b7042f8cd8e3dc9901deb160d">CBarMaterial</a>
+, <a class="el" href="class_c_element.html#a5a496d2954eb458f9d59b6ed08e934d1">CElement</a>
+, <a class="el" href="class_c_load_case_data.html#ac5647d77899e048a4a19776adfa3ec62">CLoadCaseData</a>
+, <a class="el" href="class_c_material.html#aefd4e3d63dff87ec299e8563a1c742e4">CMaterial</a>
+, <a class="el" href="class_c_node.html#aca3fb742ec4eb6a858034138904972bc">CNode</a>
 </li>
 <li>WriteEquationNo()
-: <a class="el" href="class_c_node.html#af70d66f293c62430c581f3801ccc6419">CNode</a>
+: <a class="el" href="class_c_node.html#ab6345f8576ed308374882c40cb96f495">CNode</a>
 </li>
 <li>WriteNodalDisplacement()
-: <a class="el" href="class_c_node.html#aee903e43b9257b9f01cc9ce91a24c38d">CNode</a>
+: <a class="el" href="class_c_node.html#aa0cd94871de00478bdd9cb67e7e97a0e">CNode</a>
 </li>
 </ul>
 
@@ -347,8 +372,17 @@ $(function() {
 <li>~CDomain()
 : <a class="el" href="class_c_domain.html#ae1bbface97b156669362e2d26013a183">CDomain</a>
 </li>
+<li>~CElement()
+: <a class="el" href="class_c_element.html#a71bc9d69c081631c0cab3c86aa102f93">CElement</a>
+</li>
+<li>~CElementGroup()
+: <a class="el" href="class_c_element_group.html#a4f97a442bab35e3b84925fc06c24e0ed">CElementGroup</a>
+</li>
 <li>~CLoadCaseData()
 : <a class="el" href="class_c_load_case_data.html#a8bc141fd89c8031fd69db17e2bf75e9d">CLoadCaseData</a>
+</li>
+<li>~CMaterial()
+: <a class="el" href="class_c_material.html#ad44e38c248fc3ae8b120ab7a6ba501a6">CMaterial</a>
 </li>
 <li>~CSkylineMatrix()
 : <a class="el" href="class_c_skyline_matrix.html#ab868bb1f85cb4ce0886f231dcd22eef8">CSkylineMatrix&lt; T_ &gt;</a>

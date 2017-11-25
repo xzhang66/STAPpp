@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -40,6 +40,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -59,16 +60,23 @@ $(function() {
 Collaboration diagram for COutputter:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_outputter__coll__graph.png" border="0" usemap="#_c_outputter_coll__map" alt="Collaboration graph"/></div>
+<map name="_c_outputter_coll__map" id="_c_outputter_coll__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a749aa6888f1ba469b44a9d54967924f7"><td class="memItemLeft" align="right" valign="top">typedef std::basic_ostream&lt; char, std::char_traits&lt; char &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">CharOstream</a></td></tr>
+<tr class="separator:a749aa6888f1ba469b44a9d54967924f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af6f977648147e8c513b7af136e5f22df"><td class="memItemLeft" align="right" valign="top">ofstream *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#af6f977648147e8c513b7af136e5f22df">GetOutputFile</a> ()</td></tr>
 <tr class="memdesc:af6f977648147e8c513b7af136e5f22df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to the output file stream.  <a href="#af6f977648147e8c513b7af136e5f22df">More...</a><br /></td></tr>
 <tr class="separator:af6f977648147e8c513b7af136e5f22df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a642c14c93f4ce32b8dfc4857fd9921be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#a642c14c93f4ce32b8dfc4857fd9921be">PrintTime</a> (const struct tm *ptm, ostream &amp;output)</td></tr>
-<tr class="memdesc:a642c14c93f4ce32b8dfc4857fd9921be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output current time and date.  <a href="#a642c14c93f4ce32b8dfc4857fd9921be">More...</a><br /></td></tr>
-<tr class="separator:a642c14c93f4ce32b8dfc4857fd9921be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a165a7156f67311da620713564df385f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#a165a7156f67311da620713564df385f7">PrintTime</a> (const struct tm *ptm, <a class="el" href="class_c_outputter.html">COutputter</a> &amp;output)</td></tr>
+<tr class="memdesc:a165a7156f67311da620713564df385f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output current time and date.  <a href="#a165a7156f67311da620713564df385f7">More...</a><br /></td></tr>
+<tr class="separator:a165a7156f67311da620713564df385f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdf481ff1fd74aee8fa33ee451723aa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#acdf481ff1fd74aee8fa33ee451723aa9">OutputHeading</a> ()</td></tr>
 <tr class="memdesc:acdf481ff1fd74aee8fa33ee451723aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output logo and heading.  <a href="#acdf481ff1fd74aee8fa33ee451723aa9">More...</a><br /></td></tr>
 <tr class="separator:acdf481ff1fd74aee8fa33ee451723aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -96,6 +104,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae691513a01529fbeb6a6549b7a68e3bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#ae691513a01529fbeb6a6549b7a68e3bd">OutputTotalSystemData</a> ()</td></tr>
 <tr class="memdesc:ae691513a01529fbeb6a6549b7a68e3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print total system data.  <a href="#ae691513a01529fbeb6a6549b7a68e3bd">More...</a><br /></td></tr>
 <tr class="separator:ae691513a01529fbeb6a6549b7a68e3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c69a1a184b47bd47f23a26ce7c561bb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2c69a1a184b47bd47f23a26ce7c561bb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_c_outputter.html">COutputter</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#a2c69a1a184b47bd47f23a26ce7c561bb">operator&lt;&lt;</a> (const T &amp;item)</td></tr>
+<tr class="memdesc:a2c69a1a184b47bd47f23a26ce7c561bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload the operator &lt;&lt;.  <a href="#a2c69a1a184b47bd47f23a26ce7c561bb">More...</a><br /></td></tr>
+<tr class="separator:a2c69a1a184b47bd47f23a26ce7c561bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa71492654c4af9bb4ce3a87fccc16e22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_outputter.html">COutputter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#aa71492654c4af9bb4ce3a87fccc16e22">operator&lt;&lt;</a> (<a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">CharOstream</a> &amp;(*op)(<a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">CharOstream</a> &amp;))</td></tr>
+<tr class="separator:aa71492654c4af9bb4ce3a87fccc16e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -111,7 +125,7 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aa7b11228b1e6bf61009fb2ea642b76f5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_outputter.html">COutputter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#aa7b11228b1e6bf61009fb2ea642b76f5">_instance</a> = NULL</td></tr>
+<tr class="memitem:aa7b11228b1e6bf61009fb2ea642b76f5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_outputter.html">COutputter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_outputter.html#aa7b11228b1e6bf61009fb2ea642b76f5">_instance</a> = nullptr</td></tr>
 <tr class="memdesc:aa7b11228b1e6bf61009fb2ea642b76f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Designed as a single instance class.  <a href="#aa7b11228b1e6bf61009fb2ea642b76f5">More...</a><br /></td></tr>
 <tr class="separator:aa7b11228b1e6bf61009fb2ea642b76f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -123,7 +137,22 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Outputer class is used to output results. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a749aa6888f1ba469b44a9d54967924f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a749aa6888f1ba469b44a9d54967924f7">&#9670;&nbsp;</a></span>CharOstream</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt; <a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">COutputter::CharOstream</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab969080a1fe542efdeca772a48955d6e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab969080a1fe542efdeca772a48955d6e">&#9670;&nbsp;</a></span>COutputter()</h2>
 
@@ -205,6 +234,62 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the single instance of the class. </p>
+
+</div>
+</div>
+<a id="a2c69a1a184b47bd47f23a26ce7c561bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c69a1a184b47bd47f23a26ce7c561bb">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_outputter.html">COutputter</a>&amp; COutputter::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload the operator &lt;&lt;. </p>
+
+</div>
+</div>
+<a id="aa71492654c4af9bb4ce3a87fccc16e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa71492654c4af9bb4ce3a87fccc16e22">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_outputter.html">COutputter</a>&amp; COutputter::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">CharOstream</a> &amp;(*)(<a class="el" href="class_c_outputter.html#a749aa6888f1ba469b44a9d54967924f7">CharOstream</a> &amp;)&#160;</td>
+          <td class="paramname"><em>op</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -381,8 +466,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a642c14c93f4ce32b8dfc4857fd9921be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a642c14c93f4ce32b8dfc4857fd9921be">&#9670;&nbsp;</a></span>PrintTime()</h2>
+<a id="a165a7156f67311da620713564df385f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a165a7156f67311da620713564df385f7">&#9670;&nbsp;</a></span>PrintTime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -396,7 +481,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ostream &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_c_outputter.html">COutputter</a> &amp;&#160;</td>
           <td class="paramname"><em>output</em>&#160;</td>
         </tr>
         <tr>
@@ -422,7 +507,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_outputter.html">COutputter</a> * COutputter::_instance = NULL</td>
+          <td class="memname"><a class="el" href="class_c_outputter.html">COutputter</a> * COutputter::_instance = nullptr</td>
         </tr>
       </table>
   </td>

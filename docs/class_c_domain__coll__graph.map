@@ -1,7 +1,8 @@
 <map id="CDomain" name="CDomain">
-<area shape="rect" id="node2" href="$class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="5,92,125,117"/>
-<area shape="rect" id="node3" href="$class_c_element.html" title="Element base class. " alt="" coords="289,92,369,117"/>
-<area shape="rect" id="node4" href="$class_c_material.html" title="Material base class which only define one data member. " alt="" coords="161,5,239,31"/>
-<area shape="rect" id="node5" href="$class_c_node.html" title="Node class. " alt="" coords="354,5,417,31"/>
-<area shape="rect" id="node6" href="$class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="497,92,671,117"/>
+<area shape="rect" id="node2" href="$class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="5,179,125,204"/>
+<area shape="rect" id="node3" href="$class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="149,179,323,204"/>
+<area shape="rect" id="node4" href="$class_c_element_group.html" title="Element group class. " alt="" coords="347,179,464,204"/>
+<area shape="rect" id="node5" href="$class_c_element.html" title="Element base class. " alt="" coords="315,92,395,117"/>
+<area shape="rect" id="node6" href="$class_c_material.html" title="Material base class which only define one data member. " alt="" coords="189,5,267,31"/>
+<area shape="rect" id="node7" href="$class_c_node.html" title="Node class. " alt="" coords="425,5,487,31"/>
 </map>

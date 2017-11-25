@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -56,6 +56,8 @@ $(function() {
 Collaboration diagram for CSkylineMatrix&lt; T_ &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_skyline_matrix__coll__graph.png" border="0" usemap="#_c_skyline_matrix_3_01_t___01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="_c_skyline_matrix_3_01_t___01_4_coll__map" id="_c_skyline_matrix_3_01_t___01_4_coll__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -77,9 +79,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a431da491ecc0c21a688ae57975ee6d87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a431da491ecc0c21a688ae57975ee6d87">Allocate</a> ()</td></tr>
 <tr class="memdesc:a431da491ecc0c21a688ae57975ee6d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate storage for the skyline matrix.  <a href="#a431da491ecc0c21a688ae57975ee6d87">More...</a><br /></td></tr>
 <tr class="separator:a431da491ecc0c21a688ae57975ee6d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a1fa077c37f647d58401e2caeebb3d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a3a1fa077c37f647d58401e2caeebb3d7">CalculateColumnHeight</a> (unsigned int *LocationMatrix, size_t ND)</td></tr>
+<tr class="memdesc:a3a1fa077c37f647d58401e2caeebb3d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the column height, used with the skyline storage scheme.  <a href="#a3a1fa077c37f647d58401e2caeebb3d7">More...</a><br /></td></tr>
+<tr class="separator:a3a1fa077c37f647d58401e2caeebb3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7faee81cfb1aa319ba915a7b2d67cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a6f7faee81cfb1aa319ba915a7b2d67cf">CalculateMaximumHalfBandwidth</a> ()</td></tr>
+<tr class="memdesc:a6f7faee81cfb1aa319ba915a7b2d67cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the maximum half bandwidth ( = max(ColumnHeights) + 1 )  <a href="#a6f7faee81cfb1aa319ba915a7b2d67cf">More...</a><br /></td></tr>
+<tr class="separator:a6f7faee81cfb1aa319ba915a7b2d67cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9a8e0669971771ebac4d8027dfd947"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a6b9a8e0669971771ebac4d8027dfd947">CalculateDiagnoalAddress</a> ()</td></tr>
+<tr class="separator:a6b9a8e0669971771ebac4d8027dfd947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2365934ee37f684fce1fada014fc42d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#aa2365934ee37f684fce1fada014fc42d">Assembly</a> (double *Matrix, unsigned int *LocationMatrix, size_t ND)</td></tr>
+<tr class="memdesc:aa2365934ee37f684fce1fada014fc42d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the element stiffness matrix to the global stiffness matrix.  <a href="#aa2365934ee37f684fce1fada014fc42d">More...</a><br /></td></tr>
+<tr class="separator:aa2365934ee37f684fce1fada014fc42d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8e1bbe4a63119ab28c4019176706ac6"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#ac8e1bbe4a63119ab28c4019176706ac6">GetColumnHeights</a> ()</td></tr>
 <tr class="memdesc:ac8e1bbe4a63119ab28c4019176706ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to the ColumnHeights_.  <a href="#ac8e1bbe4a63119ab28c4019176706ac6">More...</a><br /></td></tr>
 <tr class="separator:ac8e1bbe4a63119ab28c4019176706ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eaeb842810a8dd9c91b8f96a3624ca5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a2eaeb842810a8dd9c91b8f96a3624ca5">GetMaximumHalfBandwidth</a> () const</td></tr>
+<tr class="memdesc:a2eaeb842810a8dd9c91b8f96a3624ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum half bandwidth.  <a href="#a2eaeb842810a8dd9c91b8f96a3624ca5">More...</a><br /></td></tr>
+<tr class="separator:a2eaeb842810a8dd9c91b8f96a3624ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a587dd94d49d4ccf23de92f945a9a3759"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a587dd94d49d4ccf23de92f945a9a3759">GetDiagonalAddress</a> ()</td></tr>
 <tr class="memdesc:a587dd94d49d4ccf23de92f945a9a3759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to the DiagonalAddress_.  <a href="#a587dd94d49d4ccf23de92f945a9a3759">More...</a><br /></td></tr>
 <tr class="separator:a587dd94d49d4ccf23de92f945a9a3759"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,6 +114,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:adfa710964bef6788a25f7a5bc766696a"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#adfa710964bef6788a25f7a5bc766696a">NEQ_</a></td></tr>
 <tr class="memdesc:adfa710964bef6788a25f7a5bc766696a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the stiffness matrix.  <a href="#adfa710964bef6788a25f7a5bc766696a">More...</a><br /></td></tr>
 <tr class="separator:adfa710964bef6788a25f7a5bc766696a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0353206c217d2f54afe3d5456dd79024"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a0353206c217d2f54afe3d5456dd79024">MK_</a></td></tr>
+<tr class="memdesc:a0353206c217d2f54afe3d5456dd79024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum half bandwith.  <a href="#a0353206c217d2f54afe3d5456dd79024">More...</a><br /></td></tr>
+<tr class="separator:a0353206c217d2f54afe3d5456dd79024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91068fb180023ea430997d49b3ed2595"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skyline_matrix.html#a91068fb180023ea430997d49b3ed2595">NWK_</a></td></tr>
 <tr class="memdesc:a91068fb180023ea430997d49b3ed2595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the storage used to store the stiffness matrkix in skyline.  <a href="#a91068fb180023ea430997d49b3ed2595">More...</a><br /></td></tr>
 <tr class="separator:a91068fb180023ea430997d49b3ed2595"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,6 +252,117 @@ template&lt;class T_ &gt; </div>
 
 </div>
 </div>
+<a id="aa2365934ee37f684fce1fada014fc42d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2365934ee37f684fce1fada014fc42d">&#9670;&nbsp;</a></span>Assembly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::Assembly </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>Matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int *&#160;</td>
+          <td class="paramname"><em>LocationMatrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ND</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assemble the element stiffness matrix to the global stiffness matrix. </p>
+
+</div>
+</div>
+<a id="a3a1fa077c37f647d58401e2caeebb3d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a1fa077c37f647d58401e2caeebb3d7">&#9670;&nbsp;</a></span>CalculateColumnHeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::CalculateColumnHeight </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int *&#160;</td>
+          <td class="paramname"><em>LocationMatrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ND</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate the column height, used with the skyline storage scheme. </p>
+
+</div>
+</div>
+<a id="a6b9a8e0669971771ebac4d8027dfd947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b9a8e0669971771ebac4d8027dfd947">&#9670;&nbsp;</a></span>CalculateDiagnoalAddress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::CalculateDiagnoalAddress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate address of diagonal elements in banded matrix Caution: Address is numbered from 1 ! </p>
+
+</div>
+</div>
+<a id="a6f7faee81cfb1aa319ba915a7b2d67cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f7faee81cfb1aa319ba915a7b2d67cf">&#9670;&nbsp;</a></span>CalculateMaximumHalfBandwidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::CalculateMaximumHalfBandwidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate the maximum half bandwidth ( = max(ColumnHeights) + 1 ) </p>
+
+</div>
+</div>
 <a id="a67bc59e413b386bb92954bffa736db17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a67bc59e413b386bb92954bffa736db17">&#9670;&nbsp;</a></span>dim()</h2>
 
@@ -317,6 +447,35 @@ template&lt;class T_ &gt; </div>
 </div><div class="memdoc">
 
 <p>Return pointer to the DiagonalAddress_. </p>
+
+</div>
+</div>
+<a id="a2eaeb842810a8dd9c91b8f96a3624ca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eaeb842810a8dd9c91b8f96a3624ca5">&#9670;&nbsp;</a></span>GetMaximumHalfBandwidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::GetMaximumHalfBandwidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the maximum half bandwidth. </p>
 
 </div>
 </div>
@@ -497,6 +656,32 @@ template&lt;class T_&gt; </div>
 </div><div class="memdoc">
 
 <p>Diagonal address of all columns in data_. </p>
+
+</div>
+</div>
+<a id="a0353206c217d2f54afe3d5456dd79024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0353206c217d2f54afe3d5456dd79024">&#9670;&nbsp;</a></span>MK_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; T_ &gt;::MK_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum half bandwith. </p>
 
 </div>
 </div>
