@@ -24,7 +24,21 @@ int main(int argc, char *argv[])
 	}
 
 	string filename(argv[1]);
-	string InFile = filename + ".dat";
+    size_t found = filename.find_last_of('.');
+
+    // If the input file name is provided with an extension
+    if (found != std::string::npos) {
+        if (filename.substr(found) == ".dat")
+            filename = filename.substr(0, found);
+        else {
+            // The input file name must has an extension of 'dat'
+            cout << "*** Error *** Invalid file extension: "
+                 << filename.substr(found+1) << endl;
+            exit(1);
+        }
+    }
+
+    string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
 	CDomain* FEMData = CDomain::Instance();
