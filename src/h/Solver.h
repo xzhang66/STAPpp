@@ -19,7 +19,7 @@ class CSolver
 {
 protected:
 
-	CSkylineMatrix<double>* K;
+	CSkylineMatrix<double>& K;
 
 public:
 
