@@ -101,7 +101,7 @@ void COutputter::OutputNodeInfo()
 		  << "   NUMBER  CONDITION  CODES                     COORDINATES" << endl;
 
 	for (unsigned int np = 0; np < NUMNP; np++)
-		NodeList[np].Write(*this, np);
+		NodeList[np].Write(*this);
 
 	*this << endl;
 }
@@ -120,7 +120,7 @@ void COutputter::OutputEquationNumber()
 	*this << "        N           X    Y    Z" << endl;
 
 	for (unsigned int np = 0; np < NUMNP; np++) // Loop over for all node
-		NodeList[np].WriteEquationNo(*this, np);
+		NodeList[np].WriteEquationNo(*this);
 
 	*this << endl;
 }
@@ -248,7 +248,7 @@ void COutputter::OutputNodalDisplacement(unsigned int lcase)
 	*this << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
 	for (unsigned int np = 0; np < FEMData->GetNUMNP(); np++)
-		NodeList[np].WriteNodalDisplacement(*this, np, Displacement);
+		NodeList[np].WriteNodalDisplacement(*this, Displacement);
 
 	*this << endl;
 }

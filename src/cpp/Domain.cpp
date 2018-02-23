@@ -121,8 +121,19 @@ bool CDomain::ReadNodalPoints()
 
 //	Loop over for all nodal points
 	for (unsigned int np = 0; np < NUMNP; np++)
-		if (!NodeList[np].Read(Input, np))
+    {
+		if (!NodeList[np].Read(Input))
 			return false;
+    
+        if (NodeList[np].NodeNumber != np + 1)
+        {
+            cerr << "*** Error *** Nodes must be inputted in order !" << endl
+            << "   Expected node number : " << np + 1 << endl
+            << "   Provided node number : " << NodeList[np].NodeNumber << endl;
+        
+            return false;
+        }
+    }
 
 	return true;
 }

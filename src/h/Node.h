@@ -40,14 +40,14 @@ public:
 	CNode(double X = 0, double Y = 0, double Z = 0);
 
 //!	Read nodal point data from stream Input
-	bool Read(ifstream& Input, unsigned int np);
+	bool Read(ifstream& Input);
 
 //!	Output nodal point data to stream
-	void Write(COutputter& output, unsigned int np);
+	void Write(COutputter& output);
 
 //!	Output equation numbers of nodal point to stream OutputFile
-	void WriteEquationNo(COutputter& OutputFile, unsigned int np);
+	void WriteEquationNo(COutputter& OutputFile);
 
 //!	Write nodal displacement
-	void WriteNodalDisplacement(COutputter& OutputFile, unsigned int np, double* Displacement);
+	void WriteNodalDisplacement(COutputter& OutputFile, double* Displacement);
 };
