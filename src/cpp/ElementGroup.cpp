@@ -121,8 +121,23 @@ bool CElementGroup::Read(ifstream& Input)
     
 //  Loop over for all elements in this element group
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)
-        if (!(*this)[Ele].Read(Input, Ele, MaterialList_, NodeList_))
+    {
+        unsigned int N;
+        
+        Input >> N;    // element number
+        
+        if (N != Ele + 1)
+        {
+            cerr << "*** Error *** Elements must be inputted in order !" << endl
+            << "    Expected element : " << Ele + 1 << endl
+            << "    Provided element : " << N << endl;
+            
             return false;
+        }
+
+        if (!(*this)[Ele].Read(Input, MaterialList_, NodeList_))
+            return false;
+    }
 
     return true;
 }

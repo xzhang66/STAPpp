@@ -56,10 +56,10 @@ public:
     }
 
 //!	Read element data from stream Input
-	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
+	virtual bool Read(ifstream& Input, CMaterial* MaterialSets, CNode* NodeList) = 0;
 
 //!	Write element data to stream
-	virtual void Write(COutputter& output, unsigned int Ele) = 0;
+	virtual void Write(COutputter& output) = 0;
 
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !

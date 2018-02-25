@@ -200,7 +200,10 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		ElementGroup[Ele].Write(*this, Ele);
+    {
+        *this << setw(5) << Ele+1;
+		ElementGroup[Ele].Write(*this);
+    }
 
 	*this << endl;
 }

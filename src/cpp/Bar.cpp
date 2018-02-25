@@ -34,21 +34,8 @@ CBar::~CBar()
 }
 
 //	Read element data from stream Input
-bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList)
+bool CBar::Read(ifstream& Input, CMaterial* MaterialSets, CNode* NodeList)
 {
-	unsigned int N;
-
-	Input >> N;	// element number
-
-	if (N != Ele + 1)
-	{
-		cerr << "*** Error *** Elements must be inputted in order !" << endl 
-			 << "    Expected element : " << Ele + 1 << endl
-			 << "    Provided element : " << N << endl;
-
-		return false;
-	}
-
 	unsigned int MSet;	// Material property set number
 	unsigned int N1, N2;	// Left node number and right node number
 
@@ -61,9 +48,9 @@ bool CBar::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNod
 }
 
 //	Write element data to stream
-void CBar::Write(COutputter& output, unsigned int Ele)
+void CBar::Write(COutputter& output)
 {
-	output << setw(5) << Ele+1 << setw(11) << nodes_[0]->NodeNumber
+	output << setw(11) << nodes_[0]->NodeNumber
 		   << setw(9) << nodes_[1]->NodeNumber << setw(12) << ElementMaterial_->nset << endl;
 }
 
