@@ -78,7 +78,7 @@ bool CDomain::ReadData(string FileName, string OutFile)
 		exit(3);
 	}
 
-	COutputter* Output = COutputter::Instance(OutFile);
+	COutputter* Output = COutputter::GetInstance(OutFile);
 
 //	Read the heading line
 	Input.getline(Title, 256);
@@ -283,6 +283,6 @@ void CDomain::AllocateMatrices()
 //	Allocate for banded global stiffness matrix
     StiffnessMatrix->Allocate();
 
-	COutputter* Output = COutputter::Instance();
+	COutputter* Output = COutputter::GetInstance();
 	Output->OutputTotalSystemData();
 }

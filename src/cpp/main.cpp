@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 //  Perform L*D*L(T) factorization of stiffness matrix
     Solver->LDLT();
 
-    COutputter* Output = COutputter::Instance();
+    COutputter* Output = COutputter::GetInstance();
 
 #ifdef _DEBUG_
     Output->PrintStiffnessMatrix();

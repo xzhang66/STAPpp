@@ -48,10 +48,11 @@ COutputter::COutputter(string FileName)
 }
 
 //	Return the single instance of the class
-COutputter* COutputter::Instance(string FileName)
+COutputter* COutputter::GetInstance(string FileName)
 {
 	if (!_instance)
 		_instance = new COutputter(FileName);
+    
 	return _instance;
 }
 
