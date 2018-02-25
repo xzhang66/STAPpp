@@ -108,15 +108,6 @@ bool CElementGroup::Read(ifstream& Input)
     
     CalculateMemberSize();
 
-    if (!ReadElementData(Input))
-        return false;
-
-    return true;
-}
-
-//  Read bar element data from the input data file
-bool CElementGroup::ReadElementData(ifstream& Input)
-{
 //  Read material/section property lines
     AllocateMaterials(NUMMAT_);
     
@@ -132,6 +123,6 @@ bool CElementGroup::ReadElementData(ifstream& Input)
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)
         if (!(*this)[Ele].Read(Input, Ele, MaterialList_, NodeList_))
             return false;
-    
+
     return true;
 }

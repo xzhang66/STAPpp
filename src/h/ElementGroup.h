@@ -79,9 +79,6 @@ public:
     //! Allocate array of derived materials
     void AllocateMaterials(std::size_t size);
 
-    //! Read element data from the input data file
-    bool ReadElementData(ifstream& Input);
-
     //! Return element type of this group
     ElementTypes GetElementType() { return ElementType_; }
 
