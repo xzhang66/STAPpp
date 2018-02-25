@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     string InFile = filename + ".dat";
 	string OutFile = filename + ".out";
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
     Clock timer;
     timer.Start();

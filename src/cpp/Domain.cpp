@@ -59,7 +59,7 @@ CDomain::~CDomain()
 }
 
 //	Return pointer to the instance of the Domain class
-CDomain* CDomain::Instance()
+CDomain* CDomain::GetInstance()
 {
 	if (!_instance) 
 		_instance = new CDomain();

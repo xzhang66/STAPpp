@@ -18,7 +18,7 @@ CElementGroup::CElementGroup()
 {
     if (!NodeList_)
     {
-        CDomain* FEMData = CDomain::Instance();
+        CDomain* FEMData = CDomain::GetInstance();
         NodeList_ = FEMData->GetNodeList();
     }
     
