@@ -85,20 +85,20 @@ int main(int argc, char *argv[])
             
 //      Reduce right-hand-side force vector and back substitute
         Solver->BackSubstitution(FEMData->GetForce());
-            
+
+        *Output << " LOAD CASE" << setw(5) << lcase + 1 << endl << endl << endl;
+
 #ifdef _DEBUG_
-        Output->PrintDisplacement(lcase);
+        Output->PrintDisplacement();
 #endif
             
-        Output->OutputNodalDisplacement(lcase);
+        Output->OutputNodalDisplacement();
+
+//      Calculate and output stresses of all elements
+        Output->OutputElementStress();
     }
 
     double time_solution = timer.ElapsedTime();
-
-//  Calculate and output stresses of all elements
-	Output->OutputElementStress();
-    
-    double time_stress = timer.ElapsedTime();
     
     timer.Stop();
     
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
             << "     TIME FOR INPUT PHASE = " << time_input << endl
             << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
             << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
-            << "     T O T A L   S O L U T I O N   T I M E = " << time_stress << endl;
+            << "     T O T A L   S O L U T I O N   T I M E = " << time_solution << endl;
 
 	return 0;
 }

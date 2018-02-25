@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -59,7 +60,7 @@ public:
 	void OutputLoadInfo(); 
 
 //!	Output displacement data
-	void OutputNodalDisplacement(unsigned int lcase);
+	void OutputNodalDisplacement();
 
 //!	Output element stresses 
 	void OutputElementStress();
@@ -96,7 +97,7 @@ public:
 	void PrintColumnHeights();
 
 //!	Print displacement vector for debuging
-	void PrintDisplacement(unsigned int loadcase);
+	void PrintDisplacement();
 
 #endif
 

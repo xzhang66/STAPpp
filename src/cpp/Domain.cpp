@@ -251,6 +251,8 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 
 	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
+    clear(Force, NEQ);
+
 //	Loop over for all concentrated loads in load case LoadCase
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
@@ -269,7 +271,6 @@ void CDomain::AllocateMatrices()
 {
 //	Allocate for global force/displacement vector
 	Force = new double[NEQ];
-    clear(Force, NEQ);
 
 //  Create the banded stiffness matrix
     StiffnessMatrix = new CSkylineMatrix<double>(NEQ);

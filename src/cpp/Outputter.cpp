@@ -8,13 +8,11 @@
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
+#include <ctime>
+
 #include "Domain.h"
 #include "Outputter.h"
 #include "SkylineMatrix.h"
-
-#include <iostream>
-#include <iomanip>
-#include <ctime>
 
 using namespace std;
 
@@ -235,15 +233,11 @@ void COutputter::OutputLoadInfo()
 }
 
 //	Print nodal displacement
-void COutputter::OutputNodalDisplacement(unsigned int lcase)
+void COutputter::OutputNodalDisplacement()
 {
 	CDomain* FEMData = CDomain::GetInstance();
 	CNode* NodeList = FEMData->GetNodeList();
 	double* Displacement = FEMData->GetDisplacement();
-
-	*this << " LOAD CASE" << setw(5) << lcase + 1 << endl
-		  << endl
-		  << endl;
 
 	*this << setiosflags(ios::scientific);
 
@@ -426,7 +420,7 @@ void COutputter::PrintStiffnessMatrix()
 }
 
 //	Print displacement vector for debuging
-void COutputter::PrintDisplacement(unsigned int loadcase)
+void COutputter::PrintDisplacement()
 {
 	*this << "*** _Debug_ *** Displacement vector" << endl;
 
@@ -434,8 +428,6 @@ void COutputter::PrintDisplacement(unsigned int loadcase)
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	double* Force = FEMData->GetForce();
-
-	*this << "  Load case = " << loadcase << endl;
 
 	*this << setiosflags(ios::scientific) << setprecision(5);
 
