@@ -212,6 +212,29 @@ void CDomain::CalculateColumnHeights()
 
 }
 
+//    Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
+//    and calculate the column heights and address of diagonal elements
+void CDomain::AllocateMatrices()
+{
+    //    Allocate for global force/displacement vector
+    Force = new double[NEQ];
+    
+    //  Create the banded stiffness matrix
+    StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
+    
+    //    Calculate column heights
+    CalculateColumnHeights();
+    
+    //    Calculate address of diagonal elements in banded matrix
+    StiffnessMatrix->CalculateDiagnoalAddress();
+    
+    //    Allocate for banded global stiffness matrix
+    StiffnessMatrix->Allocate();
+    
+    COutputter* Output = COutputter::GetInstance();
+    Output->OutputTotalSystemData();
+}
+
 //	Assemble the banded gloabl stiffness matrix
 void CDomain::AssembleStiffnessMatrix()
 {
@@ -265,25 +288,3 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 	return true;
 }
 
-//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
-//	and calculate the column heights and address of diagonal elements
-void CDomain::AllocateMatrices()
-{
-//	Allocate for global force/displacement vector
-	Force = new double[NEQ];
-
-//  Create the banded stiffness matrix
-    StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
-
-//	Calculate column heights
-	CalculateColumnHeights();
-
-//	Calculate address of diagonal elements in banded matrix
-	StiffnessMatrix->CalculateDiagnoalAddress();
-
-//	Allocate for banded global stiffness matrix
-    StiffnessMatrix->Allocate();
-
-	COutputter* Output = COutputter::GetInstance();
-	Output->OutputTotalSystemData();
-}
