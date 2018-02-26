@@ -136,7 +136,7 @@ public:
 	inline unsigned int GetNUMEG() { return NUMEG; }
 
 //! Return element group list
-    CElementGroup* GetEleGrpList() { return EleGrpList; }
+    inline CElementGroup* GetEleGrpList() { return EleGrpList; }
 
 //!	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }
