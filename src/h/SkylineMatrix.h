@@ -17,6 +17,8 @@
 template <class T_>
 class CSkylineMatrix
 {
+    
+private:
 //! Store the stiffness matrkix in skyline storage
     T_* data_;
     
