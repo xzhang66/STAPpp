@@ -55,6 +55,14 @@ int main(int argc, char *argv[])
     
     double time_input = timer.ElapsedTime();
 
+    COutputter* Output = COutputter::GetInstance();
+
+    if (!FEMData->GetMODEX())
+    {
+        *Output << "Data check completed !" << endl << endl;
+        return 0;
+    }
+
 //  Allocate global vectors and matrices, such as the Force, ColumnHeights,
 //  DiagonalAddress and StiffnessMatrix, and calculate the column heights
 //  and address of diagonal elements
@@ -70,8 +78,6 @@ int main(int argc, char *argv[])
     
 //  Perform L*D*L(T) factorization of stiffness matrix
     Solver->LDLT();
-
-    COutputter* Output = COutputter::GetInstance();
 
 #ifdef _DEBUG_
     Output->PrintStiffnessMatrix();
@@ -106,7 +112,7 @@ int main(int argc, char *argv[])
             << "     TIME FOR INPUT PHASE = " << time_input << endl
             << "     TIME FOR CALCULATION OF STIFFNESS MATRIX = " << time_assemble - time_input << endl
             << "     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = " << time_solution - time_assemble << endl << endl
-            << "     T O T A L   S O L U T I O N   T I M E = " << time_solution << endl;
+            << "     T O T A L   S O L U T I O N   T I M E = " << time_solution << endl << endl;
 
 	return 0;
 }
