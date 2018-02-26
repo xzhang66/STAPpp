@@ -17,8 +17,6 @@
 
 using namespace std;
 
-CSolver::CSolver(CSkylineMatrix<double>* K) : K(*K) {};
-
 // LDLT facterization
 void CLDLTSolver::LDLT()
 {
