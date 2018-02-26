@@ -50,10 +50,6 @@ public:
 //! For the sake of efficiency, the index bounds are not checked
     inline T_& operator()(unsigned int i, unsigned int j);
     
-//! operator (i) where i numbers from 1
-//! For the sake of efficiency, the index bounds are not checked
-    inline T_ operator()(unsigned int i);
-
 //! Allocate storage for the skyline matrix
     inline void Allocate();
     
@@ -140,13 +136,6 @@ inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
         return data_[DiagonalAddress_[j - 1] + (j - i) - 1];
     else
         return data_[DiagonalAddress_[i - 1] + (i - j) - 1];
-}
-
-//! operator function (i) where i numbers from 1
-template <class T_>
-inline T_ CSkylineMatrix<T_>::operator()(unsigned int i)
-{
-    return data_[i];
 }
 
 //! Allocate storage for the matrix
