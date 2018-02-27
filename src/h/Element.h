@@ -63,7 +63,13 @@ public:
 
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !
-    virtual void GenerateLocationMatrix() = 0;
+    virtual void GenerateLocationMatrix()
+    {
+        unsigned int i = 0;
+        for (unsigned int N = 0; N < NEN_; N++)
+            for (unsigned int D = 0; D < CNode::NDF; D++)
+                LocationMatrix_[i++] = nodes_[N]->bcode[D];
+    }
 
 //!	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0; 
