@@ -187,6 +187,11 @@ bool CDomain::ReadElements()
 //	Calculate column heights
 void CDomain::CalculateColumnHeights()
 {
+#ifdef _DEBUG_
+    COutputter* Output = COutputter::GetInstance();
+    *Output << setw(9) << "Ele = " << setw(22) << "Location Matrix" << endl;
+#endif
+
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
     {
         CElementGroup& ElementGrp = EleGrpList[EleGrp];
@@ -199,6 +204,15 @@ void CDomain::CalculateColumnHeights()
             // Generate location matrix
             Element.GenerateLocationMatrix();
             
+#ifdef _DEBUG_
+            unsigned int* LocationMatrix = Element.GetLocationMatrix();
+            
+            *Output << setw(9) << Ele+1;
+            for (int i=0; i<Element.GetND(); i++)
+                *Output << setw(5) << LocationMatrix[i];
+            *Output << endl;
+#endif
+
             StiffnessMatrix->CalculateColumnHeight(Element.GetLocationMatrix(), Element.GetND());
         }
     }
@@ -206,7 +220,7 @@ void CDomain::CalculateColumnHeights()
     StiffnessMatrix->CalculateMaximumHalfBandwidth();
     
 #ifdef _DEBUG_
-	COutputter* Output = COutputter::GetInstance();
+    *Output << endl;
 	Output->PrintColumnHeights();
 #endif
 
