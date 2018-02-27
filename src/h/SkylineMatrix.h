@@ -13,6 +13,10 @@
 #include <string>
 #include <climits>
 
+#ifdef _DEBUG_
+#include "Outputter.h"
+#endif
+
 //! CSkylineMatrix class is used to store the FEM stiffness matrix in skyline storage
 template <class T_>
 class CSkylineMatrix
@@ -46,9 +50,15 @@ public:
 //! destructor
     inline ~CSkylineMatrix();
 
-//! operator (i,j) where i and j number from 1
+//! operator (i,j) where i and j numbering from 1
 //! For the sake of efficiency, the index bounds are not checked
     inline T_& operator()(unsigned int i, unsigned int j);
+
+#ifdef _DEBUG_
+//! operator (i) where i numbering from 1
+//! For the sake of efficiency, the index bounds are not checked
+    inline T_& operator()(unsigned int i);
+#endif
     
 //! Allocate storage for the skyline matrix
     inline void Allocate();
@@ -128,7 +138,7 @@ inline CSkylineMatrix<T_>::~CSkylineMatrix<T_>()
         delete[] data_;
 }
 
-//! operator function (i,j) where i and j number from 1
+//! operator function (i,j) where i and j numbering from 1
 template <class T_>
 inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
 {
@@ -137,6 +147,15 @@ inline T_& CSkylineMatrix<T_>::operator()(unsigned int i, unsigned int j)
     else
         return data_[DiagonalAddress_[i - 1] + (i - j) - 1];
 }
+
+#ifdef _DEBUG_
+//! operator function (i) where i numbering from 1
+template <class T_>
+inline T_& CSkylineMatrix<T_>::operator()(unsigned int i)
+{
+    return data_[i];
+}
+#endif
 
 //! Allocate storage for the matrix
 template <class T_>
@@ -259,7 +278,7 @@ void CSkylineMatrix<T_>::CalculateDiagnoalAddress()
         DiagonalAddress_[col] = DiagonalAddress_[col - 1] + ColumnHeights_[col-1] + 1;
     
 #ifdef _DEBUG_
-    COutputter* Output = COutputter::Instance();
+    COutputter* Output = COutputter::GetInstance();
     Output->PrintDiagonalAddress();
 #endif
     

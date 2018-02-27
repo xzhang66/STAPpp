@@ -206,7 +206,7 @@ void CDomain::CalculateColumnHeights()
     StiffnessMatrix->CalculateMaximumHalfBandwidth();
     
 #ifdef _DEBUG_
-	COutputter* Output = COutputter::Instance();
+	COutputter* Output = COutputter::GetInstance();
 	Output->PrintColumnHeights();
 #endif
 
@@ -260,7 +260,7 @@ void CDomain::AssembleStiffnessMatrix()
 	}
 
 #ifdef _DEBUG_
-	COutputter* Output = COutputter::Instance();
+	COutputter* Output = COutputter::GetInstance();
 	Output->PrintStiffnessMatrix();
 #endif
 
