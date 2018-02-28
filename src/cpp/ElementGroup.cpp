@@ -49,9 +49,9 @@ CElement& CElementGroup::operator[](unsigned int i)
 }
 
 //! Return index-th material in this element group
-CMaterial& CElementGroup::GetMaterial(unsigned int index)
+CMaterial& CElementGroup::GetMaterial(unsigned int i)
 {
-    return *(CMaterial*)((std::size_t)(MaterialList_) + index*MaterialSize_);
+    return *(CMaterial*)((std::size_t)(MaterialList_) + i*MaterialSize_);
 }
 
 //! Calculate the size of the derived element and material class

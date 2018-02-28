@@ -90,7 +90,7 @@ public:
     CElement& operator[](unsigned int i);
 
     //! Return the index-th material in this group
-    CMaterial& GetMaterial(unsigned int index);
+    CMaterial& GetMaterial(unsigned int i);
 
     //! Return the number of material/section property setss in this element group
     unsigned int GetNUMMAT() { return NUMMAT_; }
