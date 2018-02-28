@@ -159,13 +159,13 @@ void COutputter::OutputElementInfo()
 		switch (ElementType)
 		{
 			case ElementTypes::Bar: // Bar element
-				PrintBarElementData(EleGrp);
+				OutputBarElements(EleGrp);
 				break;
 		}
 	}
 }
 //	Output bar element data
-void COutputter::PrintBarElementData(unsigned int EleGrp)
+void COutputter::OutputBarElements(unsigned int EleGrp)
 {
 	CDomain* FEMData = CDomain::GetInstance();
 

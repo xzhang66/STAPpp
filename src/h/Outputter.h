@@ -54,7 +54,7 @@ public:
 	void OutputElementInfo();
 
 //!	Output bar element data
-	void PrintBarElementData(unsigned int EleGrp);
+	void OutputBarElements(unsigned int EleGrp);
 
 //!	Output load data 
 	void OutputLoadInfo(); 
