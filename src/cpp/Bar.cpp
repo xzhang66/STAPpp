@@ -54,11 +54,6 @@ void CBar::Write(COutputter& output)
 		   << setw(9) << nodes_[1]->NodeNumber << setw(12) << ElementMaterial_->nset << endl;
 }
 
-//	Return the size of the element stiffness matrix (stored as an array column by column)
-//	For 2 node bar element, element stiffness is a 6x6 matrix, whose upper triangular part
-//	has 21 elements
-unsigned int CBar::SizeOfStiffnessMatrix() { return 21; }
-
 //	Calculate element stiffness matrix 
 //	Upper triangular matrix, stored as an array column by colum starting from the diagonal element
 void CBar::ElementStiffness(double* Matrix)
