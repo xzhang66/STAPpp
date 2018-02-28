@@ -33,8 +33,8 @@ public:
 	void Allocate(unsigned int num);
 
 //!	Read load case data from stream Input
-	bool Read(ifstream& Input, unsigned int lcase);
+	bool Read(ifstream& Input);
 
 //!	Write load case data to stream
-	void Write(COutputter& output, unsigned int lcase);
+	void Write(COutputter& output);
 };

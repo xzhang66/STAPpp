@@ -31,22 +31,13 @@ void CLoadCaseData :: Allocate(unsigned int num)
 }; 
 
 //	Read load case data from stream Input
-bool CLoadCaseData :: Read(ifstream& Input, unsigned int lcase)
+bool CLoadCaseData :: Read(ifstream& Input)
 {
 //	Load case number (LL) and number of concentrated loads in this load case(NL)
 	
-	unsigned int LL, NL;
+	unsigned int NL;
 
-	Input >> LL >> NL;	
-
-	if (LL != lcase + 1) 
-	{
-		cerr << "*** Error *** Load case must be inputted in order !" << endl 
-			 << "   Expected load case : " << lcase + 1 << endl
-			 << "   Provided load case : " << LL << endl;
-
-		return false;
-	}
+	Input >> NL;
 
 	Allocate(NL);
 
@@ -57,10 +48,8 @@ bool CLoadCaseData :: Read(ifstream& Input, unsigned int lcase)
 }
 
 //	Write load case data to stream
-void CLoadCaseData::Write(COutputter& output, unsigned int lcase)
+void CLoadCaseData::Write(COutputter& output)
 {
 	for (unsigned int i = 0; i < nloads; i++)
-	{
 		output << setw(7) << node[i] << setw(13) << dof[i]  << setw(19) << load[i] << endl;
-	}
 }

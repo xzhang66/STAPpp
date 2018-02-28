@@ -165,8 +165,21 @@ bool CDomain::ReadLoadCases()
 
 //	Loop over for all load cases
 	for (unsigned int lcase = 0; lcase < NLCASE; lcase++)
-		if (!LoadCases[lcase].Read(Input, lcase))
-			return false;
+    {
+        unsigned int LL;
+        Input >> LL;
+        
+        if (LL != lcase + 1)
+        {
+            cerr << "*** Error *** Load case must be inputted in order !" << endl
+            << "   Expected load case : " << lcase + 1 << endl
+            << "   Provided load case : " << LL << endl;
+            
+            return false;
+        }
+
+        LoadCases[lcase].Read(Input);
+    }
 
 	return true;
 }

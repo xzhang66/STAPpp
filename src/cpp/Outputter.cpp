@@ -229,7 +229,7 @@ void COutputter::OutputLoadInfo()
 		*this << "    NODE       DIRECTION      LOAD" << endl
 			  << "   NUMBER                   MAGNITUDE" << endl;
 
-		LoadData->Write(*this, lcase);
+		LoadData->Write(*this);
 
 		*this << endl;
 	}
