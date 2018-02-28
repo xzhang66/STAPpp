@@ -187,11 +187,14 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all property sets
 	for (unsigned int mset = 0; mset < NUMMAT; mset++)
-		ElementGroup.GetMaterial(mset).Write(*this, mset);
+    {
+        *this << setw(5) << mset+1;
+		ElementGroup.GetMaterial(mset).Write(*this);
+    }
 
-	*this << endl
-		  << endl
+	*this << endl << endl
 		  << " E L E M E N T   I N F O R M A T I O N" << endl;
+    
 	*this << " ELEMENT     NODE     NODE       MATERIAL" << endl
 		  << " NUMBER-N      I        J       SET NUMBER" << endl;
 

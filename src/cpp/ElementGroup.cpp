@@ -113,9 +113,19 @@ bool CElementGroup::Read(ifstream& Input)
     
 //  Loop over for all material property sets in this element group
     for (unsigned int mset = 0; mset < NUMMAT_; mset++)
-        if (!GetMaterial(mset).Read(Input, mset))
+    {
+        GetMaterial(mset).Read(Input);
+  
+        if (GetMaterial(mset).nset != mset + 1)
+        {
+            cerr << "*** Error *** Material sets must be inputted in order !" << endl
+            << "    Expected set : " << mset + 1 << endl
+            << "    Provided set : " << GetMaterial(mset).nset << endl;
+        
             return false;
-    
+        }
+    }
+
 //  Read element data lines
     AllocateElements(NUME_);
     
