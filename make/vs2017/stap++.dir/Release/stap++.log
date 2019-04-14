@@ -1,0 +1,18 @@
+﻿  Building Custom Rule D:/Users/Leehow/Documents/GitHub/stappp/src/CMakeLists.txt
+  CMake does not need to re-run because D:/Users/Leehow/Documents/GitHub/stappp/make/vs2017/CMakeFiles/generate.stamp is up-to-date.
+  Bar.cpp
+  Clock.cpp
+  Domain.cpp
+  ElementGroup.cpp
+  LoadCaseData.cpp
+  Material.cpp
+  Node.cpp
+  Outputter.cpp
+D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\Outputter.cpp(69): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  D:\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h(506): note: 参见“localtime”的声明
+D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\Outputter.cpp(403): warning C4018: “<=”: 有符号/无符号不匹配
+D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\Outputter.cpp(405): warning C4018: “<=”: 有符号/无符号不匹配
+  Solver.cpp
+  main.cpp
+  正在生成代码...
+  stap++.vcxproj -> D:\Users\Leehow\Documents\GitHub\stappp\make\vs2017\Release\stap++.exe
