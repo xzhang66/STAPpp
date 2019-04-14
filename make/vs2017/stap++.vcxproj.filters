@@ -31,6 +31,9 @@
     <ClCompile Include="D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\main.cpp">
       <Filter>SOURCE FILES</Filter>
     </ClCompile>
+    <ClCompile Include="4Q.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\Users\Leehow\Documents\GitHub\stappp\src\h\Bar.h">
