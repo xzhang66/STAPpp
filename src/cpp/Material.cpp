@@ -40,3 +40,28 @@ void CBarMaterial::Write(COutputter& output, unsigned int mset)
 {
 	output << setw(5) << mset+1 << setw(16) << E << setw(16) << Area << endl;
 }
+
+bool C4QMaterial::Read(ifstream& Input, unsigned int mset)
+{
+	Input >> nset;	// Number of property set
+
+	if (nset != mset + 1)
+	{
+		cerr << "*** Error *** Material sets must be inputted in order !" << endl
+			<< "    Expected set : " << mset + 1 << endl
+			<< "    Provided set : " << nset << endl;
+
+		return false;
+	}
+
+	Input >> E >> Thickness;	// Young's modulus and section area
+
+	return true;
+}
+
+//	Write material data to Stream
+void C4QMaterial::Write(COutputter& output, unsigned int mset)
+{
+	output << setw(5) << mset + 1 << setw(16) << E << setw(16) << Thickness << endl;
+}
+

@@ -13,7 +13,7 @@
 
 #include "Node.h"
 
-CNode::CNode(double X, double Y, double Z)
+CNode::CNode(double X, double Y, double Z)//或许可以指定默认参数？
 {
     XYZ[0] = X;		// Coordinates of the node
     XYZ[1] = Y;

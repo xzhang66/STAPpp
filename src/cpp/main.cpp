@@ -12,6 +12,8 @@
 #include "Bar.h"
 #include "Outputter.h"
 #include "Clock.h"
+#include <Eigen/Dense> 
+using namespace Eigen;
 
 using namespace std;
 

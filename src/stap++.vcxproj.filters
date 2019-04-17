@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Bar.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Clock.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Domain.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\ElementGroup.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\LoadCaseData.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Material.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Node.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Outputter.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\Solver.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\cpp\main.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+    <ClCompile Include="4Q.cpp">
+      <Filter>SOURCE FILES</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Bar.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Clock.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Domain.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Element.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\ElementGroup.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\LoadCaseData.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Material.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Node.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Outputter.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\SkylineMatrix.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\h\Solver.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+    <ClInclude Include="h\4Q.h">
+      <Filter>HEADER FILES</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\64461\Documents\GitHub\STAP++\stappp\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="HEADER FILES">
+      <UniqueIdentifier>{BCE11366-07D6-3270-A9EC-F78BAFD02705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SOURCE FILES">
+      <UniqueIdentifier>{A9513339-F35D-35B3-8298-ED4EFE8A9E9F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
