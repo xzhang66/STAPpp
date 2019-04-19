@@ -54,7 +54,7 @@ bool C4QMaterial::Read(ifstream& Input, unsigned int mset)
 		return false;
 	}
 
-	Input >> E >> Thickness;	// Young's modulus and section area
+	Input >> E >> Poisson;	// Young's modulus and section area
 
 	return true;
 }
@@ -62,6 +62,6 @@ bool C4QMaterial::Read(ifstream& Input, unsigned int mset)
 //	Write material data to Stream
 void C4QMaterial::Write(COutputter& output, unsigned int mset)
 {
-	output << setw(5) << mset + 1 << setw(16) << E << setw(16) << Thickness << endl;
+	output << setw(5) << mset + 1 << setw(16) << E << setw(16) << Poisson << endl;
 }
 

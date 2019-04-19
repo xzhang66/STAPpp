@@ -10,6 +10,7 @@
 
 #include "Domain.h"
 #include "Bar.h"
+#include "4Q.h"
 #include "Outputter.h"
 #include "Clock.h"
 #include <Eigen/Dense> 

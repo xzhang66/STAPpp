@@ -56,7 +56,7 @@ public:
 class C4QMaterial :public CMaterial
 {
 public:
-	double Thickness;
+	double Poisson;
 public:
 
 	//!	Read material data from stream Input

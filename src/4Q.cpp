@@ -50,7 +50,7 @@ bool C4Q::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode
 	unsigned int N1, N2, N3, N4;	// node number of 4 nodes of 4Q element
 
 	Input >> N1 >> N2 >> N3 >> N4 >> MSet;
-	ElementMaterial_ = dynamic_cast<CBarMaterial*>(MaterialSets) + MSet - 1;
+	ElementMaterial_ = dynamic_cast<C4QMaterial*>(MaterialSets) + MSet - 1;
 	nodes_[0] = &NodeList[N1 - 1];
 	nodes_[1] = &NodeList[N2 - 1];
 	nodes_[2] = &NodeList[N3 - 1];
@@ -63,7 +63,8 @@ bool C4Q::Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode
 void C4Q::Write(COutputter& output, unsigned int Ele)
 {
 	output << setw(5) << Ele + 1 << setw(11) << nodes_[0]->NodeNumber
-		<< setw(9) << nodes_[1]->NodeNumber << setw(12) << ElementMaterial_->nset << endl;
+		<< setw(9) << nodes_[1]->NodeNumber << setw(9) << nodes_[2]->NodeNumber
+		<< setw(9) << nodes_[3]->NodeNumber << setw(12) << ElementMaterial_->nset << endl;
 }
 
 //  Generate location matrix: the global equation number that corresponding to each DOF of the element
@@ -90,7 +91,7 @@ void C4Q::ElementStiffness(double* Matrix)
 	C4QMaterial* material_ = dynamic_cast<C4QMaterial*>(ElementMaterial_);	// Pointer to material of the element
 
 	double E = material_->E;
-	double v = material_->Thickness;
+	double v = material_->Poisson;
 	MatrixXd D(3, 3);
 	D(0, 0) = 1;
 	D(0, 1) = v;
@@ -132,22 +133,30 @@ void C4Q::ElementStiffness(double* Matrix)
 	MatrixXd Bpart(2, 4);
 	MatrixXd B(3, 8);
 	MatrixXd K=MatrixXd::Zero(8, 8);
+	MatrixXd BT(8, 3);
 	
 	for (int i = 0; i < 2; i++)//psi
 	{
 		for (int j = 0; j < 2; j++)//eta
 		{
-			GN(0, 0) = eta[j] - 1;
+			GN << eta[j] - 1, 1 - eta[j], 1 + eta[j], -eta[j] - 1,
+				psi[i] - 1, -psi[i] - 1, 1 + psi[i], 1 - psi[i];
+			/* GN(0, 0) = eta[j] - 1;
 			GN(0, 1) = 1 - eta[j];
 			GN(0, 2) = 1 + eta[j];
 			GN(0, 3) = -eta[j] - 1;
 			GN(1, 0) = psi[i] - 1;
 			GN(1, 1) = -psi[i] - 1;
 			GN(1, 2) = 1 + psi[i];
-			GN(1, 3) = 1 - psi[i];
+			GN(1, 3) = 1 - psi[i];*/
 			GN = GN / 4;
 			J = GN * C;
 			Bpart = J.inverse()*GN;
+			B << Bpart(0, 0), 0, Bpart(0, 1), 0, Bpart(0, 2), 0, Bpart(0, 3), 0,
+				0, Bpart(1, 0), 0, Bpart(1, 1), 0, Bpart(1, 2), 0, Bpart(1, 3),
+				Bpart(1, 0), Bpart(0, 0), Bpart(1, 1), Bpart(0, 1), Bpart(1, 2), Bpart(0, 2), Bpart(1, 3), Bpart(0, 3);
+
+			/*
 			B(0, 0) = Bpart(0, 0);
 			B(0, 1) = 0;
 			B(0, 2) = Bpart(0, 1);
@@ -173,8 +182,9 @@ void C4Q::ElementStiffness(double* Matrix)
 			B(2, 4) = Bpart(1, 2);
 			B(2, 5) = Bpart(0, 2);
 			B(2, 6) = Bpart(1, 3);
-			B(2, 7) = Bpart(0, 3);
-			K = K + B.transpose()*D*B*J.determinant();
+			B(2, 7) = Bpart(0, 3);*/
+			BT = B.transpose();
+			K = K + BT*D*B*(J.determinant());
 		}
 	}
 	//double J00 = 0.197*x1*y2 - 0.197*x2*y2 - 0.197*x1*y4 + 0.0528*x2*y3 - 0.0528*x3*y2 + 0.144*x2*y4 + 0.0528*x4*y2 + 0.0528*x3*y4 - 0.0528*x4*y3;
@@ -252,7 +262,7 @@ void C4Q::ElementStress(double* stress, double* Displacement)
 	de(7, 0) = y4;
 	C4QMaterial* material_ = dynamic_cast<C4QMaterial*>(ElementMaterial_);	// Pointer to material of the element
 	double E = material_->E;
-	double v = material_->Thickness;
+	double v = material_->Poisson;
 	MatrixXd D(3, 3);
 	D(0, 0) = 1;
 	D(0, 1) = v;

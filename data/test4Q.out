@@ -1,0 +1,111 @@
+TITLE : Example on Homework 4-4 to test 4Q
+        (19:58:48 on April 19, 2019, Friday)
+
+C O N T R O L   I N F O R M A T I O N
+
+      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =     4
+      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =     1
+      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =     1
+      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =     1
+         EQ.0, DATA CHECK
+         EQ.1, EXECUTION
+
+ N O D A L   P O I N T   D A T A
+
+    NODE       BOUNDARY                         NODAL POINT
+   NUMBER  CONDITION  CODES                     COORDINATES
+        1    1    1    1       0.00000e+00    1.00000e+00    0.00000e+00
+        2    1    1    1       0.00000e+00    0.00000e+00    0.00000e+00
+        3    0    0    1       2.00000e+00    5.00000e-01    0.00000e+00
+        4    0    0    1       2.00000e+00    1.00000e+00    0.00000e+00
+
+ EQUATION NUMBERS
+
+   NODE NUMBER   DEGREES OF FREEDOM
+        N           X    Y    Z
+        1           0    0    0
+        2           0    0    0
+        3           1    2    0
+        4           3    4    0
+
+ L O A D   C A S E   D A T A
+
+     LOAD CASE NUMBER . . . . . . . =     1
+     NUMBER OF CONCENTRATED LOADS . =     2
+
+    NODE       DIRECTION      LOAD
+   NUMBER                   MAGNITUDE
+      1            2       -2.00000e+01
+      4            2       -2.00000e+01
+
+ E L E M E N T   G R O U P   D A T A
+
+
+ E L E M E N T   D E F I N I T I O N
+
+ ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =    2
+     EQ.1, TRUSS ELEMENTS
+     EQ.2, ELEMENTS CURRENTLY
+     EQ.3, NOT AVAILABLE
+
+ NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =    1
+
+*** _Debug_ *** Column Heights
+       0       1       2       3
+
+*** _Debug_ *** Address of Diagonal Element
+       1       2       4       7      11
+
+	TOTAL SYSTEM DATA
+
+     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = 4
+     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = 10
+     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = 4
+     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = 2
+
+
+*** _Debug_ *** Banded stiffness matrix
+   2.00338e+07   3.81657e+07  -8.24176e+06   1.59129e+07   3.29670e+06  -1.17920e+07
+   3.67234e+07   2.47253e+06  -3.52811e+07   2.47253e+06
+
+*** _Debug_ *** Full stiffness matrix
+   2.00338e+07  -8.24176e+06  -1.17920e+07   2.47253e+06
+  -8.24176e+06   3.81657e+07   3.29670e+06  -3.52811e+07
+  -1.17920e+07   3.29670e+06   1.59129e+07   2.47253e+06
+   2.47253e+06  -3.52811e+07   2.47253e+06   3.67234e+07
+
+*** _Debug_ *** Banded stiffness matrix
+   2.00338e+07   3.47751e+07  -4.11392e-01   8.90255e+06  -4.47003e-02  -5.88607e-01
+   2.01302e+06   2.69166e-01  -9.85300e-01   1.23418e-01
+
+*** _Debug_ *** Full stiffness matrix
+   2.00338e+07  -4.11392e-01  -5.88607e-01   1.23418e-01
+  -4.11392e-01   3.47751e+07  -4.47003e-02  -9.85300e-01
+  -5.88607e-01  -4.47003e-02   8.90255e+06   2.69166e-01
+   1.23418e-01  -9.85300e-01   2.69166e-01   2.01302e+06
+
+*** _Debug_ *** Displacement vector
+  Load case = 0
+  -1.17777e-06  -9.66973e-06   2.67426e-06  -9.93532e-06
+
+ LOAD CASE    1
+
+
+ D I S P L A C E M E N T S
+
+  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT
+    1               0.00000e+00       0.00000e+00       0.00000e+00
+    2               0.00000e+00       0.00000e+00       0.00000e+00
+    3              -1.17777e-06      -9.66973e-06       0.00000e+00
+    4               2.67426e-06      -9.93532e-06       0.00000e+00
+
+ S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P    1
+
+
+ S O L U T I O N   T I M E   L O G   I N   S E C 
+
+     TIME FOR INPUT PHASE = 1.62000e-01
+     TIME FOR CALCULATION OF STIFFNESS MATRIX = 1.76000e-01
+     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = 1.36000e-01
+
+     T O T A L   S O L U T I O N   T I M E = 4.79000e-01
