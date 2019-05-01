@@ -323,6 +323,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\Outputter.cpp" />
     <ClCompile Include="D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\Solver.cpp" />
     <ClCompile Include="D:\Users\Leehow\Documents\GitHub\stappp\src\cpp\main.cpp" />
+    <ClCompile Include="4Q.cpp" />
     <ClInclude Include="D:\Users\Leehow\Documents\GitHub\stappp\src\h\Bar.h" />
     <ClInclude Include="D:\Users\Leehow\Documents\GitHub\stappp\src\h\Clock.h" />
     <ClInclude Include="D:\Users\Leehow\Documents\GitHub\stappp\src\h\Domain.h" />
