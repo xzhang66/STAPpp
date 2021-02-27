@@ -8,13 +8,11 @@
 /*     http://www.comdyn.cn/                                                 */
 /*****************************************************************************/
 
+#include <ctime>
+
 #include "Domain.h"
 #include "Outputter.h"
 #include "SkylineMatrix.h"
-
-#include <iostream>
-#include <iomanip>
-#include <ctime>
 
 using namespace std;
 
@@ -48,17 +46,18 @@ COutputter::COutputter(string FileName)
 }
 
 //	Return the single instance of the class
-COutputter* COutputter::Instance(string FileName)
+COutputter* COutputter::GetInstance(string FileName)
 {
 	if (!_instance)
 		_instance = new COutputter(FileName);
+    
 	return _instance;
 }
 
 //	Print program logo
 void COutputter::OutputHeading()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	*this << "TITLE : " << FEMData->GetTitle() << endl;
 
@@ -74,7 +73,7 @@ void COutputter::OutputHeading()
 //	Print nodal data
 void COutputter::OutputNodeInfo()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	CNode* NodeList = FEMData->GetNodeList();
 
@@ -101,7 +100,7 @@ void COutputter::OutputNodeInfo()
 		  << "   NUMBER  CONDITION  CODES                     COORDINATES" << endl;
 
 	for (unsigned int np = 0; np < NUMNP; np++)
-		NodeList[np].Write(*this, np);
+		NodeList[np].Write(*this);
 
 	*this << endl;
 }
@@ -109,7 +108,7 @@ void COutputter::OutputNodeInfo()
 //	Output equation numbers
 void COutputter::OutputEquationNumber()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 	unsigned int NUMNP = FEMData->GetNUMNP();
 
 	CNode* NodeList = FEMData->GetNodeList();
@@ -120,7 +119,7 @@ void COutputter::OutputEquationNumber()
 	*this << "        N           X    Y    Z" << endl;
 
 	for (unsigned int np = 0; np < NUMNP; np++) // Loop over for all node
-		NodeList[np].WriteEquationNo(*this, np);
+		NodeList[np].WriteEquationNo(*this);
 
 	*this << endl;
 }
@@ -130,7 +129,7 @@ void COutputter::OutputElementInfo()
 {
 	//	Print element group control line
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	unsigned int NUMEG = FEMData->GetNUMEG();
 
@@ -160,15 +159,15 @@ void COutputter::OutputElementInfo()
 		switch (ElementType)
 		{
 			case ElementTypes::Bar: // Bar element
-				PrintBarElementData(EleGrp);
+				OutputBarElements(EleGrp);
 				break;
 		}
 	}
 }
 //	Output bar element data
-void COutputter::PrintBarElementData(unsigned int EleGrp)
+void COutputter::OutputBarElements(unsigned int EleGrp)
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	CElementGroup& ElementGroup = FEMData->GetEleGrpList()[EleGrp];
 	unsigned int NUMMAT = ElementGroup.GetNUMMAT();
@@ -188,11 +187,14 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all property sets
 	for (unsigned int mset = 0; mset < NUMMAT; mset++)
-		ElementGroup.GetMaterial(mset).Write(*this, mset);
+    {
+        *this << setw(5) << mset+1;
+		ElementGroup.GetMaterial(mset).Write(*this);
+    }
 
-	*this << endl
-		  << endl
+	*this << endl << endl
 		  << " E L E M E N T   I N F O R M A T I O N" << endl;
+    
 	*this << " ELEMENT     NODE     NODE       MATERIAL" << endl
 		  << " NUMBER-N      I        J       SET NUMBER" << endl;
 
@@ -200,7 +202,10 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 
 	//	Loop over for all elements in group EleGrp
 	for (unsigned int Ele = 0; Ele < NUME; Ele++)
-		ElementGroup[Ele].Write(*this, Ele);
+    {
+        *this << setw(5) << Ele+1;
+		ElementGroup[Ele].Write(*this);
+    }
 
 	*this << endl;
 }
@@ -208,7 +213,7 @@ void COutputter::PrintBarElementData(unsigned int EleGrp)
 //	Print load data
 void COutputter::OutputLoadInfo()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	for (unsigned int lcase = 1; lcase <= FEMData->GetNLCASE(); lcase++)
 	{
@@ -224,22 +229,18 @@ void COutputter::OutputLoadInfo()
 		*this << "    NODE       DIRECTION      LOAD" << endl
 			  << "   NUMBER                   MAGNITUDE" << endl;
 
-		LoadData->Write(*this, lcase);
+		LoadData->Write(*this);
 
 		*this << endl;
 	}
 }
 
 //	Print nodal displacement
-void COutputter::OutputNodalDisplacement(unsigned int lcase)
+void COutputter::OutputNodalDisplacement()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 	CNode* NodeList = FEMData->GetNodeList();
 	double* Displacement = FEMData->GetDisplacement();
-
-	*this << " LOAD CASE" << setw(5) << lcase + 1 << endl
-		  << endl
-		  << endl;
 
 	*this << setiosflags(ios::scientific);
 
@@ -248,7 +249,7 @@ void COutputter::OutputNodalDisplacement(unsigned int lcase)
 	*this << "  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT" << endl;
 
 	for (unsigned int np = 0; np < FEMData->GetNUMNP(); np++)
-		NodeList[np].WriteNodalDisplacement(*this, np, Displacement);
+		NodeList[np].WriteNodalDisplacement(*this, Displacement);
 
 	*this << endl;
 }
@@ -256,7 +257,7 @@ void COutputter::OutputNodalDisplacement(unsigned int lcase)
 //	Calculate stresses
 void COutputter::OutputElementStress()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	double* Displacement = FEMData->GetDisplacement();
 
@@ -304,7 +305,7 @@ void COutputter::OutputElementStress()
 //	Print total system data
 void COutputter::OutputTotalSystemData()
 {
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	*this << "	TOTAL SYSTEM DATA" << endl
 		  << endl;
@@ -327,7 +328,7 @@ void COutputter::PrintColumnHeights()
 {
 	*this << "*** _Debug_ *** Column Heights" << endl;
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
@@ -352,7 +353,7 @@ void COutputter::PrintDiagonalAddress()
 {
 	*this << "*** _Debug_ *** Address of Diagonal Element" << endl;
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
@@ -377,7 +378,7 @@ void COutputter::PrintStiffnessMatrix()
 {
 	*this << "*** _Debug_ *** Banded stiffness matrix" << endl;
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	CSkylineMatrix<double> *StiffnessMatrix = FEMData->GetStiffnessMatrix();
@@ -422,16 +423,14 @@ void COutputter::PrintStiffnessMatrix()
 }
 
 //	Print displacement vector for debuging
-void COutputter::PrintDisplacement(unsigned int loadcase)
+void COutputter::PrintDisplacement()
 {
 	*this << "*** _Debug_ *** Displacement vector" << endl;
 
-	CDomain* FEMData = CDomain::Instance();
+	CDomain* FEMData = CDomain::GetInstance();
 
 	unsigned int NEQ = FEMData->GetNEQ();
 	double* Force = FEMData->GetForce();
-
-	*this << "  Load case = " << loadcase << endl;
 
 	*this << setiosflags(ios::scientific) << setprecision(5);
 

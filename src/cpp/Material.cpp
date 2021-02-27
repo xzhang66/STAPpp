@@ -17,18 +17,9 @@
 using namespace std;
 
 //	Read material data from stream Input
-bool CBarMaterial::Read(ifstream& Input, unsigned int mset)
+bool CBarMaterial::Read(ifstream& Input)
 {
 	Input >> nset;	// Number of property set
-
-	if (nset != mset + 1)
-	{
-		cerr << "*** Error *** Material sets must be inputted in order !" << endl 
-			 << "    Expected set : " << mset + 1 << endl
-			 << "    Provided set : " << nset << endl;
-
-		return false;
-	}
 
 	Input >> E >> Area;	// Young's modulus and section area
 
@@ -36,7 +27,7 @@ bool CBarMaterial::Read(ifstream& Input, unsigned int mset)
 }
 
 //	Write material data to Stream
-void CBarMaterial::Write(COutputter& output, unsigned int mset)
+void CBarMaterial::Write(COutputter& output)
 {
-	output << setw(5) << mset+1 << setw(16) << E << setw(16) << Area << endl;
+	output << setw(16) << E << setw(16) << Area << endl;
 }

@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -23,13 +24,11 @@ private:
 //!	File stream for output
 	ofstream OutputFile;
 
-protected:
-
-//!	Constructor
-	COutputter(string FileName);
-
 //!	Designed as a single instance class
 	static COutputter* _instance;
+
+//! Constructor
+    COutputter(string FileName);
 
 public:
 
@@ -37,7 +36,7 @@ public:
 	inline ofstream* GetOutputFile() { return &OutputFile; }
 
 //!	Return the single instance of the class
-	static COutputter* Instance(string FileName = " ");
+	static COutputter* GetInstance(string FileName = " ");
 
 //!	Output current time and date
 	void PrintTime(const struct tm * ptm, COutputter& output);
@@ -55,13 +54,13 @@ public:
 	void OutputElementInfo();
 
 //!	Output bar element data
-	void PrintBarElementData(unsigned int EleGrp);
+	void OutputBarElements(unsigned int EleGrp);
 
 //!	Output load data 
 	void OutputLoadInfo(); 
 
 //!	Output displacement data
-	void OutputNodalDisplacement(unsigned int lcase);
+	void OutputNodalDisplacement();
 
 //!	Output element stresses 
 	void OutputElementStress();
@@ -98,7 +97,7 @@ public:
 	void PrintColumnHeights();
 
 //!	Print displacement vector for debuging
-	void PrintDisplacement(unsigned int loadcase);
+	void PrintDisplacement();
 
 #endif
 

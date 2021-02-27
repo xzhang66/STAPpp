@@ -18,7 +18,7 @@ CElementGroup::CElementGroup()
 {
     if (!NodeList_)
     {
-        CDomain* FEMData = CDomain::Instance();
+        CDomain* FEMData = CDomain::GetInstance();
         NodeList_ = FEMData->GetNodeList();
     }
     
@@ -49,9 +49,9 @@ CElement& CElementGroup::operator[](unsigned int i)
 }
 
 //! Return index-th material in this element group
-CMaterial& CElementGroup::GetMaterial(unsigned int index)
+CMaterial& CElementGroup::GetMaterial(unsigned int i)
 {
-    return *(CMaterial*)((std::size_t)(MaterialList_) + index*MaterialSize_);
+    return *(CMaterial*)((std::size_t)(MaterialList_) + i*MaterialSize_);
 }
 
 //! Calculate the size of the derived element and material class
@@ -108,30 +108,46 @@ bool CElementGroup::Read(ifstream& Input)
     
     CalculateMemberSize();
 
-    if (!ReadElementData(Input))
-        return false;
-
-    return true;
-}
-
-//  Read bar element data from the input data file
-bool CElementGroup::ReadElementData(ifstream& Input)
-{
 //  Read material/section property lines
     AllocateMaterials(NUMMAT_);
     
 //  Loop over for all material property sets in this element group
     for (unsigned int mset = 0; mset < NUMMAT_; mset++)
-        if (!GetMaterial(mset).Read(Input, mset))
+    {
+        GetMaterial(mset).Read(Input);
+  
+        if (GetMaterial(mset).nset != mset + 1)
+        {
+            cerr << "*** Error *** Material sets must be inputted in order !" << endl
+            << "    Expected set : " << mset + 1 << endl
+            << "    Provided set : " << GetMaterial(mset).nset << endl;
+        
             return false;
-    
+        }
+    }
+
 //  Read element data lines
     AllocateElements(NUME_);
     
 //  Loop over for all elements in this element group
     for (unsigned int Ele = 0; Ele < NUME_; Ele++)
-        if (!(*this)[Ele].Read(Input, Ele, MaterialList_, NodeList_))
+    {
+        unsigned int N;
+        
+        Input >> N;    // element number
+        
+        if (N != Ele + 1)
+        {
+            cerr << "*** Error *** Elements must be inputted in order !" << endl
+            << "    Expected element : " << Ele + 1 << endl
+            << "    Provided element : " << N << endl;
+            
             return false;
-    
+        }
+
+        if (!(*this)[Ele].Read(Input, MaterialList_, NodeList_))
+            return false;
+    }
+
     return true;
 }

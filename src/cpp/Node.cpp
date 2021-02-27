@@ -25,22 +25,9 @@ CNode::CNode(double X, double Y, double Z)
 };
 
 //	Read element data from stream Input
-bool CNode::Read(ifstream& Input, unsigned int np)
+bool CNode::Read(ifstream& Input)
 {
-	unsigned int N;
-
-	Input >> N;	// node number
-	if (N != np + 1) 
-	{
-		cerr << "*** Error *** Nodes must be inputted in order !" << endl 
-			 << "   Expected node number : " << np + 1 << endl
-			 << "   Provided node number : " << N << endl;
-
-		return false;
-	}
-
-	NodeNumber = N;
-
+	Input >> NodeNumber;	// node number
 	Input >> bcode[0] >> bcode[1] >> bcode[2]
 		  >> XYZ[0] >> XYZ[1] >> XYZ[2];
 
@@ -48,16 +35,16 @@ bool CNode::Read(ifstream& Input, unsigned int np)
 }
 
 //	Output nodal point data to stream
-void CNode::Write(COutputter& output, unsigned int np)
+void CNode::Write(COutputter& output)
 {
-	output << setw(9) << np + 1 << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
+	output << setw(9) << NodeNumber << setw(5) << bcode[0] << setw(5) << bcode[1] << setw(5) << bcode[2]
 		   << setw(18) << XYZ[0] << setw(15) << XYZ[1] << setw(15) << XYZ[2] << endl;
 }
 
 //	Output equation numbers of nodal point to stream
-void CNode::WriteEquationNo(COutputter& output, unsigned int np)
+void CNode::WriteEquationNo(COutputter& output)
 {
-	output << setw(9) << np+1 << "       ";
+	output << setw(9) << NodeNumber << "       ";
 
 	for (unsigned int dof = 0; dof < CNode::NDF; dof++)	// Loop over for DOFs of node np
 	{
@@ -68,9 +55,9 @@ void CNode::WriteEquationNo(COutputter& output, unsigned int np)
 }
 
 //	Write nodal displacement
-void CNode::WriteNodalDisplacement(COutputter& output, unsigned int np, double* Displacement)
+void CNode::WriteNodalDisplacement(COutputter& output, double* Displacement)
 {
-	output << setw(5) << np + 1 << "        ";
+	output << setw(5) << NodeNumber << "        ";
 
 	for (unsigned int j = 0; j < NDF; j++)
 	{

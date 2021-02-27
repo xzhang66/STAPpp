@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -59,11 +59,12 @@ Collaboration diagram for CDomain:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_domain__coll__graph.png" border="0" usemap="#_c_domain_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_domain_coll__map" id="_c_domain_coll__map">
-<area shape="rect" id="node2" href="class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="5,92,125,117"/>
-<area shape="rect" id="node3" href="class_c_element.html" title="Element base class. " alt="" coords="289,92,369,117"/>
-<area shape="rect" id="node4" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="161,5,239,31"/>
-<area shape="rect" id="node5" href="class_c_node.html" title="Node class. " alt="" coords="354,5,417,31"/>
-<area shape="rect" id="node6" href="class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="497,92,671,117"/>
+<area shape="rect" id="node2" href="class_c_load_case_data.html" title="Class LoadData is used to store load data. " alt="" coords="5,179,125,204"/>
+<area shape="rect" id="node3" href="class_c_skyline_matrix.html" title="CSkylineMatrix\&lt; double \&gt;" alt="" coords="149,179,323,204"/>
+<area shape="rect" id="node4" href="class_c_element_group.html" title="Element group class. " alt="" coords="347,179,464,204"/>
+<area shape="rect" id="node5" href="class_c_element.html" title="Element base class. " alt="" coords="315,92,395,117"/>
+<area shape="rect" id="node6" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="189,5,267,31"/>
+<area shape="rect" id="node7" href="class_c_node.html" title="Node class. " alt="" coords="425,5,487,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -87,18 +88,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a85c5d050e61b83aff9ddd4713a5de88d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a85c5d050e61b83aff9ddd4713a5de88d">ReadElements</a> ()</td></tr>
 <tr class="memdesc:a85c5d050e61b83aff9ddd4713a5de88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read element data.  <a href="#a85c5d050e61b83aff9ddd4713a5de88d">More...</a><br /></td></tr>
 <tr class="separator:a85c5d050e61b83aff9ddd4713a5de88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9565aa1bd7478955682cebfde2035029"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a9565aa1bd7478955682cebfde2035029">ReadBarElementData</a> (unsigned int EleGrp)</td></tr>
-<tr class="memdesc:a9565aa1bd7478955682cebfde2035029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bar element data from the input data file.  <a href="#a9565aa1bd7478955682cebfde2035029">More...</a><br /></td></tr>
-<tr class="separator:a9565aa1bd7478955682cebfde2035029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bb81e6126a3af7a934f614e1abaa7d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a4bb81e6126a3af7a934f614e1abaa7d6">CalculateEquationNumber</a> ()</td></tr>
 <tr class="memdesc:a4bb81e6126a3af7a934f614e1abaa7d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate global equation numbers corresponding to every degree of freedom of each node.  <a href="#a4bb81e6126a3af7a934f614e1abaa7d6">More...</a><br /></td></tr>
 <tr class="separator:a4bb81e6126a3af7a934f614e1abaa7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45b5d1e1497327e3598330f9fbb44a0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a45b5d1e1497327e3598330f9fbb44a0b">CalculateColumnHeights</a> ()</td></tr>
 <tr class="memdesc:a45b5d1e1497327e3598330f9fbb44a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate column heights.  <a href="#a45b5d1e1497327e3598330f9fbb44a0b">More...</a><br /></td></tr>
 <tr class="separator:a45b5d1e1497327e3598330f9fbb44a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14dd5afbd4b14cf16884d6adee4daf61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a14dd5afbd4b14cf16884d6adee4daf61">CalculateDiagnoalAddress</a> ()</td></tr>
-<tr class="memdesc:a14dd5afbd4b14cf16884d6adee4daf61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate address of diagonal elements in banded matrix.  <a href="#a14dd5afbd4b14cf16884d6adee4daf61">More...</a><br /></td></tr>
-<tr class="separator:a14dd5afbd4b14cf16884d6adee4daf61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d8778ea80cca6c2b1766c6281bb27fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a8d8778ea80cca6c2b1766c6281bb27fb">AllocateMatrices</a> ()</td></tr>
 <tr class="memdesc:a8d8778ea80cca6c2b1766c6281bb27fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate storage for matrices.  <a href="#a8d8778ea80cca6c2b1766c6281bb27fb">More...</a><br /></td></tr>
 <tr class="separator:a8d8778ea80cca6c2b1766c6281bb27fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,33 +115,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a79ef02bcdfe04e4f9d0af98a27b0bb64"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a79ef02bcdfe04e4f9d0af98a27b0bb64">GetNUMNP</a> ()</td></tr>
 <tr class="memdesc:a79ef02bcdfe04e4f9d0af98a27b0bb64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total number of nodal points.  <a href="#a79ef02bcdfe04e4f9d0af98a27b0bb64">More...</a><br /></td></tr>
 <tr class="separator:a79ef02bcdfe04e4f9d0af98a27b0bb64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91e886fced3f012cb3f8bc541d4e633"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#af91e886fced3f012cb3f8bc541d4e633">GetNWK</a> ()</td></tr>
-<tr class="memdesc:af91e886fced3f012cb3f8bc541d4e633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of banded global stiffness matrix elements.  <a href="#af91e886fced3f012cb3f8bc541d4e633">More...</a><br /></td></tr>
-<tr class="separator:af91e886fced3f012cb3f8bc541d4e633"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29553432cdd970c9726a43ca0ab8f46b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a29553432cdd970c9726a43ca0ab8f46b">GetMK</a> ()</td></tr>
-<tr class="memdesc:a29553432cdd970c9726a43ca0ab8f46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum half bandwith.  <a href="#a29553432cdd970c9726a43ca0ab8f46b">More...</a><br /></td></tr>
-<tr class="separator:a29553432cdd970c9726a43ca0ab8f46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901fd72e3a58f6d7a6cd4688e7050573"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a901fd72e3a58f6d7a6cd4688e7050573">GetNodeList</a> ()</td></tr>
 <tr class="memdesc:a901fd72e3a58f6d7a6cd4688e7050573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the node list.  <a href="#a901fd72e3a58f6d7a6cd4688e7050573">More...</a><br /></td></tr>
 <tr class="separator:a901fd72e3a58f6d7a6cd4688e7050573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8094ce3184224463e99233820269791"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#aa8094ce3184224463e99233820269791">GetNUME</a> ()</td></tr>
-<tr class="memdesc:aa8094ce3184224463e99233820269791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of elements in each element group.  <a href="#aa8094ce3184224463e99233820269791">More...</a><br /></td></tr>
-<tr class="separator:aa8094ce3184224463e99233820269791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba540711d3917aed41ccf408138d2a89"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#aba540711d3917aed41ccf408138d2a89">GetNUMEG</a> ()</td></tr>
 <tr class="memdesc:aba540711d3917aed41ccf408138d2a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total number of element groups.  <a href="#aba540711d3917aed41ccf408138d2a89">More...</a><br /></td></tr>
 <tr class="separator:aba540711d3917aed41ccf408138d2a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75104bfb1048137e4a2ce408cd106e2e"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a75104bfb1048137e4a2ce408cd106e2e">GetElementTypes</a> ()</td></tr>
-<tr class="memdesc:a75104bfb1048137e4a2ce408cd106e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type of each group.  <a href="#a75104bfb1048137e4a2ce408cd106e2e">More...</a><br /></td></tr>
-<tr class="separator:a75104bfb1048137e4a2ce408cd106e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1cf348efce9a2a68c10629e59d053f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_element.html">CElement</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#af1cf348efce9a2a68c10629e59d053f6">GetElementSetList</a> ()</td></tr>
-<tr class="memdesc:af1cf348efce9a2a68c10629e59d053f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element Set List.  <a href="#af1cf348efce9a2a68c10629e59d053f6">More...</a><br /></td></tr>
-<tr class="separator:af1cf348efce9a2a68c10629e59d053f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91550b4289f53a4add3563e0d618a87d"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a91550b4289f53a4add3563e0d618a87d">GetNUMMAT</a> ()</td></tr>
-<tr class="memdesc:a91550b4289f53a4add3563e0d618a87d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of different sets of material/section properties in each element group.  <a href="#a91550b4289f53a4add3563e0d618a87d">More...</a><br /></td></tr>
-<tr class="separator:a91550b4289f53a4add3563e0d618a87d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa392754138abad8b2b06989dff347db5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#aa392754138abad8b2b06989dff347db5">GetMaterialSetList</a> ()</td></tr>
-<tr class="memdesc:aa392754138abad8b2b06989dff347db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return material set list.  <a href="#aa392754138abad8b2b06989dff347db5">More...</a><br /></td></tr>
-<tr class="separator:aa392754138abad8b2b06989dff347db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab52d7c9bf4a03ae8954da32a4fc2ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_element_group.html">CElementGroup</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a6ab52d7c9bf4a03ae8954da32a4fc2ec">GetEleGrpList</a> ()</td></tr>
+<tr class="memdesc:a6ab52d7c9bf4a03ae8954da32a4fc2ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element group list.  <a href="#a6ab52d7c9bf4a03ae8954da32a4fc2ec">More...</a><br /></td></tr>
+<tr class="separator:a6ab52d7c9bf4a03ae8954da32a4fc2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0935b1b927a3009dc59b1c55d1c9c1f7"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a0935b1b927a3009dc59b1c55d1c9c1f7">GetForce</a> ()</td></tr>
 <tr class="memdesc:a0935b1b927a3009dc59b1c55d1c9c1f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to the global nodal force vector.  <a href="#a0935b1b927a3009dc59b1c55d1c9c1f7">More...</a><br /></td></tr>
 <tr class="separator:a0935b1b927a3009dc59b1c55d1c9c1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,21 +169,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:af4611af5102633c35f25552de8b2741b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#af4611af5102633c35f25552de8b2741b">NUMEG</a></td></tr>
 <tr class="memdesc:af4611af5102633c35f25552de8b2741b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of element groups.  <a href="#af4611af5102633c35f25552de8b2741b">More...</a><br /></td></tr>
 <tr class="separator:af4611af5102633c35f25552de8b2741b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e35f2f099af78185d457b858cb5b9e8"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a6e35f2f099af78185d457b858cb5b9e8">ElementTypes</a></td></tr>
-<tr class="memdesc:a6e35f2f099af78185d457b858cb5b9e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type of each group.  <a href="#a6e35f2f099af78185d457b858cb5b9e8">More...</a><br /></td></tr>
-<tr class="separator:a6e35f2f099af78185d457b858cb5b9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d85c4822189857994c8bb85c02147df"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a3d85c4822189857994c8bb85c02147df">NUME</a></td></tr>
-<tr class="memdesc:a3d85c4822189857994c8bb85c02147df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of elements in each element group.  <a href="#a3d85c4822189857994c8bb85c02147df">More...</a><br /></td></tr>
-<tr class="separator:a3d85c4822189857994c8bb85c02147df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27e7fb3382fe9de8ff25cbfc78fd5daf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_element.html">CElement</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a27e7fb3382fe9de8ff25cbfc78fd5daf">ElementSetList</a></td></tr>
-<tr class="memdesc:a27e7fb3382fe9de8ff25cbfc78fd5daf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element Set List.  <a href="#a27e7fb3382fe9de8ff25cbfc78fd5daf">More...</a><br /></td></tr>
-<tr class="separator:a27e7fb3382fe9de8ff25cbfc78fd5daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fb919f85006a618dc8a9612f00b6eed"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a7fb919f85006a618dc8a9612f00b6eed">NUMMAT</a></td></tr>
-<tr class="memdesc:a7fb919f85006a618dc8a9612f00b6eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of different sets of material/section properties in each element group.  <a href="#a7fb919f85006a618dc8a9612f00b6eed">More...</a><br /></td></tr>
-<tr class="separator:a7fb919f85006a618dc8a9612f00b6eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f17349bfbec031b16d8c737dd42737b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a2f17349bfbec031b16d8c737dd42737b">MaterialSetList</a></td></tr>
-<tr class="memdesc:a2f17349bfbec031b16d8c737dd42737b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material set list.  <a href="#a2f17349bfbec031b16d8c737dd42737b">More...</a><br /></td></tr>
-<tr class="separator:a2f17349bfbec031b16d8c737dd42737b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f9bbf24bdf84bc2ca4659d5f461c28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_element_group.html">CElementGroup</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#ab7f9bbf24bdf84bc2ca4659d5f461c28">EleGrpList</a></td></tr>
+<tr class="memdesc:ab7f9bbf24bdf84bc2ca4659d5f461c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element group list.  <a href="#ab7f9bbf24bdf84bc2ca4659d5f461c28">More...</a><br /></td></tr>
+<tr class="separator:ab7f9bbf24bdf84bc2ca4659d5f461c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8b538965b1ade83445bb417673a60a7"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#ad8b538965b1ade83445bb417673a60a7">NLCASE</a></td></tr>
 <tr class="memdesc:ad8b538965b1ade83445bb417673a60a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of load cases.  <a href="#ad8b538965b1ade83445bb417673a60a7">More...</a><br /></td></tr>
 <tr class="separator:ad8b538965b1ade83445bb417673a60a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -219,12 +184,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a34c75bf1c31199ec1e25dfc92af98d7a"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a34c75bf1c31199ec1e25dfc92af98d7a">NEQ</a></td></tr>
 <tr class="memdesc:a34c75bf1c31199ec1e25dfc92af98d7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of equations in the system.  <a href="#a34c75bf1c31199ec1e25dfc92af98d7a">More...</a><br /></td></tr>
 <tr class="separator:a34c75bf1c31199ec1e25dfc92af98d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a833916c80af600a3d8e0de7edfced78b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a833916c80af600a3d8e0de7edfced78b">NWK</a></td></tr>
-<tr class="memdesc:a833916c80af600a3d8e0de7edfced78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of elements in banded global stiffness matrix.  <a href="#a833916c80af600a3d8e0de7edfced78b">More...</a><br /></td></tr>
-<tr class="separator:a833916c80af600a3d8e0de7edfced78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6baa1b214563041bab3b35ec195e1011"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#a6baa1b214563041bab3b35ec195e1011">MK</a></td></tr>
-<tr class="memdesc:a6baa1b214563041bab3b35ec195e1011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum half bandwith.  <a href="#a6baa1b214563041bab3b35ec195e1011">More...</a><br /></td></tr>
-<tr class="separator:a6baa1b214563041bab3b35ec195e1011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaebdd6e72cc56c01a23b3d95c395863"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#adaebdd6e72cc56c01a23b3d95c395863">StiffnessMatrix</a></td></tr>
 <tr class="memdesc:adaebdd6e72cc56c01a23b3d95c395863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Banded stiffness matrix.  <a href="#adaebdd6e72cc56c01a23b3d95c395863">More...</a><br /></td></tr>
 <tr class="separator:adaebdd6e72cc56c01a23b3d95c395863"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,7 +193,7 @@ Private Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:ab1c20abfddca2dce49cb8303854f7297"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#ab1c20abfddca2dce49cb8303854f7297">_instance</a> = NULL</td></tr>
+<tr class="memitem:ab1c20abfddca2dce49cb8303854f7297"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_domain.html">CDomain</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_domain.html#ab1c20abfddca2dce49cb8303854f7297">_instance</a> = nullptr</td></tr>
 <tr class="memdesc:ab1c20abfddca2dce49cb8303854f7297"><td class="mdescLeft">&#160;</td><td class="mdescRight">The instance of the Domain class.  <a href="#ab1c20abfddca2dce49cb8303854f7297">More...</a><br /></td></tr>
 <tr class="separator:ab1c20abfddca2dce49cb8303854f7297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -359,25 +318,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a14dd5afbd4b14cf16884d6adee4daf61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14dd5afbd4b14cf16884d6adee4daf61">&#9670;&nbsp;</a></span>CalculateDiagnoalAddress()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CDomain::CalculateDiagnoalAddress </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculate address of diagonal elements in banded matrix. </p>
-
-</div>
-</div>
 <a id="a4bb81e6126a3af7a934f614e1abaa7d6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4bb81e6126a3af7a934f614e1abaa7d6">&#9670;&nbsp;</a></span>CalculateEquationNumber()</h2>
 
@@ -424,8 +364,8 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af1cf348efce9a2a68c10629e59d053f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1cf348efce9a2a68c10629e59d053f6">&#9670;&nbsp;</a></span>GetElementSetList()</h2>
+<a id="a6ab52d7c9bf4a03ae8954da32a4fc2ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ab52d7c9bf4a03ae8954da32a4fc2ec">&#9670;&nbsp;</a></span>GetEleGrpList()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -434,7 +374,7 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_element.html">CElement</a>** CDomain::GetElementSetList </td>
+          <td class="memname"><a class="el" href="class_c_element_group.html">CElementGroup</a>* CDomain::GetEleGrpList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -447,34 +387,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return element Set List. </p>
-
-</div>
-</div>
-<a id="a75104bfb1048137e4a2ce408cd106e2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75104bfb1048137e4a2ce408cd106e2e">&#9670;&nbsp;</a></span>GetElementTypes()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::GetElementTypes </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Element type of each group. </p>
+<p>Return element group list. </p>
 
 </div>
 </div>
@@ -529,60 +442,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the list of load cases. </p>
-
-</div>
-</div>
-<a id="aa392754138abad8b2b06989dff347db5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa392754138abad8b2b06989dff347db5">&#9670;&nbsp;</a></span>GetMaterialSetList()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_c_material.html">CMaterial</a>** CDomain::GetMaterialSetList </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return material set list. </p>
-
-</div>
-</div>
-<a id="a29553432cdd970c9726a43ca0ab8f46b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29553432cdd970c9726a43ca0ab8f46b">&#9670;&nbsp;</a></span>GetMK()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CDomain::GetMK </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return the maximum half bandwith. </p>
 
 </div>
 </div>
@@ -721,33 +580,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa8094ce3184224463e99233820269791"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8094ce3184224463e99233820269791">&#9670;&nbsp;</a></span>GetNUME()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::GetNUME </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return the number of elements in each element group. </p>
-
-</div>
-</div>
 <a id="aba540711d3917aed41ccf408138d2a89"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba540711d3917aed41ccf408138d2a89">&#9670;&nbsp;</a></span>GetNUMEG()</h2>
 
@@ -775,33 +607,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a91550b4289f53a4add3563e0d618a87d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91550b4289f53a4add3563e0d618a87d">&#9670;&nbsp;</a></span>GetNUMMAT()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::GetNUMMAT </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return number of different sets of material/section properties in each element group. </p>
-
-</div>
-</div>
 <a id="a79ef02bcdfe04e4f9d0af98a27b0bb64"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79ef02bcdfe04e4f9d0af98a27b0bb64">&#9670;&nbsp;</a></span>GetNUMNP()</h2>
 
@@ -826,33 +631,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the total number of nodal points. </p>
-
-</div>
-</div>
-<a id="af91e886fced3f012cb3f8bc541d4e633"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af91e886fced3f012cb3f8bc541d4e633">&#9670;&nbsp;</a></span>GetNWK()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CDomain::GetNWK </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return the number of banded global stiffness matrix elements. </p>
 
 </div>
 </div>
@@ -934,26 +712,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return pointer to the instance of the Domain class. </p>
-
-</div>
-</div>
-<a id="a9565aa1bd7478955682cebfde2035029"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9565aa1bd7478955682cebfde2035029">&#9670;&nbsp;</a></span>ReadBarElementData()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool CDomain::ReadBarElementData </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>EleGrp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Read bar element data from the input data file. </p>
 
 </div>
 </div>
@@ -1055,7 +813,7 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_domain.html">CDomain</a> * CDomain::_instance = NULL</td>
+          <td class="memname"><a class="el" href="class_c_domain.html">CDomain</a> * CDomain::_instance = nullptr</td>
         </tr>
       </table>
   </td>
@@ -1069,8 +827,8 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a27e7fb3382fe9de8ff25cbfc78fd5daf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27e7fb3382fe9de8ff25cbfc78fd5daf">&#9670;&nbsp;</a></span>ElementSetList</h2>
+<a id="ab7f9bbf24bdf84bc2ca4659d5f461c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f9bbf24bdf84bc2ca4659d5f461c28">&#9670;&nbsp;</a></span>EleGrpList</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1079,7 +837,7 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_element.html">CElement</a>** CDomain::ElementSetList</td>
+          <td class="memname"><a class="el" href="class_c_element_group.html">CElementGroup</a>* CDomain::EleGrpList</td>
         </tr>
       </table>
   </td>
@@ -1089,33 +847,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Element Set List. </p>
-<p>ElementSetList[i] - ith element set</p>
-<p>ElementSetList[i][j] - jth element in ith set </p>
-
-</div>
-</div>
-<a id="a6e35f2f099af78185d457b858cb5b9e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e35f2f099af78185d457b858cb5b9e8">&#9670;&nbsp;</a></span>ElementTypes</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::ElementTypes</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Element type of each group. </p>
+<p>Element group list. </p>
 
 </div>
 </div>
@@ -1188,56 +920,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>List of all load cases. </p>
-
-</div>
-</div>
-<a id="a2f17349bfbec031b16d8c737dd42737b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f17349bfbec031b16d8c737dd42737b">&#9670;&nbsp;</a></span>MaterialSetList</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_c_material.html">CMaterial</a>** CDomain::MaterialSetList</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Material set list. </p>
-<p>MaterialSetList[i] - ith material set</p>
-<p>MaterialSetList[i][j] - jth material in ith set </p>
-
-</div>
-</div>
-<a id="a6baa1b214563041bab3b35ec195e1011"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6baa1b214563041bab3b35ec195e1011">&#9670;&nbsp;</a></span>MK</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CDomain::MK</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum half bandwith. </p>
 
 </div>
 </div>
@@ -1362,30 +1044,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3d85c4822189857994c8bb85c02147df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d85c4822189857994c8bb85c02147df">&#9670;&nbsp;</a></span>NUME</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::NUME</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Number of elements in each element group. </p>
-
-</div>
-</div>
 <a id="af4611af5102633c35f25552de8b2741b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4611af5102633c35f25552de8b2741b">&#9670;&nbsp;</a></span>NUMEG</h2>
 
@@ -1411,30 +1069,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7fb919f85006a618dc8a9612f00b6eed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fb919f85006a618dc8a9612f00b6eed">&#9670;&nbsp;</a></span>NUMMAT</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int* CDomain::NUMMAT</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Number of different sets of material/section properties in each element group. </p>
-
-</div>
-</div>
 <a id="ad6770caa103690e60e9a9108ac8130d6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6770caa103690e60e9a9108ac8130d6">&#9670;&nbsp;</a></span>NUMNP</h2>
 
@@ -1456,30 +1090,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Total number of nodal points. </p>
-
-</div>
-</div>
-<a id="a833916c80af600a3d8e0de7edfced78b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a833916c80af600a3d8e0de7edfced78b">&#9670;&nbsp;</a></span>NWK</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CDomain::NWK</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Number of elements in banded global stiffness matrix. </p>
 
 </div>
 </div>

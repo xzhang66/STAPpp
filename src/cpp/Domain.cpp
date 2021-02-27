@@ -59,7 +59,7 @@ CDomain::~CDomain()
 }
 
 //	Return pointer to the instance of the Domain class
-CDomain* CDomain::Instance()
+CDomain* CDomain::GetInstance()
 {
 	if (!_instance) 
 		_instance = new CDomain();
@@ -78,7 +78,7 @@ bool CDomain::ReadData(string FileName, string OutFile)
 		exit(3);
 	}
 
-	COutputter* Output = COutputter::Instance(OutFile);
+	COutputter* Output = COutputter::GetInstance(OutFile);
 
 //	Read the heading line
 	Input.getline(Title, 256);
@@ -121,8 +121,19 @@ bool CDomain::ReadNodalPoints()
 
 //	Loop over for all nodal points
 	for (unsigned int np = 0; np < NUMNP; np++)
-		if (!NodeList[np].Read(Input, np))
+    {
+		if (!NodeList[np].Read(Input))
 			return false;
+    
+        if (NodeList[np].NodeNumber != np + 1)
+        {
+            cerr << "*** Error *** Nodes must be inputted in order !" << endl
+            << "   Expected node number : " << np + 1 << endl
+            << "   Provided node number : " << NodeList[np].NodeNumber << endl;
+        
+            return false;
+        }
+    }
 
 	return true;
 }
@@ -154,8 +165,21 @@ bool CDomain::ReadLoadCases()
 
 //	Loop over for all load cases
 	for (unsigned int lcase = 0; lcase < NLCASE; lcase++)
-		if (!LoadCases[lcase].Read(Input, lcase))
-			return false;
+    {
+        unsigned int LL;
+        Input >> LL;
+        
+        if (LL != lcase + 1)
+        {
+            cerr << "*** Error *** Load case must be inputted in order !" << endl
+            << "   Expected load case : " << lcase + 1 << endl
+            << "   Provided load case : " << LL << endl;
+            
+            return false;
+        }
+
+        LoadCases[lcase].Read(Input);
+    }
 
 	return true;
 }
@@ -176,6 +200,11 @@ bool CDomain::ReadElements()
 //	Calculate column heights
 void CDomain::CalculateColumnHeights()
 {
+#ifdef _DEBUG_
+    COutputter* Output = COutputter::GetInstance();
+    *Output << setw(9) << "Ele = " << setw(22) << "Location Matrix" << endl;
+#endif
+
 	for (unsigned int EleGrp = 0; EleGrp < NUMEG; EleGrp++)		//	Loop over for all element groups
     {
         CElementGroup& ElementGrp = EleGrpList[EleGrp];
@@ -188,6 +217,15 @@ void CDomain::CalculateColumnHeights()
             // Generate location matrix
             Element.GenerateLocationMatrix();
             
+#ifdef _DEBUG_
+            unsigned int* LocationMatrix = Element.GetLocationMatrix();
+            
+            *Output << setw(9) << Ele+1;
+            for (int i=0; i<Element.GetND(); i++)
+                *Output << setw(5) << LocationMatrix[i];
+            *Output << endl;
+#endif
+
             StiffnessMatrix->CalculateColumnHeight(Element.GetLocationMatrix(), Element.GetND());
         }
     }
@@ -195,10 +233,33 @@ void CDomain::CalculateColumnHeights()
     StiffnessMatrix->CalculateMaximumHalfBandwidth();
     
 #ifdef _DEBUG_
-	COutputter* Output = COutputter::Instance();
+    *Output << endl;
 	Output->PrintColumnHeights();
 #endif
 
+}
+
+//    Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
+//    and calculate the column heights and address of diagonal elements
+void CDomain::AllocateMatrices()
+{
+    //    Allocate for global force/displacement vector
+    Force = new double[NEQ];
+    
+    //  Create the banded stiffness matrix
+    StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
+    
+    //    Calculate column heights
+    CalculateColumnHeights();
+    
+    //    Calculate address of diagonal elements in banded matrix
+    StiffnessMatrix->CalculateDiagnoalAddress();
+    
+    //    Allocate for banded global stiffness matrix
+    StiffnessMatrix->Allocate();
+    
+    COutputter* Output = COutputter::GetInstance();
+    Output->OutputTotalSystemData();
 }
 
 //	Assemble the banded gloabl stiffness matrix
@@ -226,7 +287,7 @@ void CDomain::AssembleStiffnessMatrix()
 	}
 
 #ifdef _DEBUG_
-	COutputter* Output = COutputter::Instance();
+	COutputter* Output = COutputter::GetInstance();
 	Output->PrintStiffnessMatrix();
 #endif
 
@@ -240,6 +301,8 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 
 	CLoadCaseData* LoadData = &LoadCases[LoadCase - 1];
 
+    clear(Force, NEQ);
+
 //	Loop over for all concentrated loads in load case LoadCase
 	for (unsigned int lnum = 0; lnum < LoadData->nloads; lnum++)
 	{
@@ -252,26 +315,3 @@ bool CDomain::AssembleForce(unsigned int LoadCase)
 	return true;
 }
 
-//	Allocate storage for matrices Force, ColumnHeights, DiagonalAddress and StiffnessMatrix
-//	and calculate the column heights and address of diagonal elements
-void CDomain::AllocateMatrices()
-{
-//	Allocate for global force/displacement vector
-	Force = new double[NEQ];
-    clear(Force, NEQ);
-
-//  Create the banded stiffness matrix
-    StiffnessMatrix = new CSkylineMatrix<double>(NEQ);
-
-//	Calculate column heights
-	CalculateColumnHeights();
-
-//	Calculate address of diagonal elements in banded matrix
-	StiffnessMatrix->CalculateDiagnoalAddress();
-
-//	Allocate for banded global stiffness matrix
-    StiffnessMatrix->Allocate();
-
-	COutputter* Output = COutputter::Instance();
-	Output->OutputTotalSystemData();
-}

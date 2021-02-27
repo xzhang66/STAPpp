@@ -75,7 +75,7 @@ private:
 //!	Global nodal force/displacement vector
 	double* Force;
 
-public:
+private:
 
 //!	Constructor
 	CDomain();
@@ -83,8 +83,10 @@ public:
 //!	Desconstructor
 	~CDomain();
 
+public:
+
 //!	Return pointer to the instance of the Domain class
-	static CDomain* Instance();
+	static CDomain* GetInstance();
 
 //!	Read domain data from the input data file
 	bool ReadData(string FileName, string OutFile);
@@ -134,7 +136,7 @@ public:
 	inline unsigned int GetNUMEG() { return NUMEG; }
 
 //! Return element group list
-    CElementGroup* GetEleGrpList() { return EleGrpList; }
+    inline CElementGroup* GetEleGrpList() { return EleGrpList; }
 
 //!	Return pointer to the global nodal force vector
 	inline double* GetForce() { return Force; }

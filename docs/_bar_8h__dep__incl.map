@@ -1,7 +1,9 @@
 <map id="/Users/xzhang/git/FEM&#45;Projects/STAPpp/src/h/Bar.h" name="/Users/xzhang/git/FEM&#45;Projects/STAPpp/src/h/Bar.h">
 <area shape="rect" id="node2" href="$_bar_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/Bar.cpp" alt="" coords="5,105,162,157"/>
-<area shape="rect" id="node3" href="$_domain_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/Domain.cpp" alt="" coords="57,205,214,257"/>
-<area shape="rect" id="node4" href="$main_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/main.cpp" alt="" coords="417,205,574,257"/>
-<area shape="rect" id="node5" href="$_domain_8h.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/h/Domain.h" alt="" coords="237,105,394,157"/>
-<area shape="rect" id="node6" href="$_outputter_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/Outputter.cpp" alt="" coords="237,205,394,257"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/main.cpp" alt="" coords="28,305,184,357"/>
+<area shape="rect" id="node4" href="$_element_group_8h.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/h/ElementGroup.h" alt="" coords="269,105,426,157"/>
+<area shape="rect" id="node5" href="$_element_group_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/ElementGroup.cpp" alt="" coords="568,305,729,357"/>
+<area shape="rect" id="node6" href="$_domain_8h.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/h/Domain.h" alt="" coords="269,205,426,257"/>
+<area shape="rect" id="node7" href="$_domain_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/Domain.cpp" alt="" coords="388,305,544,357"/>
+<area shape="rect" id="node8" href="$_outputter_8cpp.html" title="/Users/xzhang/git/FEM\l&#45;Projects/STAPpp/src\l/cpp/Outputter.cpp" alt="" coords="208,305,364,357"/>
 </map>

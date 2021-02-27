@@ -12,28 +12,17 @@
 
 #include "SkylineMatrix.h"
 
-//!	Base class for a solver
-/*	New solver should be derived from this base class, and match the storage scheme
-	of the global stiffness matrix employed in Domain class. */
-class CSolver
-{
-protected:
-
-	CSkylineMatrix<double>* K;
-
-public:
-
-	CSolver(CSkylineMatrix<double>* K);
-    
-};
-
 //!	LDLT solver: A in core solver using skyline storage  and column reduction scheme
-class CLDLTSolver : public CSolver
+class CLDLTSolver
 {
+private:
+    
+    CSkylineMatrix<double>& K;
+
 public:
 
 //!	Constructor
-	CLDLTSolver(CSkylineMatrix<double>* K) : CSolver(K) {};
+	CLDLTSolver(CSkylineMatrix<double>* K): K(*K) {};
 
 //!	Perform L*D*L(T) factorization of the stiffness matrix
 	void LDLT();

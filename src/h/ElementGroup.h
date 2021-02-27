@@ -79,9 +79,6 @@ public:
     //! Allocate array of derived materials
     void AllocateMaterials(std::size_t size);
 
-    //! Read element data from the input data file
-    bool ReadElementData(ifstream& Input);
-
     //! Return element type of this group
     ElementTypes GetElementType() { return ElementType_; }
 
@@ -93,7 +90,7 @@ public:
     CElement& operator[](unsigned int i);
 
     //! Return the index-th material in this group
-    CMaterial& GetMaterial(unsigned int index);
+    CMaterial& GetMaterial(unsigned int i);
 
     //! Return the number of material/section property setss in this element group
     unsigned int GetNUMMAT() { return NUMMAT_; }

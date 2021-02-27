@@ -30,10 +30,10 @@ public:
     virtual ~CMaterial() {};
 
 //!	Read material data from stream Input
-	virtual bool Read(ifstream& Input, unsigned int mset) = 0;
+	virtual bool Read(ifstream& Input) = 0;
 
 //!	Write material data to Stream
-    virtual void Write(COutputter& output, unsigned int mset) = 0;
+    virtual void Write(COutputter& output) = 0;
 
 };
 
@@ -47,8 +47,8 @@ public:
 public:
 	
 //!	Read material data from stream Input
-	virtual bool Read(ifstream& Input, unsigned int mset);
+	virtual bool Read(ifstream& Input);
 
 //!	Write material data to Stream
-	virtual void Write(COutputter& output, unsigned int mset);
+	virtual void Write(COutputter& output);
 };

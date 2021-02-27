@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -42,7 +42,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="class_c_element-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CElement Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -67,7 +66,7 @@ Collaboration diagram for CElement:</div>
 <div class="center"><img src="class_c_element__coll__graph.png" border="0" usemap="#_c_element_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_element_coll__map" id="_c_element_coll__map">
 <area shape="rect" id="node2" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="5,5,84,31"/>
-<area shape="rect" id="node3" href="class_c_node.html" title="Node class. " alt="" coords="144,5,207,31"/>
+<area shape="rect" id="node3" href="class_c_node.html" title="Node class. " alt="" coords="152,5,215,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -76,21 +75,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1bea8a7fd6a8c1529b7bd41f34bd8edf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1bea8a7fd6a8c1529b7bd41f34bd8edf">CElement</a> ()</td></tr>
 <tr class="memdesc:a1bea8a7fd6a8c1529b7bd41f34bd8edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1bea8a7fd6a8c1529b7bd41f34bd8edf">More...</a><br /></td></tr>
 <tr class="separator:a1bea8a7fd6a8c1529b7bd41f34bd8edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71bc9d69c081631c0cab3c86aa102f93"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a71bc9d69c081631c0cab3c86aa102f93">~CElement</a> ()</td></tr>
+<tr class="memdesc:a71bc9d69c081631c0cab3c86aa102f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual deconstructor.  <a href="#a71bc9d69c081631c0cab3c86aa102f93">More...</a><br /></td></tr>
+<tr class="separator:a71bc9d69c081631c0cab3c86aa102f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e84fbf9db78de66c9fd19c0c65b8fb7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a9e84fbf9db78de66c9fd19c0c65b8fb7">Read</a> (ifstream &amp;Input, unsigned int Ele, <a class="el" href="class_c_material.html">CMaterial</a> *MaterialSets, <a class="el" href="class_c_node.html">CNode</a> *NodeList)=0</td></tr>
 <tr class="memdesc:a9e84fbf9db78de66c9fd19c0c65b8fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read element data from stream Input.  <a href="#a9e84fbf9db78de66c9fd19c0c65b8fb7">More...</a><br /></td></tr>
 <tr class="separator:a9e84fbf9db78de66c9fd19c0c65b8fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e58a659dcc2f9f676effa3453ad4e8d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a3e58a659dcc2f9f676effa3453ad4e8d">Write</a> (ofstream &amp;OutputFile, unsigned int Ele)=0</td></tr>
-<tr class="memdesc:a3e58a659dcc2f9f676effa3453ad4e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream OutputFile.  <a href="#a3e58a659dcc2f9f676effa3453ad4e8d">More...</a><br /></td></tr>
-<tr class="separator:a3e58a659dcc2f9f676effa3453ad4e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a496d2954eb458f9d59b6ed08e934d1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a5a496d2954eb458f9d59b6ed08e934d1">Write</a> (<a class="el" href="class_c_outputter.html">COutputter</a> &amp;output, unsigned int Ele)=0</td></tr>
+<tr class="memdesc:a5a496d2954eb458f9d59b6ed08e934d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream.  <a href="#a5a496d2954eb458f9d59b6ed08e934d1">More...</a><br /></td></tr>
+<tr class="separator:a5a496d2954eb458f9d59b6ed08e934d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8c19d556504af95f80061a9ee2e7dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1d8c19d556504af95f80061a9ee2e7dd">GenerateLocationMatrix</a> ()=0</td></tr>
 <tr class="memdesc:a1d8c19d556504af95f80061a9ee2e7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate location matrix: the global equation number that corresponding to each DOF of the element.  <a href="#a1d8c19d556504af95f80061a9ee2e7dd">More...</a><br /></td></tr>
 <tr class="separator:a1d8c19d556504af95f80061a9ee2e7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a0539a65dd0f7900d5c4b5e9cd1df8abb">CalculateColumnHeight</a> (unsigned int *ColumnHeight)</td></tr>
-<tr class="memdesc:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the column height, used with the skyline storage scheme.  <a href="#a0539a65dd0f7900d5c4b5e9cd1df8abb">More...</a><br /></td></tr>
-<tr class="separator:a0539a65dd0f7900d5c4b5e9cd1df8abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad02a121c629f5b4d4d508cb8c0a4aed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ad02a121c629f5b4d4d508cb8c0a4aed3">assembly</a> (double *Matrix, <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *StiffnessMatrix)</td></tr>
-<tr class="memdesc:ad02a121c629f5b4d4d508cb8c0a4aed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the element stiffness matrix to the global stiffness matrix.  <a href="#ad02a121c629f5b4d4d508cb8c0a4aed3">More...</a><br /></td></tr>
-<tr class="separator:ad02a121c629f5b4d4d508cb8c0a4aed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38819c5277adf30f3f3169bec91261f6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a38819c5277adf30f3f3169bec91261f6">ElementStiffness</a> (double *stiffness)=0</td></tr>
 <tr class="memdesc:a38819c5277adf30f3f3169bec91261f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)  <a href="#a38819c5277adf30f3f3169bec91261f6">More...</a><br /></td></tr>
 <tr class="separator:a38819c5277adf30f3f3169bec91261f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,32 +99,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9c3aa0155a858d271530a462612aad9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a9c3aa0155a858d271530a462612aad9c">GetElementMaterial</a> ()</td></tr>
 <tr class="memdesc:a9c3aa0155a858d271530a462612aad9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return material of the element.  <a href="#a9c3aa0155a858d271530a462612aad9c">More...</a><br /></td></tr>
 <tr class="separator:a9c3aa0155a858d271530a462612aad9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa3238dbdc0018d96fd7fa126eb07064"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#afa3238dbdc0018d96fd7fa126eb07064">GetLocationMatrix</a> ()</td></tr>
+<tr class="memdesc:afa3238dbdc0018d96fd7fa126eb07064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the Location Matrix of the element.  <a href="#afa3238dbdc0018d96fd7fa126eb07064">More...</a><br /></td></tr>
+<tr class="separator:afa3238dbdc0018d96fd7fa126eb07064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a656024fea9b83fbb69fddb908c98d479"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a656024fea9b83fbb69fddb908c98d479">GetND</a> ()</td></tr>
+<tr class="memdesc:a656024fea9b83fbb69fddb908c98d479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the dimension of the location matrix.  <a href="#a656024fea9b83fbb69fddb908c98d479">More...</a><br /></td></tr>
+<tr class="separator:a656024fea9b83fbb69fddb908c98d479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c744d5e8b55ad96f3adbfbe14a6e8cc"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a4c744d5e8b55ad96f3adbfbe14a6e8cc">SizeOfStiffnessMatrix</a> ()=0</td></tr>
 <tr class="memdesc:a4c744d5e8b55ad96f3adbfbe14a6e8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the size of the element stiffness matrix (stored as an array column by column)  <a href="#a4c744d5e8b55ad96f3adbfbe14a6e8cc">More...</a><br /></td></tr>
 <tr class="separator:a4c744d5e8b55ad96f3adbfbe14a6e8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ad098d15aca943b13da14ec88fba7aaa5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ad098d15aca943b13da14ec88fba7aaa5">NEN</a></td></tr>
-<tr class="memdesc:ad098d15aca943b13da14ec88fba7aaa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of nodes per element.  <a href="#ad098d15aca943b13da14ec88fba7aaa5">More...</a><br /></td></tr>
-<tr class="separator:ad098d15aca943b13da14ec88fba7aaa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a049aa63089d5133dbf97b9fe8b45986b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a049aa63089d5133dbf97b9fe8b45986b">nodes</a></td></tr>
-<tr class="memdesc:a049aa63089d5133dbf97b9fe8b45986b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodes of the element.  <a href="#a049aa63089d5133dbf97b9fe8b45986b">More...</a><br /></td></tr>
-<tr class="separator:a049aa63089d5133dbf97b9fe8b45986b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a066cabbbfda053188bf43e11794581"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">ElementMaterial</a></td></tr>
-<tr class="memdesc:a2a066cabbbfda053188bf43e11794581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="#a2a066cabbbfda053188bf43e11794581">More...</a><br /></td></tr>
-<tr class="separator:a2a066cabbbfda053188bf43e11794581"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc6f37cca3dcee2432f8525c28727ee"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#affc6f37cca3dcee2432f8525c28727ee">LocationMatrix</a></td></tr>
-<tr class="memdesc:affc6f37cca3dcee2432f8525c28727ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="#affc6f37cca3dcee2432f8525c28727ee">More...</a><br /></td></tr>
-<tr class="separator:affc6f37cca3dcee2432f8525c28727ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c23c9c0a89413a25271ef4228c3cc56"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1c23c9c0a89413a25271ef4228c3cc56">ND</a></td></tr>
-<tr class="memdesc:a1c23c9c0a89413a25271ef4228c3cc56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="#a1c23c9c0a89413a25271ef4228c3cc56">More...</a><br /></td></tr>
-<tr class="separator:a1c23c9c0a89413a25271ef4228c3cc56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a48a18fbde865d6066464516d5a1bfe2f"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a48a18fbde865d6066464516d5a1bfe2f">CDomain</a></td></tr>
-<tr class="separator:a48a18fbde865d6066464516d5a1bfe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b10c5b2ecaf70e4292fcae3edfc61a"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a87b10c5b2ecaf70e4292fcae3edfc61a">NEN_</a></td></tr>
+<tr class="memdesc:a87b10c5b2ecaf70e4292fcae3edfc61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of nodes per element.  <a href="#a87b10c5b2ecaf70e4292fcae3edfc61a">More...</a><br /></td></tr>
+<tr class="separator:a87b10c5b2ecaf70e4292fcae3edfc61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad5fd5a0ab986a3a6243192e90eab07f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#aad5fd5a0ab986a3a6243192e90eab07f">nodes_</a></td></tr>
+<tr class="memdesc:aad5fd5a0ab986a3a6243192e90eab07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodes of the element.  <a href="#aad5fd5a0ab986a3a6243192e90eab07f">More...</a><br /></td></tr>
+<tr class="separator:aad5fd5a0ab986a3a6243192e90eab07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a8c168cef5ffd115fa275eacaf1149"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ae3a8c168cef5ffd115fa275eacaf1149">ElementMaterial_</a></td></tr>
+<tr class="memdesc:ae3a8c168cef5ffd115fa275eacaf1149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="#ae3a8c168cef5ffd115fa275eacaf1149">More...</a><br /></td></tr>
+<tr class="separator:ae3a8c168cef5ffd115fa275eacaf1149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc3a51c14d57ea08c429c5ba6ae8eaf"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a7bc3a51c14d57ea08c429c5ba6ae8eaf">LocationMatrix_</a></td></tr>
+<tr class="memdesc:a7bc3a51c14d57ea08c429c5ba6ae8eaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="#a7bc3a51c14d57ea08c429c5ba6ae8eaf">More...</a><br /></td></tr>
+<tr class="separator:a7bc3a51c14d57ea08c429c5ba6ae8eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5445ebb6dc30d234bfbb010f4964b177"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a5445ebb6dc30d234bfbb010f4964b177">ND_</a></td></tr>
+<tr class="memdesc:a5445ebb6dc30d234bfbb010f4964b177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="#a5445ebb6dc30d234bfbb010f4964b177">More...</a><br /></td></tr>
+<tr class="separator:a5445ebb6dc30d234bfbb010f4964b177"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Element base class. </p>
@@ -161,57 +158,34 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a71bc9d69c081631c0cab3c86aa102f93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71bc9d69c081631c0cab3c86aa102f93">&#9670;&nbsp;</a></span>~CElement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual CElement::~CElement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Virtual deconstructor. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad02a121c629f5b4d4d508cb8c0a4aed3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad02a121c629f5b4d4d508cb8c0a4aed3">&#9670;&nbsp;</a></span>assembly()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CElement::assembly </td>
-          <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>Matrix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *&#160;</td>
-          <td class="paramname"><em>StiffnessMatrix</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Assemble the element stiffness matrix to the global stiffness matrix. </p>
-
-</div>
-</div>
-<a id="a0539a65dd0f7900d5c4b5e9cd1df8abb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0539a65dd0f7900d5c4b5e9cd1df8abb">&#9670;&nbsp;</a></span>CalculateColumnHeight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CElement::CalculateColumnHeight </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int *&#160;</td>
-          <td class="paramname"><em>ColumnHeight</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculate the column height, used with the skyline storage scheme. </p>
-
-</div>
-</div>
 <a id="a38819c5277adf30f3f3169bec91261f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a38819c5277adf30f3f3169bec91261f6">&#9670;&nbsp;</a></span>ElementStiffness()</h2>
 
@@ -338,6 +312,60 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="afa3238dbdc0018d96fd7fa126eb07064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa3238dbdc0018d96fd7fa126eb07064">&#9670;&nbsp;</a></span>GetLocationMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int* CElement::GetLocationMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the Location Matrix of the element. </p>
+
+</div>
+</div>
+<a id="a656024fea9b83fbb69fddb908c98d479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a656024fea9b83fbb69fddb908c98d479">&#9670;&nbsp;</a></span>GetND()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int CElement::GetND </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the dimension of the location matrix. </p>
+
+</div>
+</div>
 <a id="a9a13dc46d9eba3a1ecf2677da7d45465"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a13dc46d9eba3a1ecf2677da7d45465">&#9670;&nbsp;</a></span>GetNodes()</h2>
 
@@ -446,8 +474,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e58a659dcc2f9f676effa3453ad4e8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e58a659dcc2f9f676effa3453ad4e8d">&#9670;&nbsp;</a></span>Write()</h2>
+<a id="a5a496d2954eb458f9d59b6ed08e934d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a496d2954eb458f9d59b6ed08e934d1">&#9670;&nbsp;</a></span>Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -458,8 +486,8 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">virtual void CElement::Write </td>
           <td>(</td>
-          <td class="paramtype">ofstream &amp;&#160;</td>
-          <td class="paramname"><em>OutputFile</em>, </td>
+          <td class="paramtype"><a class="el" href="class_c_outputter.html">COutputter</a> &amp;&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -480,38 +508,15 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Write element data to stream OutputFile. </p>
+<p>Write element data to stream. </p>
 
-<p>Implemented in <a class="el" href="class_c_bar.html#a4231decc59a5caec261a489812677c4a">CBar</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="a48a18fbde865d6066464516d5a1bfe2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48a18fbde865d6066464516d5a1bfe2f">&#9670;&nbsp;</a></span>CDomain</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="class_c_domain.html">CDomain</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Implemented in <a class="el" href="class_c_bar.html#ae175e9ebbbb88f38e97e917fad4a4752">CBar</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a2a066cabbbfda053188bf43e11794581"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a066cabbbfda053188bf43e11794581">&#9670;&nbsp;</a></span>ElementMaterial</h2>
+<a id="ae3a8c168cef5ffd115fa275eacaf1149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3a8c168cef5ffd115fa275eacaf1149">&#9670;&nbsp;</a></span>ElementMaterial_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,7 +525,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_material.html">CMaterial</a>* CElement::ElementMaterial</td>
+          <td class="memname"><a class="el" href="class_c_material.html">CMaterial</a>* CElement::ElementMaterial_</td>
         </tr>
       </table>
   </td>
@@ -535,8 +540,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="affc6f37cca3dcee2432f8525c28727ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affc6f37cca3dcee2432f8525c28727ee">&#9670;&nbsp;</a></span>LocationMatrix</h2>
+<a id="a7bc3a51c14d57ea08c429c5ba6ae8eaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bc3a51c14d57ea08c429c5ba6ae8eaf">&#9670;&nbsp;</a></span>LocationMatrix_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -545,7 +550,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int* CElement::LocationMatrix</td>
+          <td class="memname">unsigned int* CElement::LocationMatrix_</td>
         </tr>
       </table>
   </td>
@@ -559,8 +564,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a1c23c9c0a89413a25271ef4228c3cc56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c23c9c0a89413a25271ef4228c3cc56">&#9670;&nbsp;</a></span>ND</h2>
+<a id="a5445ebb6dc30d234bfbb010f4964b177"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5445ebb6dc30d234bfbb010f4964b177">&#9670;&nbsp;</a></span>ND_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -569,7 +574,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int CElement::ND</td>
+          <td class="memname">unsigned int CElement::ND_</td>
         </tr>
       </table>
   </td>
@@ -583,8 +588,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="ad098d15aca943b13da14ec88fba7aaa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad098d15aca943b13da14ec88fba7aaa5">&#9670;&nbsp;</a></span>NEN</h2>
+<a id="a87b10c5b2ecaf70e4292fcae3edfc61a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87b10c5b2ecaf70e4292fcae3edfc61a">&#9670;&nbsp;</a></span>NEN_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -593,7 +598,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int CElement::NEN</td>
+          <td class="memname">unsigned int CElement::NEN_</td>
         </tr>
       </table>
   </td>
@@ -607,8 +612,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a049aa63089d5133dbf97b9fe8b45986b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a049aa63089d5133dbf97b9fe8b45986b">&#9670;&nbsp;</a></span>nodes</h2>
+<a id="aad5fd5a0ab986a3a6243192e90eab07f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad5fd5a0ab986a3a6243192e90eab07f">&#9670;&nbsp;</a></span>nodes_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -617,7 +622,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_node.html">CNode</a>** CElement::nodes</td>
+          <td class="memname"><a class="el" href="class_c_node.html">CNode</a>** CElement::nodes_</td>
         </tr>
       </table>
   </td>
@@ -631,9 +636,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/xzhang/git/FEM-Projects/STAPpp/src/h/<a class="el" href="_element_8h_source.html">Element.h</a></li>
-<li>/Users/xzhang/git/FEM-Projects/STAPpp/src/cpp/<a class="el" href="_element_8cpp.html">Element.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

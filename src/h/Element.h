@@ -56,14 +56,30 @@ public:
     }
 
 //!	Read element data from stream Input
-	virtual bool Read(ifstream& Input, unsigned int Ele, CMaterial* MaterialSets, CNode* NodeList) = 0;
+	virtual bool Read(ifstream& Input, CMaterial* MaterialSets, CNode* NodeList) = 0;
 
 //!	Write element data to stream
-	virtual void Write(COutputter& output, unsigned int Ele) = 0;
+	virtual void Write(COutputter& output) = 0;
 
 //! Generate location matrix: the global equation number that corresponding to each DOF of the element
 //	Caution:  Equation number is numbered from 1 !
-    virtual void GenerateLocationMatrix() = 0;
+    virtual void GenerateLocationMatrix()
+    {
+        unsigned int i = 0;
+        for (unsigned int N = 0; N < NEN_; N++)
+            for (unsigned int D = 0; D < CNode::NDF; D++)
+                LocationMatrix_[i++] = nodes_[N]->bcode[D];
+    }
+
+//! Return the size of the element stiffness matrix (stored as an array column by column)
+    virtual unsigned int SizeOfStiffnessMatrix()
+    {
+        unsigned int size = 0;
+        for (int i=1; i<= ND_; i++)
+            size += i;
+        
+        return size;
+    }
 
 //!	Calculate element stiffness matrix (Upper triangular matrix, stored as an array column by colum)
 	virtual void ElementStiffness(double* stiffness) = 0; 
@@ -71,6 +87,9 @@ public:
 //!	Calculate element stress 
 	virtual void ElementStress(double* stress, double* Displacement) = 0;
 
+//! Return number of nodes per element
+    inline unsigned int GetNEN() { return NEN_; }
+    
 //!	Return nodes of the element
 	inline CNode** GetNodes() { return nodes_; }
 
@@ -82,7 +101,4 @@ public:
     
     //! Return the dimension of the location matrix
     inline unsigned int GetND() { return ND_; }
-
-//!	Return the size of the element stiffness matrix (stored as an array column by column)
-	virtual unsigned int SizeOfStiffnessMatrix() = 0;     
 };

@@ -19,7 +19,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">STAPpp
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.10</span>
    </div>
    <div id="projectbrief">STAPpp is a C++ finite element method (FEM) code whose input/output data files are the same as STAP90.</div>
   </td>
@@ -64,9 +64,9 @@ Collaboration diagram for CBar:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_bar__coll__graph.png" border="0" usemap="#_c_bar_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_bar_coll__map" id="_c_bar_coll__map">
-<area shape="rect" id="node2" href="class_c_element.html" title="Element base class. " alt="" coords="70,92,150,117"/>
+<area shape="rect" id="node2" href="class_c_element.html" title="Element base class. " alt="" coords="74,92,154,117"/>
 <area shape="rect" id="node3" href="class_c_material.html" title="Material base class which only define one data member. " alt="" coords="5,5,84,31"/>
-<area shape="rect" id="node4" href="class_c_node.html" title="Node class. " alt="" coords="144,5,207,31"/>
+<area shape="rect" id="node4" href="class_c_node.html" title="Node class. " alt="" coords="152,5,215,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -81,9 +81,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9dab4ce4b4dc467b77a673d515973a80"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#a9dab4ce4b4dc467b77a673d515973a80">Read</a> (ifstream &amp;Input, unsigned int Ele, <a class="el" href="class_c_material.html">CMaterial</a> *MaterialSets, <a class="el" href="class_c_node.html">CNode</a> *NodeList)</td></tr>
 <tr class="memdesc:a9dab4ce4b4dc467b77a673d515973a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read element data from stream Input.  <a href="#a9dab4ce4b4dc467b77a673d515973a80">More...</a><br /></td></tr>
 <tr class="separator:a9dab4ce4b4dc467b77a673d515973a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4231decc59a5caec261a489812677c4a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#a4231decc59a5caec261a489812677c4a">Write</a> (ofstream &amp;OutputFile, unsigned int Ele)</td></tr>
-<tr class="memdesc:a4231decc59a5caec261a489812677c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream OutputFile.  <a href="#a4231decc59a5caec261a489812677c4a">More...</a><br /></td></tr>
-<tr class="separator:a4231decc59a5caec261a489812677c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae175e9ebbbb88f38e97e917fad4a4752"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#ae175e9ebbbb88f38e97e917fad4a4752">Write</a> (<a class="el" href="class_c_outputter.html">COutputter</a> &amp;output, unsigned int Ele)</td></tr>
+<tr class="memdesc:ae175e9ebbbb88f38e97e917fad4a4752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write element data to stream.  <a href="#ae175e9ebbbb88f38e97e917fad4a4752">More...</a><br /></td></tr>
+<tr class="separator:ae175e9ebbbb88f38e97e917fad4a4752"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ccef3010d999490d3a8f5da0e800b19"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_bar.html#a8ccef3010d999490d3a8f5da0e800b19">GenerateLocationMatrix</a> ()</td></tr>
 <tr class="memdesc:a8ccef3010d999490d3a8f5da0e800b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate location matrix: the global equation number that corresponding to each DOF of the element.  <a href="#a8ccef3010d999490d3a8f5da0e800b19">More...</a><br /></td></tr>
 <tr class="separator:a8ccef3010d999490d3a8f5da0e800b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,37 +100,40 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1bea8a7fd6a8c1529b7bd41f34bd8edf inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1bea8a7fd6a8c1529b7bd41f34bd8edf">CElement</a> ()</td></tr>
 <tr class="memdesc:a1bea8a7fd6a8c1529b7bd41f34bd8edf inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_c_element.html#a1bea8a7fd6a8c1529b7bd41f34bd8edf">More...</a><br /></td></tr>
 <tr class="separator:a1bea8a7fd6a8c1529b7bd41f34bd8edf inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0539a65dd0f7900d5c4b5e9cd1df8abb inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a0539a65dd0f7900d5c4b5e9cd1df8abb">CalculateColumnHeight</a> (unsigned int *ColumnHeight)</td></tr>
-<tr class="memdesc:a0539a65dd0f7900d5c4b5e9cd1df8abb inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the column height, used with the skyline storage scheme.  <a href="class_c_element.html#a0539a65dd0f7900d5c4b5e9cd1df8abb">More...</a><br /></td></tr>
-<tr class="separator:a0539a65dd0f7900d5c4b5e9cd1df8abb inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad02a121c629f5b4d4d508cb8c0a4aed3 inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ad02a121c629f5b4d4d508cb8c0a4aed3">assembly</a> (double *Matrix, <a class="el" href="class_c_skyline_matrix.html">CSkylineMatrix</a>&lt; double &gt; *StiffnessMatrix)</td></tr>
-<tr class="memdesc:ad02a121c629f5b4d4d508cb8c0a4aed3 inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the element stiffness matrix to the global stiffness matrix.  <a href="class_c_element.html#ad02a121c629f5b4d4d508cb8c0a4aed3">More...</a><br /></td></tr>
-<tr class="separator:ad02a121c629f5b4d4d508cb8c0a4aed3 inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71bc9d69c081631c0cab3c86aa102f93 inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a71bc9d69c081631c0cab3c86aa102f93">~CElement</a> ()</td></tr>
+<tr class="memdesc:a71bc9d69c081631c0cab3c86aa102f93 inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual deconstructor.  <a href="class_c_element.html#a71bc9d69c081631c0cab3c86aa102f93">More...</a><br /></td></tr>
+<tr class="separator:a71bc9d69c081631c0cab3c86aa102f93 inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a13dc46d9eba3a1ecf2677da7d45465 inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a9a13dc46d9eba3a1ecf2677da7d45465">GetNodes</a> ()</td></tr>
 <tr class="memdesc:a9a13dc46d9eba3a1ecf2677da7d45465 inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return nodes of the element.  <a href="class_c_element.html#a9a13dc46d9eba3a1ecf2677da7d45465">More...</a><br /></td></tr>
 <tr class="separator:a9a13dc46d9eba3a1ecf2677da7d45465 inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c3aa0155a858d271530a462612aad9c inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a9c3aa0155a858d271530a462612aad9c">GetElementMaterial</a> ()</td></tr>
 <tr class="memdesc:a9c3aa0155a858d271530a462612aad9c inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return material of the element.  <a href="class_c_element.html#a9c3aa0155a858d271530a462612aad9c">More...</a><br /></td></tr>
 <tr class="separator:a9c3aa0155a858d271530a462612aad9c inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa3238dbdc0018d96fd7fa126eb07064 inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#afa3238dbdc0018d96fd7fa126eb07064">GetLocationMatrix</a> ()</td></tr>
+<tr class="memdesc:afa3238dbdc0018d96fd7fa126eb07064 inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the Location Matrix of the element.  <a href="class_c_element.html#afa3238dbdc0018d96fd7fa126eb07064">More...</a><br /></td></tr>
+<tr class="separator:afa3238dbdc0018d96fd7fa126eb07064 inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a656024fea9b83fbb69fddb908c98d479 inherit pub_methods_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a656024fea9b83fbb69fddb908c98d479">GetND</a> ()</td></tr>
+<tr class="memdesc:a656024fea9b83fbb69fddb908c98d479 inherit pub_methods_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the dimension of the location matrix.  <a href="class_c_element.html#a656024fea9b83fbb69fddb908c98d479">More...</a><br /></td></tr>
+<tr class="separator:a656024fea9b83fbb69fddb908c98d479 inherit pub_methods_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_c_element"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_c_element')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_c_element.html">CElement</a></td></tr>
-<tr class="memitem:ad098d15aca943b13da14ec88fba7aaa5 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ad098d15aca943b13da14ec88fba7aaa5">NEN</a></td></tr>
-<tr class="memdesc:ad098d15aca943b13da14ec88fba7aaa5 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of nodes per element.  <a href="class_c_element.html#ad098d15aca943b13da14ec88fba7aaa5">More...</a><br /></td></tr>
-<tr class="separator:ad098d15aca943b13da14ec88fba7aaa5 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a049aa63089d5133dbf97b9fe8b45986b inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a049aa63089d5133dbf97b9fe8b45986b">nodes</a></td></tr>
-<tr class="memdesc:a049aa63089d5133dbf97b9fe8b45986b inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodes of the element.  <a href="class_c_element.html#a049aa63089d5133dbf97b9fe8b45986b">More...</a><br /></td></tr>
-<tr class="separator:a049aa63089d5133dbf97b9fe8b45986b inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">ElementMaterial</a></td></tr>
-<tr class="memdesc:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="class_c_element.html#a2a066cabbbfda053188bf43e11794581">More...</a><br /></td></tr>
-<tr class="separator:a2a066cabbbfda053188bf43e11794581 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc6f37cca3dcee2432f8525c28727ee inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#affc6f37cca3dcee2432f8525c28727ee">LocationMatrix</a></td></tr>
-<tr class="memdesc:affc6f37cca3dcee2432f8525c28727ee inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="class_c_element.html#affc6f37cca3dcee2432f8525c28727ee">More...</a><br /></td></tr>
-<tr class="separator:affc6f37cca3dcee2432f8525c28727ee inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c23c9c0a89413a25271ef4228c3cc56 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a1c23c9c0a89413a25271ef4228c3cc56">ND</a></td></tr>
-<tr class="memdesc:a1c23c9c0a89413a25271ef4228c3cc56 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="class_c_element.html#a1c23c9c0a89413a25271ef4228c3cc56">More...</a><br /></td></tr>
-<tr class="separator:a1c23c9c0a89413a25271ef4228c3cc56 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b10c5b2ecaf70e4292fcae3edfc61a inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a87b10c5b2ecaf70e4292fcae3edfc61a">NEN_</a></td></tr>
+<tr class="memdesc:a87b10c5b2ecaf70e4292fcae3edfc61a inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of nodes per element.  <a href="class_c_element.html#a87b10c5b2ecaf70e4292fcae3edfc61a">More...</a><br /></td></tr>
+<tr class="separator:a87b10c5b2ecaf70e4292fcae3edfc61a inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad5fd5a0ab986a3a6243192e90eab07f inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_node.html">CNode</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#aad5fd5a0ab986a3a6243192e90eab07f">nodes_</a></td></tr>
+<tr class="memdesc:aad5fd5a0ab986a3a6243192e90eab07f inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodes of the element.  <a href="class_c_element.html#aad5fd5a0ab986a3a6243192e90eab07f">More...</a><br /></td></tr>
+<tr class="separator:aad5fd5a0ab986a3a6243192e90eab07f inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a8c168cef5ffd115fa275eacaf1149 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_material.html">CMaterial</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#ae3a8c168cef5ffd115fa275eacaf1149">ElementMaterial_</a></td></tr>
+<tr class="memdesc:ae3a8c168cef5ffd115fa275eacaf1149 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material of the element.  <a href="class_c_element.html#ae3a8c168cef5ffd115fa275eacaf1149">More...</a><br /></td></tr>
+<tr class="separator:ae3a8c168cef5ffd115fa275eacaf1149 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc3a51c14d57ea08c429c5ba6ae8eaf inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a7bc3a51c14d57ea08c429c5ba6ae8eaf">LocationMatrix_</a></td></tr>
+<tr class="memdesc:a7bc3a51c14d57ea08c429c5ba6ae8eaf inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location Matrix of the element.  <a href="class_c_element.html#a7bc3a51c14d57ea08c429c5ba6ae8eaf">More...</a><br /></td></tr>
+<tr class="separator:a7bc3a51c14d57ea08c429c5ba6ae8eaf inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5445ebb6dc30d234bfbb010f4964b177 inherit pro_attribs_class_c_element"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_element.html#a5445ebb6dc30d234bfbb010f4964b177">ND_</a></td></tr>
+<tr class="memdesc:a5445ebb6dc30d234bfbb010f4964b177 inherit pro_attribs_class_c_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of the location matrix.  <a href="class_c_element.html#a5445ebb6dc30d234bfbb010f4964b177">More...</a><br /></td></tr>
+<tr class="separator:a5445ebb6dc30d234bfbb010f4964b177 inherit pro_attribs_class_c_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Bar element class. </p>
@@ -354,8 +357,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a4231decc59a5caec261a489812677c4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4231decc59a5caec261a489812677c4a">&#9670;&nbsp;</a></span>Write()</h2>
+<a id="ae175e9ebbbb88f38e97e917fad4a4752"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae175e9ebbbb88f38e97e917fad4a4752">&#9670;&nbsp;</a></span>Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,8 +369,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void CBar::Write </td>
           <td>(</td>
-          <td class="paramtype">ofstream &amp;&#160;</td>
-          <td class="paramname"><em>OutputFile</em>, </td>
+          <td class="paramtype"><a class="el" href="class_c_outputter.html">COutputter</a> &amp;&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -388,9 +391,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Write element data to stream OutputFile. </p>
+<p>Write element data to stream. </p>
 
-<p>Implements <a class="el" href="class_c_element.html#a3e58a659dcc2f9f676effa3453ad4e8d">CElement</a>.</p>
+<p>Implements <a class="el" href="class_c_element.html#a5a496d2954eb458f9d59b6ed08e934d1">CElement</a>.</p>
 
 </div>
 </div>
