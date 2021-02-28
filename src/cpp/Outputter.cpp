@@ -161,6 +161,9 @@ void COutputter::OutputElementInfo()
 			case ElementTypes::Bar: // Bar element
 				OutputBarElements(EleGrp);
 				break;
+		    default:
+		        *this << ElementType << " has not been implemented yet." << endl;
+		        break;
 		}
 	}
 }
