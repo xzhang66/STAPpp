@@ -41,7 +41,7 @@ protected:
 public:
 
 //!	Constructor
-	CElement() : NEN_(0), nodes_(nullptr), ElementMaterial_(nullptr) {};
+	CElement() : NEN_(0), nodes_(nullptr), ElementMaterial_(nullptr) {}
 
 //! Virtual deconstructor
     virtual ~CElement() {
