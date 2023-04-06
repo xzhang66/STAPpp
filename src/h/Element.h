@@ -45,13 +45,13 @@ public:
 
 //! Virtual deconstructor
     virtual ~CElement() {
-        if (!nodes_)
+        if (nodes_)
             delete [] nodes_;
         
-        if (!ElementMaterial_)
+        if (ElementMaterial_)
             delete [] ElementMaterial_;
         
-        if (!LocationMatrix_)
+        if (LocationMatrix_)
             delete [] LocationMatrix_;
     }
 
