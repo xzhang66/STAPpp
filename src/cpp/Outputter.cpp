@@ -150,6 +150,7 @@ void COutputter::OutputElementInfo()
 		*this << "     EQ.1, TRUSS ELEMENTS" << endl
 			  << "     EQ.2, FOUR-NODE PLANE ELEMENTS (FULL INTEGRATION)" << endl
 			  << "     EQ.3, FOUR-NODE PLANE ELEMENTS (REDUCED INTEGRATION)" << endl
+			  << "     EQ.4, THREE-NODE TRIANGULAR PLANE ELEMENTS (CST)" << endl
 			  << endl;
 
 		*this << " NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =" << setw(5) << NUME
@@ -167,6 +168,11 @@ void COutputter::OutputElementInfo()
 		    case ElementTypes::Q4R: // Q4R element (reduced integration)
 		    {
 		        OutputQ4Elements(EleGrp);
+		        break;
+		    }
+		    case ElementTypes::T3: // T3 element (CST)
+		    {
+		        OutputT3Elements(EleGrp);
 		        break;
 		    }
 		    default:
@@ -354,6 +360,7 @@ void COutputter::OutputElementStress()
 
 			case ElementTypes::Q4: // Q4 element (full integration)
 		    case ElementTypes::Q4R: // Q4R element (reduced integration)
+		    case ElementTypes::T3: // T3 element (CST)
 			{
 				*this << "  ELEMENT            SIGMA-X           SIGMA-Y          TAU-XY" << endl
 					<< "  NUMBER" << endl;
@@ -380,6 +387,50 @@ void COutputter::OutputElementStress()
 }
 
 //	Print total system data
+//	Output T3 element data
+void COutputter::OutputT3Elements(unsigned int EleGrp)
+{
+	CDomain* FEMData = CDomain::GetInstance();
+
+	CElementGroup& ElementGroup = FEMData->GetEleGrpList()[EleGrp];
+	unsigned int NUMMAT = ElementGroup.GetNUMMAT();
+
+	*this << " M A T E R I A L   D E F I N I T I O N" << endl
+		  << endl;
+	*this << " NUMBER OF DIFFERENT SETS OF MATERIAL" << endl;
+	*this << " AND THICKNESS / POISSON RATIO . . . . .( NPAR(3) ) . . =" << setw(5) << NUMMAT
+		  << endl
+		  << endl;
+
+	*this << "  SET       YOUNG'S    POISSON'S    THICKNESS" << endl
+		  << " NUMBER     MODULUS      RATIO" << endl
+		  << "               E          NU          T" << endl;
+
+	*this << setiosflags(ios::scientific) << setprecision(5);
+
+	for (unsigned int mset = 0; mset < NUMMAT; mset++)
+	{
+		*this << setw(5) << mset + 1;
+		ElementGroup.GetMaterial(mset).Write(*this);
+	}
+
+	*this << endl << endl
+		  << " E L E M E N T   I N F O R M A T I O N" << endl;
+
+	*this << " ELEMENT     NODE     NODE     NODE      MATERIAL" << endl
+		  << " NUMBER-N      I        J        K       SET NUMBER" << endl;
+
+	unsigned int NUME = ElementGroup.GetNUME();
+
+	for (unsigned int Ele = 0; Ele < NUME; Ele++)
+	{
+		*this << setw(5) << Ele + 1;
+		ElementGroup[Ele].Write(*this);
+	}
+
+	*this << endl;
+}
+
 void COutputter::OutputTotalSystemData()
 {
 	CDomain* FEMData = CDomain::GetInstance();
