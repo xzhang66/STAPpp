@@ -15,7 +15,12 @@
 
 using namespace std;
 
-template <class type> void clear( type* a, unsigned int N );	// Clear an array
+// Clear an array
+template <class type> void clear( type* a, unsigned int N )
+{
+	for (unsigned int i = 0; i < N; i++)
+		a[i] = 0;
+}
 
 //!	Element base class
 /*!	All type of element classes should be derived from this base class */
@@ -47,9 +52,6 @@ public:
     virtual ~CElement() {
         if (nodes_)
             delete [] nodes_;
-        
-        if (ElementMaterial_)
-            delete [] ElementMaterial_;
         
         if (LocationMatrix_)
             delete [] LocationMatrix_;

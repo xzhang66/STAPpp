@@ -1,0 +1,110 @@
+TITLE : Q4 Cantilever Convergence Test 2x1 Mesh
+        (1:50:40 on June 2, 2026, Tuesday)
+
+C O N T R O L   I N F O R M A T I O N
+
+      NUMBER OF NODAL POINTS . . . . . . . . . . (NUMNP)  =     6
+      NUMBER OF ELEMENT GROUPS . . . . . . . . . (NUMEG)  =     1
+      NUMBER OF LOAD CASES . . . . . . . . . . . (NLCASE) =     1
+      SOLUTION MODE  . . . . . . . . . . . . . . (MODEX)  =     1
+         EQ.0, DATA CHECK
+         EQ.1, EXECUTION
+
+ N O D A L   P O I N T   D A T A
+
+    NODE       BOUNDARY                         NODAL POINT
+   NUMBER  CONDITION  CODES                     COORDINATES
+        1    1    1    1       0.00000e+00    0.00000e+00    0.00000e+00
+        2    0    0    1       5.00000e+00    0.00000e+00    0.00000e+00
+        3    0    0    1       1.00000e+01    0.00000e+00    0.00000e+00
+        4    1    1    1       0.00000e+00    1.00000e+00    0.00000e+00
+        5    0    0    1       5.00000e+00    1.00000e+00    0.00000e+00
+        6    0    0    1       1.00000e+01    1.00000e+00    0.00000e+00
+
+ EQUATION NUMBERS
+
+   NODE NUMBER   DEGREES OF FREEDOM
+        N           X    Y    Z
+        1           0    0    0
+        2           1    2    0
+        3           3    4    0
+        4           0    0    0
+        5           5    6    0
+        6           7    8    0
+
+ L O A D   C A S E   D A T A
+
+     LOAD CASE NUMBER . . . . . . . =     1
+     NUMBER OF CONCENTRATED LOADS . =     2
+
+    NODE       DIRECTION      LOAD
+   NUMBER                   MAGNITUDE
+      3            2       -5.00000e+04
+      6            2       -5.00000e+04
+
+ E L E M E N T   G R O U P   D A T A
+
+
+ E L E M E N T   D E F I N I T I O N
+
+ ELEMENT TYPE  . . . . . . . . . . . . .( NPAR(1) ) . . =    2
+     EQ.1, TRUSS ELEMENTS
+     EQ.2, FOUR-NODE PLANE ELEMENTS (FULL INTEGRATION)
+     EQ.3, FOUR-NODE PLANE ELEMENTS (REDUCED INTEGRATION)
+
+ NUMBER OF ELEMENTS. . . . . . . . . . .( NPAR(2) ) . . =    2
+
+ M A T E R I A L   D E F I N I T I O N
+
+ NUMBER OF DIFFERENT SETS OF MATERIAL
+ AND THICKNESS / POISSON RATIO . . . . .( NPAR(3) ) . . =    1
+
+  SET       YOUNG'S    POISSON'S    THICKNESS
+ NUMBER     MODULUS      RATIO
+               E          NU          T
+    1     2.00000e+11     3.00000e-01     1.00000e-01
+
+
+ E L E M E N T   I N F O R M A T I O N
+ ELEMENT     NODE     NODE     NODE     NODE      MATERIAL
+ NUMBER-N      I        J        K        L       SET NUMBER
+    1          1        2        5        4           1
+    2          2        3        6        5           1
+
+	TOTAL SYSTEM DATA
+
+     NUMBER OF EQUATIONS . . . . . . . . . . . . . .(NEQ) = 8
+     NUMBER OF MATRIX ELEMENTS . . . . . . . . . . .(NWK) = 36
+     MAXIMUM HALF BANDWIDTH  . . . . . . . . . . . .(MK ) = 8
+     MEAN HALF BANDWIDTH . . . . . . . . . . . . . .(MM ) = 4
+
+
+ LOAD CASE    1
+
+
+ D I S P L A C E M E N T S
+
+  NODE           X-DISPLACEMENT    Y-DISPLACEMENT    Z-DISPLACEMENT
+    1               0.00000e+00       0.00000e+00       0.00000e+00
+    2              -1.05000e-04      -5.90000e-04       0.00000e+00
+    3              -1.40000e-04      -1.88000e-03       0.00000e+00
+    4               0.00000e+00       0.00000e+00       0.00000e+00
+    5               1.05000e-04      -5.90000e-04       0.00000e+00
+    6               1.40000e-04      -1.88000e-03       0.00000e+00
+
+ S T R E S S  C A L C U L A T I O N S  F O R  E L E M E N T  G R O U P    1
+
+  ELEMENT            SIGMA-X           SIGMA-Y          TAU-XY
+  NUMBER
+    1       5.21251e-10      -1.06856e-08      -1.00000e+06
+    2      -1.19143e-08      -3.57429e-09      -1.00000e+06
+
+
+ S O L U T I O N   T I M E   L O G   I N   S E C 
+
+     TIME FOR INPUT PHASE = 3.00000e-03
+     TIME FOR CALCULATION OF STIFFNESS MATRIX = 0.00000e+00
+     TIME FOR FACTORIZATION AND LOAD CASE SOLUTIONS = 0.00000e+00
+
+     T O T A L   S O L U T I O N   T I M E = 3.00000e-03
+

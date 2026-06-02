@@ -31,3 +31,18 @@ void CBarMaterial::Write(COutputter& output)
 {
 	output << setw(16) << E << setw(16) << Area << endl;
 }
+
+//	Read material data from stream Input
+bool CQ4Material::Read(ifstream& Input)
+{
+	Input >> nset;
+	Input >> E >> Nu >> Thickness;
+
+	return true;
+}
+
+//	Write material data to Stream
+void CQ4Material::Write(COutputter& output)
+{
+	output << setw(16) << E << setw(16) << Nu << setw(16) << Thickness << endl;
+}

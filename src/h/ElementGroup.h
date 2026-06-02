@@ -14,6 +14,8 @@
 
 #include "Element.h"
 #include "Bar.h"
+#include "Q4.h"
+#include "Q4R.h"
 #include "Material.h"
 #include "Node.h"
 
@@ -24,7 +26,8 @@ enum ElementTypes
 {
     UNDEFINED = 0,
     Bar,    // Bar element
-    Q4,     // 4Q element
+    Q4,     // 4Q element (full integration)
+    Q4R,    // 4Q element (reduced integration with hourglass control)
     T3,     // 3T element
     H8,     // 8H element
     Beam,   // Beam element
